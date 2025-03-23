@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "Arbori de Grădină",
+    "cart": "Coș",
+    "logout": "Deconectare",
+    "login": "Conectare",
+    "dashboard": "Panou de Control"
+  },
+  "collection": {
+    "title": "Colecția Noastră",
+    "loading": "Se încarcă...",
+    "error": "Nu s-au putut încărca arborii. Vă rugăm să încercați mai târziu."
+  },
+  "tree": {
+    "addToCart": "Adaugă în coș",
+    "height": "Înălțime",
+    "maintenance": {
+      "low": "Scăzut",
+      "medium": "Mediu",
+      "high": "Ridicat"
+    },
+    "descriptions": {
+      "1": "Arbore ornamental elegant cu frunziș roșu superb",
+      "2": "Conifer perfect în formă de con pentru spații mici"
+    }
+  },
+  "cart": {
+    "title": "Coș de cumpărături",
+    "total": "Total",
+    "checkout": "Finalizare comandă",
+    "empty": "Coșul tău este gol"
+  },
+  "contact": {
+    "title": "Contactează-ne",
+    "name": "Nume",
+    "email": "Email",
+    "message": "Mesaj",
+    "send": "Trimite mesaj",
+    "success": "Vă mulțumim pentru mesaj! Vă vom contacta în curând."
+  },
+  "auth": {
+    "login": {
+      "title": "Conectează-te la cont",
+      "email": "Adresă de email",
+      "password": "Parolă",
+      "submit": "Conectare",
+      "loading": "Se conectează...",
+      "error": "Credențiale invalide",
+      "register": "Sau creează un cont nou"
+    },
+    "register": {
+      "title": "Creează un cont",
+      "name": "Nume complet",
+      "email": "Adresă de email",
+      "password": "Parolă",
+      "submit": "Creează cont",
+      "loading": "Se creează contul...",
+      "error": "Înregistrarea a eșuat",
+      "login": "Sau conectează-te la contul tău"
+    }
+  },
+  "dashboard": {
+    "welcome": "Bine ai venit, {{name}}!",
+    "profile": "Informații Profil",
+    "name": "Nume",
+    "email": "Email",
+    "orderHistory": "Istoric Comenzi",
+    "noOrders": "Nu există comenzi încă"
+  },
+  "checkout": {
+    "guestConfirm": "Doriți să continuați ca vizitator? Apăsați Anulare pentru a vă conecta.",
+    "guestProcessing": "Se procesează comanda ca vizitator...",
+    "processing": "Se procesează comanda..."
+  }
+}

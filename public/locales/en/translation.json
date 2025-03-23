@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "Garden Trees",
+    "cart": "Cart",
+    "logout": "Logout",
+    "login": "Login",
+    "dashboard": "Dashboard"
+  },
+  "collection": {
+    "title": "Our Collection",
+    "loading": "Loading...",
+    "error": "Failed to load trees. Please try again later."
+  },
+  "tree": {
+    "addToCart": "Add to Cart",
+    "height": "Height",
+    "maintenance": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "descriptions": {
+      "1": "Elegant ornamental tree with stunning red foliage",
+      "2": "Perfect cone-shaped evergreen for small spaces"
+    }
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "total": "Total",
+    "checkout": "Checkout",
+    "empty": "Your cart is empty"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "success": "Thank you for your message! We will get back to you soon."
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "email": "Email address",
+      "password": "Password",
+      "submit": "Sign in",
+      "loading": "Signing in...",
+      "error": "Invalid credentials",
+      "register": "Or create a new account"
+    },
+    "register": {
+      "title": "Create your account",
+      "name": "Full name",
+      "email": "Email address",
+      "password": "Password",
+      "submit": "Create account",
+      "loading": "Creating account...",
+      "error": "Registration failed",
+      "login": "Or sign in to your account"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome, {{name}}!",
+    "profile": "Profile Information",
+    "name": "Name",
+    "email": "Email",
+    "orderHistory": "Order History",
+    "noOrders": "No orders yet"
+  },
+  "checkout": {
+    "guestConfirm": "Would you like to proceed as a guest? Click Cancel to login instead.",
+    "guestProcessing": "Processing guest checkout...",
+    "processing": "Processing checkout..."
+  }
+}
