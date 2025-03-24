@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ShoppingCart, Leaf, LogOut, Menu, User } from 'lucide-react';
 import { logout } from '../store/slices/authSlice';

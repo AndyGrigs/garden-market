@@ -1,10 +1,10 @@
 {
   "header": {
-    "title": "Садовые Деревья",
+    "title": "Kovacii trees",
     "cart": "Корзина",
     "logout": "Выйти",
     "login": "Войти",
-    "dashboard": "Личный Кабинет"
+    "dashboard": "Кабинет"
   },
   "collection": {
     "title": "Наша Коллекция",
