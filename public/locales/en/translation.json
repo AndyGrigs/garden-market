@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "Kovacii Trees",
+    "title": "Garden Trees",
     "cart": "Cart",
     "logout": "Logout",
     "login": "Login",
@@ -28,7 +28,11 @@
     "title": "Shopping Cart",
     "total": "Total",
     "checkout": "Checkout",
-    "empty": "Your cart is empty"
+    "empty": "Your cart is empty",
+    "notifications": {
+      "added": "{{name}} added to cart",
+      "addedAnother": "Added another {{name}} to cart"
+    }
   },
   "contact": {
     "title": "Contact Us",

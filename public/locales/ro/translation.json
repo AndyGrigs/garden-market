@@ -4,7 +4,7 @@
     "cart": "Coș",
     "logout": "Deconectare",
     "login": "Conectare",
-    "dashboard": "Control"
+    "dashboard": "Panou de Control"
   },
   "collection": {
     "title": "Colecția Noastră",
@@ -28,7 +28,11 @@
     "title": "Coș de cumpărături",
     "total": "Total",
     "checkout": "Finalizare comandă",
-    "empty": "Coșul tău este gol"
+    "empty": "Coșul tău este gol",
+    "notifications": {
+      "added": "{{name}} a fost adăugat în coș",
+      "addedAnother": "Încă un {{name}} a fost adăugat în coș"
+    }
   },
   "contact": {
     "title": "Contactează-ne",

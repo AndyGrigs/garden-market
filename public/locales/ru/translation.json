@@ -1,10 +1,10 @@
 {
   "header": {
-    "title": "Kovacii trees",
+    "title": "KOvacii Деревья",
     "cart": "Корзина",
     "logout": "Выйти",
     "login": "Войти",
-    "dashboard": "Кабинет"
+    "dashboard": "Личный Кабинет"
   },
   "collection": {
     "title": "Наша Коллекция",
@@ -28,7 +28,11 @@
     "title": "Корзина",
     "total": "Итого",
     "checkout": "Оформить заказ",
-    "empty": "Ваша корзина пуста"
+    "empty": "Ваша корзина пуста",
+    "notifications": {
+      "added": "{{name}} добавлен в корзину",
+      "addedAnother": "Еще один {{name}} добавлен в корзину"
+    }
   },
   "contact": {
     "title": "Свяжитесь с нами",
