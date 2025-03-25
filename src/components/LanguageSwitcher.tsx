@@ -1,23 +1,32 @@
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
+  const languages = [
+    { code: 'en', label: 'English' },
+    { code: 'ro', label: 'Română' },
+    { code: 'ru', label: 'Русский' }
+  ];
+
   return (
-    <div className="flex space-x-2">
-      {['en', 'ro', 'ru'].map((lang) => (
-        <button
-          key={lang}
-          onClick={() => i18n.changeLanguage(lang)}
-          className={`px-3 py-1 rounded-md text-sm font-medium ${
-            i18n.language === lang
-              ? 'bg-emerald-700 text-white'
-              : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-          }`}
-        >
-          {lang.toUpperCase()}
-        </button>
-      ))}
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <select
+        value={i18n.language}
+        onChange={(e) => i18n.changeLanguage(e.target.value)}
+        className="bg-emerald-700 text-white px-3 py-2 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent cursor-pointer hover:bg-emerald-600 transition-colors"
+      >
+        {languages.map((lang) => (
+          <option key={lang.code} value={lang.code}>
+            {lang.label}
+          </option>
+        ))}
+      </select>
+    </motion.div>
   );
 }
