@@ -5,9 +5,9 @@ export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
   const languages = [
-    { code: 'en', label: 'English' },
-    { code: 'ro', label: 'Română' },
-    { code: 'ru', label: 'Русский' }
+    { code: 'en', label: 'En' },
+    { code: 'ro', label: 'Ro' },
+    { code: 'ru', label: 'Ру' }
   ];
 
   return (
