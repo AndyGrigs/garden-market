@@ -19,7 +19,7 @@ export default function LanguageSwitcher() {
       <select
         value={i18n.language}
         onChange={(e) => i18n.changeLanguage(e.target.value)}
-        className="bg-emerald-700 text-white px-3 py-2 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent cursor-pointer hover:bg-emerald-600 transition-colors"
+        className="bg-emerald-600 text-white py-2 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent cursor-pointer hover:bg-emerald-700 transition-colors"
       >
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>

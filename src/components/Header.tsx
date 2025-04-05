@@ -33,7 +33,7 @@ export default function Header({ cartItemsCount, onCartClick, isAuthenticated }:
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4">
-            <LanguageSwitcher />
+            
             <button
               onClick={onCartClick}
               className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
@@ -67,6 +67,7 @@ export default function Header({ cartItemsCount, onCartClick, isAuthenticated }:
                 <span className="font-semibold">{t('header.login')}</span>
               </Link>
             )}
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile Menu Button */}
