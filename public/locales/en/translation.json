@@ -75,5 +75,16 @@
     "guestConfirm": "Would you like to proceed as a guest? Click Cancel to login instead.",
     "guestProcessing": "Processing guest checkout...",
     "processing": "Processing checkout..."
+  },
+  "footer": {
+    "description": "Your trusted source for beautiful garden trees and expert advice.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "about": "About Us",
+    "contact": "Contact",
+    "terms": "Terms & Conditions",
+    "address": "Follow Us",
+    "followUs": "Follw Us",
+    "rights": "All rights reserved."
   }
 }

@@ -75,5 +75,16 @@
     "guestConfirm": "Doriți să continuați ca vizitator? Apăsați Anulare pentru a vă conecta.",
     "guestProcessing": "Se procesează comanda ca vizitator...",
     "processing": "Se procesează comanda..."
+  },
+  "footer": {
+    "description": "Sursa dumneavoastră de încredere pentru copaci frumoși de grădină și sfaturi de specialitate.",
+    "quickLinks": "Link-uri rapide",
+    "home": "Acasă",
+    "about": "Despre noi",
+    "contact": "Contact",
+    "terms": "Termeni și condiții",
+    "address": "Urmăriți-ne",
+    "followUs": "Urmăriți-ne",
+    "rights": "Toate drepturile rezervate."
   }
 }
