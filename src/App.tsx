@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import Header from './components/Header';
@@ -6,9 +6,6 @@ import Footer from './components/Footer';
 import TreeCard from './components/TreeCard';
 import Cart from './components/Cart';
 import ContactForm from './components/ContactForm';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
 import { useGetTreesQuery } from './store/api/treesApi';
 import { CartItem, ContactForm as IContactForm, Tree } from './types';
 import { useState } from 'react';
@@ -17,8 +14,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import { AnimatePresence, motion } from 'framer-motion';
+import AuthLoader from './components/AuthLoader';
 
-function MainContent() {
+export function MainContent() {
   const { data: trees, isLoading, error } = useGetTreesQuery();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -28,7 +26,7 @@ function MainContent() {
     visible: false
   });
   const { t } = useTranslation();
-  const isAuthenticated = useSelector((state: RootState) => !!state.auth.token);
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const location = useLocation();
 
   const showNotification = (message: string) => {
@@ -207,26 +205,13 @@ function MainContent() {
   );
 }
 
-function AnimatedRoutes() {
-  const location = useLocation();
-  
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<MainContent />} />
-      </Routes>
-    </AnimatePresence>
-  );
-}
+
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
-        <AnimatedRoutes />
+        <AuthLoader/>
       </Router>
     </Provider>
   );

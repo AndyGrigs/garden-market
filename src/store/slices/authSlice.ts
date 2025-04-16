@@ -8,34 +8,31 @@ interface User {
 
 interface AuthState {
   user: User | null;
-  token: string | null;
+  isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
   user: null,
-  token: localStorage.getItem('token'),
+  isAuthenticated: false,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (
+    setUser: (
       state,
-      action: PayloadAction<{ user: User; token: string }>
+      action: PayloadAction<User>
     ) => {
-      const { user, token } = action.payload;
-      state.user = user;
-      state.token = token;
-      localStorage.setItem('token', token);
+      state.user = action.payload;
+      state.isAuthenticated = true;
     },
     logout: (state) => {
       state.user = null;
-      state.token = null;
-      localStorage.removeItem('token');
+      state.isAuthenticated = false;
     },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setUser, logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -51,7 +51,7 @@ const Footer = () => {
             <li>{t('footer.address')}</li>
             <li>
               <a href="tel:+1234567890" className="hover:text-white transition-colors">
-                +1 (234) 567-890
+              +373 79 748 131
               </a>
             </li>
             <li>
@@ -74,7 +74,7 @@ const Footer = () => {
               <Youtube className="h-6 w-6" />
             </a>
             <a
-              href="https://twitter.com"
+              href="https://www.youtube.com/@paulowniamoldova2675"
               target="_blank"
               rel="noopener noreferrer"
               className="text-emerald-200 hover:text-white transition-colors"
