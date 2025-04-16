@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import TreeCard from './components/TreeCard';
 import Cart from './components/Cart';
 import ContactForm from './components/ContactForm';
@@ -147,6 +148,10 @@ function MainContent() {
       >
         <MessageCircle className="h-6 w-6" />
       </motion.button>
+
+      <Footer />
+
+ 
 
       <AnimatePresence>
         {notification.visible && (

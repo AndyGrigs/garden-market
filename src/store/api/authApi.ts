@@ -33,7 +33,7 @@ interface ApiResponse {
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4444' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4444', credentials: 'include', }),
   endpoints: (builder) => ({
 
     login: builder.mutation<AuthResponse, LoginRequest>({
