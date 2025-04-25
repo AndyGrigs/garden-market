@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../store/api/authApi";
-import { setCredentials } from "../store/slices/authSlice";
+import { setUser} from "../store/slices/authSlice";
 import { LogIn } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
@@ -26,7 +26,7 @@ export default function Login() {
 
     try {
       const result = await login({ email, password }).unwrap();
-      dispatch(setCredentials(result));
+      dispatch(setUser(result.user));
       navigate(from, { replace: true });
     } catch (err) {
       setError(t("auth.login.error"));

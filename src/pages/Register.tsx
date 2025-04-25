@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useRegisterMutation } from "../store/api/authApi";
-import { setCredentials } from "../store/slices/authSlice";
+import { setUser } from "../store/slices/authSlice";
 import { UserPlus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
@@ -24,7 +24,7 @@ export default function Register() {
 
     try {
       const result = await register({ fullName, email, password }).unwrap();
-      dispatch(setCredentials(result));
+      dispatch(setUser(result.user));
       navigate("/", { replace: true });
     } catch (err) {
       setError(t("auth.register.error"));

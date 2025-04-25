@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ShoppingCart, Leaf, LogOut, Menu, User } from 'lucide-react';
-import { logout } from '../store/slices/authSlice';
+import { logout as logoutAction } from '../store/slices/authSlice';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import MobileMenu from './MobileMenu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../store/api/authApi';
 
 interface HeaderProps {
   cartItemsCount: number;
@@ -17,9 +18,17 @@ export default function Header({ cartItemsCount, onCartClick, isAuthenticated }:
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout =  async () => {
+    try {
+      await logout().unwrap();
+      dispatch(logoutAction())
+      navigate('/')
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (

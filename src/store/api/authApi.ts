@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface User {
   id: string;
@@ -32,17 +32,21 @@ interface ApiResponse {
 // const MOCK_TOKEN = 'mock-jwt-token';
 
 export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4444', credentials: 'include', }),
+  reducerPath: "authApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:4444",
+    credentials: "include",
+  }),
   endpoints: (builder) => ({
-
     login: builder.mutation<AuthResponse, LoginRequest>({
       query: (credentials) => ({
-        url: '/auth/login',       
-        method: 'POST',
-        body: credentials,    
+        url: "/auth/login",
+        method: "POST",
+        body: credentials,
       }),
-      transformResponse: (response: ApiResponse): AuthResponse | Promise<AuthResponse> =>  {
+      transformResponse: (
+        response: ApiResponse
+      ): AuthResponse | Promise<AuthResponse> => {
         return {
           user: {
             id: response._id,
@@ -53,15 +57,15 @@ export const authApi = createApi({
         };
       },
     }),
-    
+
     register: builder.mutation<AuthResponse, RegisterRequest>({
       query: (data) => ({
-        url: '/auth/register',
-        method: 'POST',
+        url: "/auth/register",
+        method: "POST",
         body: {
           email: data.email,
           fullName: data.fullName,
-          password: data.password
+          password: data.password,
         },
       }),
       transformResponse: (response: ApiResponse) => {
@@ -71,17 +75,24 @@ export const authApi = createApi({
             email: response.email,
             fullName: response.fullName,
           },
-          token: response.token
-        }
-      }
+          token: response.token,
+        };
+      },
     }),
     getCurrentUser: builder.query<User, void>({
       query: () => ({
-        url: '/auth/me',
-        method: 'GET',
+        url: "/auth/me",
+        method: "GET",
       }),
-    })
+    }),
+    logout: builder.mutation<{ message: string }, void>({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery } = authApi;
+export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery, useLogoutMutation } =
+  authApi;
