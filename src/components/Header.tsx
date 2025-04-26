@@ -1,12 +1,13 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { ShoppingCart, Leaf, LogOut, Menu, User } from 'lucide-react';
-import { logout as logoutAction } from '../store/slices/authSlice';
-import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from './LanguageSwitcher';
-import MobileMenu from './MobileMenu';
-import { Link, useNavigate } from 'react-router-dom';
-import { useLogoutMutation } from '../store/api/authApi';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ShoppingCart, Leaf, LogOut, Menu, User, Shield } from "lucide-react";
+import { logout as logoutAction } from "../store/slices/authSlice";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
+import MobileMenu from "./MobileMenu";
+import { Link, useNavigate } from "react-router-dom";
+import { useLogoutMutation } from "../store/api/authApi";
+import { RootState } from "../store/store";
 
 interface HeaderProps {
   cartItemsCount: number;
@@ -14,20 +15,25 @@ interface HeaderProps {
   isAuthenticated: boolean;
 }
 
-export default function Header({ cartItemsCount, onCartClick, isAuthenticated }: HeaderProps) {
+export default function Header({
+  cartItemsCount,
+  onCartClick,
+  isAuthenticated,
+}: HeaderProps) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.auth.user);
 
-  const handleLogout =  async () => {
+  const handleLogout = async () => {
     try {
       await logout().unwrap();
-      dispatch(logoutAction())
-      navigate('/')
+      dispatch(logoutAction());
+      navigate("/");
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
@@ -37,12 +43,11 @@ export default function Header({ cartItemsCount, onCartClick, isAuthenticated }:
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             <Leaf className="h-8 w-8" />
-            <h1 className="text-2xl font-bold">{t('header.title')}</h1>
+            <h1 className="text-2xl font-bold">{t("header.title")}</h1>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4">
-            
             <button
               onClick={onCartClick}
               className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
@@ -57,14 +62,24 @@ export default function Header({ cartItemsCount, onCartClick, isAuthenticated }:
                   className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
                 >
                   <User className="h-6 w-6" />
-                  <span className="font-semibold">{t('header.dashboard')}</span>
+                  <span className="font-semibold">{t("header.dashboard")}</span>
                 </Link>
+
+                {user?.role === "admin" && (
+                  <Link
+                    to="/admin"
+                    className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
+                  >
+                    <Shield  className="h-6 w-6"/>
+                    <span className="font-semibold">{t('admin-panel')}</span>
+                  </Link>
+                )}
                 <button
                   onClick={handleLogout}
                   className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
                 >
                   <LogOut className="h-6 w-6" />
-                  <span className="font-semibold">{t('header.logout')}</span>
+                  <span className="font-semibold">{t("header.logout")}</span>
                 </button>
               </>
             ) : (
@@ -73,7 +88,7 @@ export default function Header({ cartItemsCount, onCartClick, isAuthenticated }:
                 className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
               >
                 <User className="h-6 w-6" />
-                <span className="font-semibold">{t('header.login')}</span>
+                <span className="font-semibold">{t("header.login")}</span>
               </Link>
             )}
             <LanguageSwitcher />

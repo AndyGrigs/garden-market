@@ -4,7 +4,8 @@
     "cart": "Корзина",
     "logout": "Выйти",
     "login": "Войти",
-    "dashboard": "Личный Кабинет"
+    "dashboard": "Личный Кабинет",
+    "admin-panel": "Админ"
   },
   "collection": {
     "title": "Наша Коллекция",

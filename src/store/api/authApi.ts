@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { User } from "../../types/IUser";
 
-interface User {
-  id: string;
-  email: string;
-  fullName: string;
-}
+// interface User {
+//   id: string;
+//   email: string;
+//   fullName: string;
+// }
 
 interface AuthResponse {
   user: User;
@@ -24,6 +25,7 @@ interface ApiResponse {
   _id: string;
   email: string;
   fullName: string;
+  role: "user" | "admin";
   token: string;
 }
 
@@ -52,6 +54,8 @@ export const authApi = createApi({
             id: response._id,
             email: response.email,
             fullName: response.fullName,
+            role: response.role
+
           },
           token: response.token,
         };
@@ -74,6 +78,8 @@ export const authApi = createApi({
             id: response._id,
             email: response.email,
             fullName: response.fullName,
+            role: response.role
+
           },
           token: response.token,
         };

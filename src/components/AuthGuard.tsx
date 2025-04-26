@@ -7,7 +7,7 @@ interface AuthGuardProps {
 }
 
 export default function AuthGuard({ children }: AuthGuardProps) {
-  const token = useSelector((state: RootState) => state.auth.token);
+  const token = useSelector((state: RootState) => state.auth);
   const location = useLocation();
 
   if (!token) {

@@ -4,7 +4,9 @@
     "cart": "Coș",
     "logout": "Deconectare",
     "login": "Conectare",
-    "dashboard": "Panou de Control"
+    "dashboard": "Panou de Control",
+    "admin-panel": "Admin"
+
   },
   "collection": {
     "title": "Colecția Noastră",

@@ -4,7 +4,8 @@
     "cart": "Cart",
     "logout": "Logout",
     "login": "Login",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "admin-panel": "Admin"
   },
   "collection": {
     "title": "Our Collection",
@@ -87,4 +88,5 @@
     "followUs": "Follw Us",
     "rights": "All rights reserved."
   }
+ 
 }
