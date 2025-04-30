@@ -1,22 +1,47 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Tree } from '../../types';
-import { trees as mockTrees } from '../../data/trees';
-
-const MOCK_DELAY = 800;
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Tree } from "../../types";
 
 export const treesApi = createApi({
-  reducerPath: 'treesApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/' }),
-  tagTypes: ['Trees'],
+  reducerPath: "treesApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:4444",
+    credentials: "include",
+  }),
+  tagTypes: ["Trees"],
   endpoints: (builder) => ({
     getTrees: builder.query<Tree[], void>({
-      queryFn: async () => {
-        await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY));
-        return { data: mockTrees };
-      },
-      providesTags: ['Trees'],
+      query: () => "/trees",
+      providesTags: ["Trees"],
+    }),
+    createTree: builder.mutation<Tree, Partial<Tree>>({
+      query: (treeData) => ({
+        url: "/trees",
+        method: "POST",
+        body: treeData,
+      }),
+      invalidatesTags: ["Trees"],
+    }),
+    updateTree: builder.mutation<Tree, { id: string; data: Partial<Tree> }>({
+      query: ({ id, ...treeData }) => ({
+        url: `/trees/${id}`,
+        method: "PATCH",
+        body: treeData,
+      }),
+      invalidatesTags: ["Trees"],
+    }),
+    deleteTree: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/trees/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Trees"],
     }),
   }),
 });
 
-export const { useGetTreesQuery } = treesApi;
+export const {
+  useGetTreesQuery,
+  useCreateTreeMutation,
+  useUpdateTreeMutation,
+  useDeleteTreeMutation,
+} = treesApi;

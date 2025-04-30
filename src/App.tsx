@@ -84,6 +84,7 @@ export function MainContent() {
     alert(t('contact.success'));
     setIsContactOpen(false);
   };
+  console.log(trees)
 
   return (
     <div className="min-h-screen bg-gray-50">
