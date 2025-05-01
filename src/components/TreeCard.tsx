@@ -1,6 +1,5 @@
-import React from 'react';
 import { Tree } from '../types';
-import { Ruler, Droplets } from 'lucide-react';
+// import { Ruler, Droplets } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface TreeCardProps {

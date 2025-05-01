@@ -6,14 +6,22 @@ import {
   useUpdateCategoryMutation,
 } from "../../store/api/categoryApi";
 
-const AdminCategories = () => {
+interface AdminCategoriesProps {
+  selectedCategoryId: string;
+  onSelectCategory: (id: string) => void;
+}
+
+const AdminCategories = ({
+  selectedCategoryId,
+  onSelectCategory,
+}: AdminCategoriesProps) => {
   const { data: categories, isLoading } = useGetCategoriesQuery();
   const [createCategory] = useCreateCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
   const [updateCategory] = useUpdateCategoryMutation();
 
-  const [newCategory, setNewCategory] = useState('');
-  const [newName, setNewName] = useState('');
+  const [newCategory, setNewCategory] = useState("");
+  const [newName, setNewName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string>("");
 
   const handleCreate = async () => {
@@ -41,7 +49,7 @@ const AdminCategories = () => {
     if (!newName?.trim()) return;
     try {
       await updateCategory({ id, name: newName }).unwrap();
-      setEditingCategoryId('');
+      setEditingCategoryId("");
       setNewName("");
     } catch {
       alert("Не вдалося оновити категорію");
@@ -67,61 +75,73 @@ const AdminCategories = () => {
       </div>
 
       {isLoading ? (
-  <p>Завантаження...</p>
-) : (
-  <ul className="space-y-2">
-    {categories?.map((cat) => (
-      <li key={cat._id} className="flex justify-between items-center border-b pb-2">
-        {editingCategoryId === cat._id ? (
-          <>
-            <input
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              className="border px-2 py-1 rounded mr-2"
-            />
-            <button
-              onClick={() => handleUpdate(cat._id)}
-              className="bg-emerald-500 text-white rounded px-3 py-1 mr-2"
+        <p>Завантаження...</p>
+      ) : (
+        <ul className="space-y-2">
+          {categories?.map((cat) => (
+            <li
+              key={cat._id}
+              className="flex justify-between items-center border-b pb-2"
             >
-              Зберегти
-            </button>
-            <button
-              onClick={() => {
-                setEditingCategoryId('');
-                setNewName('');
-              }}
-              className="bg-gray-400 text-white rounded px-3 py-1"
-            >
-              Скасувати
-            </button>
-          </>
-        ) : (
-          <>
-            <span>{cat.name}</span>
-            <div className="flex gap-2">
-              <button
-                onClick={() => {
-                  setEditingCategoryId(cat._id);
-                  setNewName(cat.name);
-                }}
-                className="text-blue-500 text-sm hover:underline"
-              >
-                Редагувати
-              </button>
-              <button
-                onClick={() => handleDelete(cat._id)}
-                className="text-red-500 text-sm hover:underline"
-              >
-                Видалити
-              </button>
-            </div>
-          </>
-        )}
-      </li>
-    ))}
-  </ul>
-)}
+              {editingCategoryId === cat._id ? (
+                <>
+                  <input
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className="border px-2 py-1 rounded mr-2"
+                  />
+                  <button
+                    onClick={() => handleUpdate(cat._id)}
+                    className="bg-emerald-500 text-white rounded px-3 py-1 mr-2"
+                  >
+                    Зберегти
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEditingCategoryId("");
+                      setNewName("");
+                    }}
+                    className="bg-gray-400 text-white rounded px-3 py-1"
+                  >
+                    Скасувати
+                  </button>
+                </>
+              ) : (
+                <>
+                  <span
+                    onClick={() => onSelectCategory(cat._id)}
+                    className={`cursor-pointer ${
+                      selectedCategoryId === cat._id
+                        ? "text-emerald-600 font-bold"
+                        : "text-gray-800"
+                    }`}
+                  >
+                    {cat.name}
+                  </span>
 
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        setEditingCategoryId(cat._id);
+                        setNewName(cat.name);
+                      }}
+                      className="text-blue-500 text-sm hover:underline"
+                    >
+                      Редагувати
+                    </button>
+                    <button
+                      onClick={() => handleDelete(cat._id)}
+                      className="text-red-500 text-sm hover:underline"
+                    >
+                      Видалити
+                    </button>
+                  </div>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

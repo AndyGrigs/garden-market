@@ -1,11 +1,14 @@
 export interface Tree {
-  id: string;
-  name: string;
-  description: string;
+  _id: string;
+  title: string;
+  description?: string;
   price: number;
-  image: string;
-  height: string;
-  maintenance: 'Low' | 'Medium' | 'High';
+  imageUrl?: string;
+  stock: number;
+  category?: {
+    _id: string;
+    name: string;
+  } | null;
 }
 
 export interface CartItem extends Tree {

@@ -38,11 +38,11 @@ export function MainContent() {
 
   const addToCart = (tree: Tree) => {
     setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.id === tree.id);
+      const existingItem = prev.find((item) => item._id === tree._id);
       if (existingItem) {
-        showNotification(t('cart.notifications.addedAnother', { name: tree.name }));
+        showNotification(t('cart.notifications.addedAnother', { name: tree.title}));
         return prev.map((item) =>
-          item.id === tree.id
+          item._id === tree._id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -56,13 +56,13 @@ export function MainContent() {
     if (quantity < 1) return;
     setCartItems((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, quantity } : item
+        item._id === id ? { ...item, quantity } : item
       )
     );
   };
 
   const removeItem = (id: string) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    setCartItems((prev) => prev.filter((item) => item._id !== id));
   };
 
   const handleCheckout = () => {
@@ -84,7 +84,6 @@ export function MainContent() {
     alert(t('contact.success'));
     setIsContactOpen(false);
   };
-  console.log(trees)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -122,7 +121,7 @@ export function MainContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {trees?.map((tree, index) => (
                 <motion.div
-                  key={tree.id}
+                  key={tree._id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
