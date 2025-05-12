@@ -6,6 +6,9 @@ import {
   useUpdateCategoryMutation,
 } from "../../store/api/categoryApi";
 
+import { Category, TranslatedString } from "../../types/ICategories";
+import { useLanguage } from "../../hooks/useLanguage";
+
 interface AdminCategoriesProps {
   selectedCategoryId: string;
   onSelectCategory: (id: string) => void;
@@ -23,12 +26,15 @@ const AdminCategories = ({
   const [newCategory, setNewCategory] = useState("");
   const [newName, setNewName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string>("");
+  const lang = useLanguage();
 
   const handleCreate = async () => {
-    if (!newCategory?.trim()) return; // якщо поле порожнє, нічого не робимо
+    if (!newCategory?.trim()) return;
     try {
-      await createCategory({ name: newCategory }).unwrap(); // створити категорію
-      setNewCategory(""); // очистити поле
+      await createCategory({
+        name: JSON.stringify({ [lang]: newCategory }),
+      }).unwrap();
+      setNewCategory("");
     } catch (err) {
       console.log(err);
       alert("Помилка створення категорії");
@@ -48,7 +54,10 @@ const AdminCategories = ({
   const handleUpdate = async (id: string) => {
     if (!newName?.trim()) return;
     try {
-      await updateCategory({ id, name: newName }).unwrap();
+      await updateCategory({
+        id,
+        name: JSON.stringify({ [lang]: newName }),
+      }).unwrap();
       setEditingCategoryId("");
       setNewName("");
     } catch {
@@ -56,7 +65,12 @@ const AdminCategories = ({
     }
   };
 
+  const getCategoryName = (name: TranslatedString): string => {
+    return name[lang as keyof typeof name] || name.ru || "Unnamed";
+  };
+
   return (
+    <>
     <div className="p-6 bg-white shadow">
       <h2 className="text-2xl font-bold mb-4">Категорії</h2>
       <div className="flex mb-4">
@@ -78,7 +92,7 @@ const AdminCategories = ({
         <p>Завантаження...</p>
       ) : (
         <ul className="space-y-2">
-          {categories?.map((cat) => (
+          {categories?.map((cat: Category) => (
             <li
               key={cat._id}
               className="flex justify-between items-center border-b pb-2"
@@ -116,14 +130,14 @@ const AdminCategories = ({
                         : "text-gray-800"
                     }`}
                   >
-                    {cat.name}
+                    {getCategoryName(cat.name)}
                   </span>
 
                   <div className="flex gap-2">
                     <button
                       onClick={() => {
                         setEditingCategoryId(cat._id);
-                        setNewName(cat.name);
+                        setNewName(getCategoryName(cat.name));
                       }}
                       className="text-blue-500 text-sm hover:underline"
                     >
@@ -142,7 +156,10 @@ const AdminCategories = ({
           ))}
         </ul>
       )}
+     
     </div>
+    
+    </>
   );
 };
 

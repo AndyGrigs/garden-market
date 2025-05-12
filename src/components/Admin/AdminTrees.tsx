@@ -8,8 +8,7 @@ interface AdminTreesProps {
 
 
 const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
-    const { data: trees, isLoading } = useGetTreesQuery();
-console.log(trees)
+    const { data: trees } = useGetTreesQuery();
     const filteredTrees = trees?.filter(tree => tree.category?._id === selectedCategoryId);
 
 
