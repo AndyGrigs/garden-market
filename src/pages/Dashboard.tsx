@@ -7,7 +7,7 @@ import Header from "../components/Header";
 export default function Dashboard() {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.auth.user);
-  const isAuthenticated = useSelector((state: RootState) => !!state.auth.token);
+  const isAuthenticated = useSelector((state: RootState) => !!state.auth);
 
   if (!user) {
     return <Navigate to="/login" />;

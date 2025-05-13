@@ -8,6 +8,7 @@ import {
 
 import { Category, TranslatedString } from "../../types/ICategories";
 import { useLanguage } from "../../hooks/useLanguage";
+import CategoryModal from "./CategoryModal";
 
 interface AdminCategoriesProps {
   selectedCategoryId: string;
@@ -22,10 +23,13 @@ const AdminCategories = ({
   const [createCategory] = useCreateCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
   const [updateCategory] = useUpdateCategoryMutation();
+  
 
   const [newCategory, setNewCategory] = useState("");
   const [newName, setNewName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string>("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const lang = useLanguage();
 
   const handleCreate = async () => {
@@ -73,20 +77,27 @@ const AdminCategories = ({
     <>
     <div className="p-6 bg-white shadow">
       <h2 className="text-2xl font-bold mb-4">Категорії</h2>
-      <div className="flex mb-4">
+      <button
+              onClick={() => setIsModalOpen(pr=>!pr)}
+              className="bg-emerald-600 mr-auto text-white px-4 py-2 rounded mb-4"
+            >
+              ➕ Додати категорію
+            </button>
+      <div className="mb-4">
         <input
           value={newCategory}
           onChange={(e) => setNewCategory(e.target.value)}
           placeholder="Нова категорія"
-          className="border px-3 py-2 rounded mr-2 w-full"
+          className="border px-2 py-1 rounded mr-2"
         />
         <button
           onClick={handleCreate}
-          className="bg-emerald-600 text-white px-4 py-2 rounded"
+          className="bg-emerald-500 text-white rounded px-3 py-1"
         >
-          Створити
+          Додати
         </button>
       </div>
+     
 
       {isLoading ? (
         <p>Завантаження...</p>
@@ -156,7 +167,19 @@ const AdminCategories = ({
           ))}
         </ul>
       )}
-     
+     <CategoryModal
+        onClose={() => setIsModalOpen(false)}
+        isOpen={isModalOpen}
+        onSubmit={async (data) => {
+          try {
+            await createCategory({ name: JSON.stringify(data) }).unwrap();
+            setIsModalOpen(false);
+          } catch (err) {
+            console.error(err);
+            alert("Помилка створення категорії");
+          }
+        }}
+      />
     </div>
     
     </>
