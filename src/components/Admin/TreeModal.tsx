@@ -1,18 +1,30 @@
 import { useEffect, useState } from "react";
-import { Tree } from "../../types";
 import { useGetCategoriesQuery } from "../../store/api/categoryApi";
-import { Category } from "../../types/ICategories";
 import { Loader2 } from "lucide-react";
+import { Category, TranslatedString } from "../../types/ICategories";
+import { TreeFormData } from "../../types";
+
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (treeData: Partial<Tree>) => void;
-  initialData?: Partial<Tree>;
+  onSubmit: (treeData: TreeFormData) => void;
+  initialData?: TreeFormData;
 }
 
+
 const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
-  const [formData, setFormData] = useState<Partial<Tree>>(initialData || {});
+  const [form, setForm] = useState<TreeFormData>(
+    initialData || {
+      title: { ru: "", ro: "", en: "" },
+      description: { ru: "", ro: "", en: "" },
+      price: 0,
+      stock: 0,
+      category: "",
+      imageUrl: ""
+    }
+  );
+
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -20,38 +32,58 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
 
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
-      if (initialData.imageUrl) setPreviewUrl(initialData.imageUrl);
+      setForm({
+        title: initialData.title || { ru: "", ro: "", en: "" },
+        description: initialData.description || { ru: "", ro: "", en: "" },
+        price: initialData.price || 0,
+        stock: initialData.stock || 0,
+        category: initialData.category || "",
+        imageUrl: initialData.imageUrl || ""
+      });
+
+      if (initialData.imageUrl) {
+        setPreviewUrl(`http://localhost:4444${initialData.imageUrl}`);
+      }
     }
   }, [initialData]);
 
-  const handleChange = (
-    field: keyof Tree,
-    value: string | number | Category | undefined
+  const handleLangChange = (
+    field: keyof Pick<TreeFormData, "title" | "description">,
+    lang: keyof TranslatedString,
+    value: string
   ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setForm((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        [lang]: value
+      }
+    }));
+  };
+
+  const handleChange = <T extends keyof TreeFormData>(field: T, value: TreeFormData[T]) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const form = new FormData();
-    form.append("image", file);
+    const formData = new FormData();
+    formData.append("image", file);
     setUploading(true);
 
     try {
       const res = await fetch("http://localhost:4444/upload", {
         method: "POST",
-        body: form,
+        body: formData,
       });
       const data = await res.json();
 
-      setFormData((prev) => ({ ...prev, imageUrl: data.imageUrl }));
+      setForm((prev) => ({ ...prev, imageUrl: data.imageUrl }));
       setPreviewUrl(`http://localhost:4444${data.imageUrl}`);
     } catch (err) {
-      alert("Не удалось загрузить фото");
-
+      alert("Не вдалося завантажити фото");
       console.error(err);
     } finally {
       setUploading(false);
@@ -59,19 +91,28 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
   };
 
   const handleSubmit = () => {
-    if (!formData.title || !formData.price || !formData.category) {
-      alert("Заполните обязательные поля: Название, Цена, Категория");
+    if (!(form.title.ru ?? "").trim() || !form.price || !form.category) {
+      alert("Назва (ru), ціна і категорія обов’язкові");
       return;
     }
-    onSubmit(formData);
-    setFormData({});
+
+    onSubmit(form);
+    setForm({
+      title: { ru: "", ro: "", en: "" },
+      description: { ru: "", ro: "", en: "" },
+      price: 0,
+      stock: 0,
+      category: "",
+      imageUrl: ""
+    });
     setPreviewUrl(null);
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50  z-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -80,58 +121,62 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         className="bg-white w-full p-6 rounded-lg shadow-lg max-w-md"
       >
         <h3 className="text-xl mb-6 text-center font-semibold">
-          Добавить товар
+          Додати товар
         </h3>
 
-        <input
-          className="border border-green-600 px-3 py-2 mb-4 rounded w-full "
-          placeholder="Название"
-          value={formData.title || ""}
-          onChange={(e) => handleChange("title", e.target.value)}
-        />
+        <h4 className="font-semibold mb-1">Назва</h4>
+        {["ru", "ro", "en"].map((lang) => (
+          <input
+            key={lang}
+            className="border border-green-600 px-3 py-2 mb-2 rounded w-full"
+            placeholder={`Назва (${lang.toUpperCase()})`}
+            value={form.title[lang as keyof TranslatedString]}
+            onChange={(e) => handleLangChange("title", lang as keyof TranslatedString, e.target.value)}
+          />
+        ))}
 
-        <input
-          className="border border-green-600 px-3 py-2 mb-4 rounded w-full "
-          placeholder="Описание"
-          value={formData.description || ""}
-          onChange={(e) => handleChange("description", e.target.value)}
-        />
+        <h4 className="font-semibold mb-1 mt-2">Опис</h4>
+        {["ru", "ro", "en"].map((lang) => (
+          <textarea
+            key={lang}
+            className="border border-green-600 px-3 py-2 mb-2 rounded w-full"
+            placeholder={`Опис (${lang.toUpperCase()})`}
+            value={form.description[lang as keyof TranslatedString]}
+            onChange={(e) => handleLangChange("description", lang as keyof TranslatedString, e.target.value)}
+          />
+        ))}
 
-  
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Фото товара</label>
-          <input type="file" accept="image/*" onChange={handleFileUpload}/>
-          {uploading && <Loader2/>}
+          <label className="block text-sm font-medium mb-1">Фото товару</label>
+          <input type="file" accept="image/*" onChange={handleFileUpload} />
+          {uploading && <Loader2 className="animate-spin" />}
           {previewUrl && (
-            <img 
-            src={previewUrl}
-            alt="preview" 
-            className="mt-2 h-40 object-cover rounded"
+            <img
+              src={previewUrl}
+              alt="preview"
+              className="mt-2 h-40 object-cover rounded"
             />
           )}
         </div>
-        <input
-          type="number"
-          className="border border-green-600 px-3 py-2 mb-4 rounded w-full "
-          placeholder="Цена"
-          value={formData.price || ""}
-          onChange={(e) => handleChange("price", e.target.value)}
-        />
+
         <input
           type="number"
           className="border px-3 py-2 rounded w-full mb-2"
-          placeholder="Количество на складе"
-          value={formData.stock || ""}
+          placeholder="Ціна"
+          value={form.price}
+          onChange={(e) => handleChange("price", Number(e.target.value))}
+        />
+        <input
+          type="number"
+          className="border px-3 py-2 rounded w-full mb-4"
+          placeholder="На складі"
+          value={form.stock}
           onChange={(e) => handleChange("stock", Number(e.target.value))}
         />
 
         <select
           className="border px-3 py-2 rounded w-full mb-4"
-          value={
-            typeof formData.category === "string"
-              ? formData.category
-              : formData.category?._id || ""
-          }
+          value={form.category}
           onChange={(e) => handleChange("category", e.target.value)}
         >
           <option value="">Оберіть категорію</option>
@@ -144,16 +189,17 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
 
         <div className="flex justify-end gap-2">
           <button
+            type="button"
             onClick={onClose}
             className="bg-gray-400 text-white px-4 py-2 rounded"
           >
-            Отменить
+            Скасувати
           </button>
           <button
-            onClick={handleSubmit}
+            type="submit"
             className="bg-emerald-600 text-white px-4 py-2 rounded"
           >
-            Сохранить
+            Зберегти
           </button>
         </div>
       </form>

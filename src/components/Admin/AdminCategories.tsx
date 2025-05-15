@@ -25,32 +25,21 @@ const AdminCategories = ({
   const [updateCategory] = useUpdateCategoryMutation();
   
 
-  const [newCategory, setNewCategory] = useState("");
   const [newName, setNewName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
   
   const lang = useLanguage();
 
-  const handleCreate = async () => {
-    if (!newCategory?.trim()) return;
-    try {
-      await createCategory({
-        name: JSON.stringify({ [lang]: newCategory }),
-      }).unwrap();
-      setNewCategory("");
-    } catch (err) {
-      console.log(err);
-      alert("Помилка створення категорії");
-    }
-  };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm("Ви впевнені, що хочете видалити цю категорію?")) {
+  
+    if (window.confirm("Вы уверены, что хотите удалить эту категорию?")) {
       try {
         await deleteCategory(id).unwrap();
       } catch {
-        alert("Не вдалося видалити");
+        alert("Не удалось удалить");
+    
       }
     }
   };
@@ -60,7 +49,7 @@ const AdminCategories = ({
     try {
       await updateCategory({
         id,
-        name: JSON.stringify({ [lang]: newName }),
+        name: { [lang]: newName },
       }).unwrap();
       setEditingCategoryId("");
       setNewName("");
@@ -83,20 +72,7 @@ const AdminCategories = ({
             >
               ➕ Додати категорію
             </button>
-      <div className="mb-4">
-        <input
-          value={newCategory}
-          onChange={(e) => setNewCategory(e.target.value)}
-          placeholder="Нова категорія"
-          className="border px-2 py-1 rounded mr-2"
-        />
-        <button
-          onClick={handleCreate}
-          className="bg-emerald-500 text-white rounded px-3 py-1"
-        >
-          Додати
-        </button>
-      </div>
+      
      
 
       {isLoading ? (
@@ -172,7 +148,7 @@ const AdminCategories = ({
         isOpen={isModalOpen}
         onSubmit={async (data) => {
           try {
-            await createCategory({ name: JSON.stringify(data) }).unwrap();
+            await createCategory({ name: data }).unwrap();
             setIsModalOpen(false);
           } catch (err) {
             console.error(err);

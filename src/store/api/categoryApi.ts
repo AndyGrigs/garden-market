@@ -1,6 +1,6 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Category } from '../../types/ICategories'; 
+import { Category, TranslatedString } from '../../types/ICategories'; 
 
 
 export const categoryApi = createApi({
@@ -16,7 +16,7 @@ export const categoryApi = createApi({
       providesTags: ['Category']
     }),
         
-    createCategory: builder.mutation<Category, { name: string }>({
+    createCategory: builder.mutation<Category, { name: TranslatedString }>({
       query: (body) => ({
         url: '/categories',
         method: 'POST',
@@ -25,7 +25,7 @@ export const categoryApi = createApi({
       invalidatesTags: ['Category']
     }),
 
-    updateCategory: builder.mutation<Category, { id: string; name: string }>({
+    updateCategory: builder.mutation<Category, { id: string; name: TranslatedString }>({
         query: ({ id, name }) => ({
           url: `/categories/${id}`,
           method: 'PATCH',
