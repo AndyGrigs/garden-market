@@ -67,19 +67,20 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
         <div key={tree._id}>{tree.title["ru"]}</div>
       ))}
 
-      <TreeModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleAddTree}
-        initialData={{
-          title: { ru: "", ro: "", en: "" },
-          description: { ru: "", ro: "", en: "" },
-          price: 0,
-          stock: 0,
-          imageUrl: "",
-          category: selectedCategoryId,
-        }}
-      />
+     <TreeModal
+  isOpen={isModalOpen}
+  onClose={() => setIsModalOpen(false)}
+  onSubmit={handleAddTree}
+  initialData={{
+    title: { ru: "", ro: "", en: "" },
+    description: { ru: "", ro: "", en: "" },
+    price: 0,
+    stock: 0,
+    imageUrl: "",
+    category: selectedCategoryId
+  }}
+/>
+
     </div>
   );
 };
