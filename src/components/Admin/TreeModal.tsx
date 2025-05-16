@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useGetCategoriesQuery } from "../../store/api/categoryApi";
 import { Loader2 } from "lucide-react";
 import { Category, TranslatedString } from "../../types/ICategories";
-import { TreeFormData } from "../../types";
-
+import { TreeFormData } from "../../types/ITree";
 
 interface Props {
   isOpen: boolean;
@@ -11,7 +10,6 @@ interface Props {
   onSubmit: (treeData: TreeFormData) => void;
   initialData?: TreeFormData;
 }
-
 
 const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
   const [form, setForm] = useState<TreeFormData>(
@@ -21,7 +19,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
       price: 0,
       stock: 0,
       category: "",
-      imageUrl: ""
+      imageUrl: "",
     }
   );
 
@@ -30,15 +28,40 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
 
   const { data: categories } = useGetCategoriesQuery();
 
+  // useEffect(() => {
+  //   if (initialData) {
+  //     setForm({
+  //       title: initialData.title || { ru: "", ro: "", en: "" },
+  //       description: initialData.description || { ru: "", ro: "", en: "" },
+  //       price: initialData.price || 0,
+  //       stock: initialData.stock || 0,
+  //       category: initialData.category || "",
+  //       imageUrl: initialData.imageUrl || ""
+  //     });
+
+  //     if (initialData.imageUrl) {
+  //       setPreviewUrl(`http://localhost:4444${initialData.imageUrl}`);
+  //     }
+  //   }
+  // }, [initialData]);
+
   useEffect(() => {
     if (initialData) {
       setForm({
-        title: initialData.title || { ru: "", ro: "", en: "" },
-        description: initialData.description || { ru: "", ro: "", en: "" },
-        price: initialData.price || 0,
-        stock: initialData.stock || 0,
-        category: initialData.category || "",
-        imageUrl: initialData.imageUrl || ""
+        title: {
+          ru: initialData.title?.ru ?? "",
+          ro: initialData.title?.ro ?? "",
+          en: initialData.title?.en ?? "",
+        },
+        description: {
+          ru: initialData.description?.ru ?? "",
+          ro: initialData.description?.ro ?? "",
+          en: initialData.description?.en ?? "",
+        },
+        price: initialData.price ?? 0,
+        stock: initialData.stock ?? 0,
+        category: initialData.category ?? "",
+        imageUrl: initialData.imageUrl ?? "",
       });
 
       if (initialData.imageUrl) {
@@ -56,12 +79,15 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
       ...prev,
       [field]: {
         ...prev[field],
-        [lang]: value
-      }
+        [lang]: value,
+      },
     }));
   };
 
-  const handleChange = <T extends keyof TreeFormData>(field: T, value: TreeFormData[T]) => {
+  const handleChange = <T extends keyof TreeFormData>(
+    field: T,
+    value: TreeFormData[T]
+  ) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -91,8 +117,8 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
   };
 
   const handleSubmit = () => {
-    if (!(form.title.ru ?? "").trim() || !form.price || !form.category) {
-      alert("Назва (ru), ціна і категорія обов’язкові");
+    if (!(form.title.ru ?? "").trim() || form.price <= 0 || !form.category) {
+      alert("Название (ru), цена и категория обязательны");
       return;
     }
 
@@ -103,7 +129,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
       price: 0,
       stock: 0,
       category: "",
-      imageUrl: ""
+      imageUrl: "",
     });
     setPreviewUrl(null);
     onClose();
@@ -120,9 +146,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         }}
         className="bg-white w-full p-6 rounded-lg shadow-lg max-w-md"
       >
-        <h3 className="text-xl mb-6 text-center font-semibold">
-          Додати товар
-        </h3>
+        <h3 className="text-xl mb-6 text-center font-semibold">Додати товар</h3>
 
         <h4 className="font-semibold mb-1">Назва</h4>
         {["ru", "ro", "en"].map((lang) => (
@@ -131,7 +155,13 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
             className="border border-green-600 px-3 py-2 mb-2 rounded w-full"
             placeholder={`Назва (${lang.toUpperCase()})`}
             value={form.title[lang as keyof TranslatedString]}
-            onChange={(e) => handleLangChange("title", lang as keyof TranslatedString, e.target.value)}
+            onChange={(e) =>
+              handleLangChange(
+                "title",
+                lang as keyof TranslatedString,
+                e.target.value
+              )
+            }
           />
         ))}
 
@@ -142,7 +172,13 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
             className="border border-green-600 px-3 py-2 mb-2 rounded w-full"
             placeholder={`Опис (${lang.toUpperCase()})`}
             value={form.description[lang as keyof TranslatedString]}
-            onChange={(e) => handleLangChange("description", lang as keyof TranslatedString, e.target.value)}
+            onChange={(e) =>
+              handleLangChange(
+                "description",
+                lang as keyof TranslatedString,
+                e.target.value
+              )
+            }
           />
         ))}
 

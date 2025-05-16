@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Tree } from "../../types";
+import { Tree } from "../../types/ITree";
+
 
 export const treesApi = createApi({
   reducerPath: "treesApi",

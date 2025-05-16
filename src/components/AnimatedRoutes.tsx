@@ -5,7 +5,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import { MainContent } from "../App";
 import AdminGuard from "./AdminGuard";
-import AdminPanel from "./AdminPanel";
+import AdminPanel from "../pages/AdminPanel";
 
 function AnimatedRoutes() {
   const location = useLocation();
