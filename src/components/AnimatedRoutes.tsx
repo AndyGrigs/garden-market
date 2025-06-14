@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import { MainContent } from "../App";
 import AdminGuard from "./AdminGuard";
 import AdminPanel from "../pages/AdminPanel";
+import VerifyEmail from "../pages/VerifyEmail";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -25,6 +26,7 @@ function AnimatedRoutes() {
             </AdminGuard>
           }
         />
+         <Route path="/verify-email" element={<VerifyEmail />} /> 
       </Routes>
     </AnimatePresence>
   );

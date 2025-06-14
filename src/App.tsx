@@ -86,7 +86,7 @@ export function MainContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className=" flex flex-col min-h-screen bg-gray-50">
       <Header
         cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
         onCartClick={() => setIsCartOpen(true)}
@@ -99,7 +99,7 @@ export function MainContent() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
-        className="container mx-auto px-4 py-8"
+        className="container flex-1 mx-auto px-4 py-8"
       >
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-gray-800 mb-8">
