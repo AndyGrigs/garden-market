@@ -3,6 +3,7 @@ import { useGetCategoriesQuery } from "../../store/api/categoryApi";
 import { Loader2 } from "lucide-react";
 import { Category, TranslatedString } from "../../types/ICategories";
 import { TreeFormData } from "../../types/ITree";
+import { useDeleteImageMutation, useUploadImageMutation } from '../../store/api/uploadApi';
 
 interface Props {
   isOpen: boolean;
@@ -23,27 +24,14 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     }
   );
 
+  // ...existing code...
+const [imageUrl, setImageUrl] = useState<string | null>(null);
+// ...existing code...
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [uploading, setUploading] = useState(false);
+ const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
+  const [deleteImage] = useDeleteImageMutation();
 
   const { data: categories } = useGetCategoriesQuery();
-
-  // useEffect(() => {
-  //   if (initialData) {
-  //     setForm({
-  //       title: initialData.title || { ru: "", ro: "", en: "" },
-  //       description: initialData.description || { ru: "", ro: "", en: "" },
-  //       price: initialData.price || 0,
-  //       stock: initialData.stock || 0,
-  //       category: initialData.category || "",
-  //       imageUrl: initialData.imageUrl || ""
-  //     });
-
-  //     if (initialData.imageUrl) {
-  //       setPreviewUrl(`http://localhost:4444${initialData.imageUrl}`);
-  //     }
-  //   }
-  // }, [initialData]);
 
   useEffect(() => {
     if (initialData) {
@@ -91,30 +79,31 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  if (event.target.files && event.target.files[0]) {
     const formData = new FormData();
-    formData.append("image", file);
-    setUploading(true);
-
+    formData.append('image', event.target.files[0]);
     try {
-      const res = await fetch("http://localhost:4444/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-
-      setForm((prev) => ({ ...prev, imageUrl: data.imageUrl }));
-      setPreviewUrl(`http://localhost:4444${data.imageUrl}`);
-    } catch (err) {
-      alert("Не вдалося завантажити фото");
-      console.error(err);
-    } finally {
-      setUploading(false);
+      const response = await uploadImage(formData).unwrap();
+    setImageUrl(response.imageUrl);
+    } catch (error) {
+       alert("Не вдалося завантажити фото");
+      console.error(error);
     }
-  };
+  }
+};
+
+// ...existing code...
+const handleDeleteImage = async (filename: string) => {
+  try {
+    await deleteImage(filename).unwrap();
+    // Remove image from your state or form
+  } catch (error) {
+    console.error("Помилка видалення зображення", error);
+      alert("Не вдалося видалити зображення");
+  }
+};
+
 
   const handleSubmit = () => {
     if (!(form.title.ru ?? "").trim() || form.price <= 0 || !form.category) {
@@ -184,7 +173,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
 
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1">Фото товару</label>
-          <input type="file" accept="image/*" onChange={handleFileUpload} />
+          <input type="file" accept="image/*" onChange={handleFileChange} />
           {uploading && <Loader2 className="animate-spin" />}
           {previewUrl && (
             <img
@@ -193,6 +182,14 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
               className="mt-2 h-40 object-cover rounded"
             />
           )}
+          {imageUrl && (
+          <div>
+            <img src={imageUrl} alt="Uploaded" style={{ maxWidth: 200 }} />
+            <button onClick={() => handleDeleteImage(imageUrl.split('/').pop()!)} >
+              Delete Image
+            </button>
+          </div>
+        )}
         </div>
 
         <input
