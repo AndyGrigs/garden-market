@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Leaf, Youtube } from 'lucide-react'
+import { Facebook, Leaf, Youtube } from 'lucide-react'
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -30,6 +30,7 @@ const Footer = () => {
             <li>
               <Link to="/about" className="text-emerald-200 hover:text-white transition-colors">
                 {t('footer.about')}
+
               </Link>
             </li>
             <li>
@@ -65,21 +66,21 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">{t('footer.followUs')}</h3>
           <div className="flex space-x-4">
-            <a
+            {/* <a
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-emerald-200 hover:text-white transition-colors"
             >
-              <Youtube className="h-6 w-6" />
-            </a>
+              <Instagram className="h-6 w-6" />
+            </a> */}
             <a
               href="https://www.youtube.com/@paulowniamoldova2675"
               target="_blank"
               rel="noopener noreferrer"
               className="text-emerald-200 hover:text-white transition-colors"
             >
-              <Instagram className="h-6 w-6" />
+              <Youtube className="h-6 w-6" />
             </a>
             <a
               href="https://facebook.com"
