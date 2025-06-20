@@ -30,7 +30,7 @@ export function MainContent() {
   const lang = useLanguage();
   
   // Get cart context from Layout
-  const { cartItems, setCartItems } = useOutletContext<OutletContext>();
+  const { setCartItems } = useOutletContext<OutletContext>();
 
   const showNotification = (message: string) => {
     setNotification({ message, visible: true });

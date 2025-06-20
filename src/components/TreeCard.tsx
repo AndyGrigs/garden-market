@@ -3,6 +3,7 @@
 import { useTranslation } from 'react-i18next';
 import { Tree } from '../types/ITree';
 import { BASE_URL } from '../config';
+import { useTreeDescription, useTreeTitle } from '../hooks/useTreeTranslations';
 
 interface TreeCardProps {
   tree: Tree;
@@ -11,6 +12,9 @@ interface TreeCardProps {
 
 export default function TreeCard({ tree, onAddToCart }: TreeCardProps) {
   const { t } = useTranslation();
+  const getTreeTitle = useTreeTitle();
+  const getTreeDescription = useTreeDescription();
+
 
   return (
 
@@ -25,8 +29,12 @@ export default function TreeCard({ tree, onAddToCart }: TreeCardProps) {
       className="w-full h-48 object-cover"
     />
     <div className="p-4">
-      {/* <h3 className="text-xl font-bold text-gray-800 mb-2">{tree.title}</h3> */}
-      {/* <p className="text-gray-600 mb-4">{tree.description}</p> */}
+       <h3 className="text-xl font-bold text-gray-800 mb-2">
+          {getTreeTitle(tree.title)}
+        </h3>
+        <p className="text-gray-600 mb-4 text-sm line-clamp-2">
+          {getTreeDescription(tree.description)}
+        </p>
 
       <div className="flex items-center justify-between">
         <span className="text-xl font-bold text-emerald-600">
