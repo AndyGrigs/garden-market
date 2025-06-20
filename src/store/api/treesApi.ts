@@ -20,11 +20,11 @@ export const treesApi = createApi({
       }),
       invalidatesTags: ["Trees"],
     }),
-    updateTree: builder.mutation<Tree, { id: string; data: Partial<Tree> }>({
-      query: ({ id, ...treeData }) => ({
+    updateTree: builder.mutation<Tree, { id: string; body: Partial<Tree> }>({
+      query: ({ id, body }) => ({
         url: `/trees/${id}`,
         method: "PATCH",
-        body: treeData,
+        body
       }),
       invalidatesTags: ["Trees"],
     }),

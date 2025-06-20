@@ -19,7 +19,10 @@ interface AdminTreesProps {
 const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTreeData, setEditTreeData] = useState<TreeFormData | null>(null);
-  const { data: trees, isLoading } = useGetTreesQuery();
+  // const { data: trees, isLoading } = useGetTreesQuery();
+  const { data: trees, isLoading } = useGetTreesQuery(undefined, {
+  refetchOnMountOrArgChange: true,
+});
   const [createTree] = useCreateTreeMutation();
   const [updateTree] = useUpdateTreeMutation();
   const [deleteTree] = useDeleteTreeMutation();
@@ -76,7 +79,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
       if (editTreeData && editTreeData._id) {
         await updateTree({
           id: editTreeData._id,
-          data: {
+          body: {
             ...treeData,
             category: {
               name: { ru: "", ro: "", en: "" },
