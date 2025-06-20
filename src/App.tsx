@@ -1,34 +1,36 @@
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, useOutletContext } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import Header from './components/Header';
 import Footer from './components/Footer';
 import TreeCard from './components/TreeCard';
-import Cart from './components/Cart';
 import ContactForm from './components/ContactForm';
 import { useGetTreesQuery } from './store/api/treesApi';
 import { CartItem, ContactForm as IContactForm } from './types';
 import { useState } from 'react';
 import { MessageCircle, X, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from './store/store';
 import { AnimatePresence, motion } from 'framer-motion';
 import AuthLoader from './components/AuthLoader';
 import { Tree } from './types/ITree';
+import { useLanguage } from './hooks/useLanguage';
+
+interface OutletContext {
+  cartItems: CartItem[];
+  setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
+}
 
 export function MainContent() {
   const { data: trees, isLoading, error } = useGetTreesQuery();
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [notification, setNotification] = useState<{ message: string; visible: boolean }>({
     message: '',
     visible: false
   });
   const { t } = useTranslation();
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const location = useLocation();
+  const lang = useLanguage();
+  
+  // Get cart context from Layout
+  const { cartItems, setCartItems } = useOutletContext<OutletContext>();
 
   const showNotification = (message: string) => {
     setNotification({ message, visible: true });
@@ -37,47 +39,24 @@ export function MainContent() {
     }, 3000);
   };
 
+  const getTreeTitle = (title: { [key: string]: string }) => {
+    return title?.[lang] || title?.en || title?.ru || "Unknown";
+  };
+
   const addToCart = (tree: Tree) => {
     setCartItems((prev) => {
       const existingItem = prev.find((item) => item._id === tree._id);
       if (existingItem) {
-        showNotification(t('cart.notifications.addedAnother', { name: tree.title}));
+        showNotification(t('cart.notifications.addedAnother', { name: getTreeTitle(tree.title) }));
         return prev.map((item) =>
           item._id === tree._id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
-      showNotification(t('cart.notifications.added', { name: tree.title }));
+      showNotification(t('cart.notifications.added', { name: getTreeTitle(tree.title) }));
       return [...prev, { ...tree, quantity: 1 }];
     });
-  };
-
-  const updateQuantity = (id: string, quantity: number) => {
-    if (quantity < 1) return;
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item._id === id ? { ...item, quantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems((prev) => prev.filter((item) => item._id !== id));
-  };
-
-  const handleCheckout = () => {
-    if (!isAuthenticated) {
-      if (window.confirm(t('checkout.guestConfirm'))) {
-        // Proceed with guest checkout
-        alert(t('checkout.guestProcessing'));
-      } else {
-        // Redirect to login
-        window.location.href = '/login';
-      }
-    } else {
-      alert(t('checkout.processing'));
-    }
   };
 
   const handleContactSubmit = (form: IContactForm) => {
@@ -87,15 +66,8 @@ export function MainContent() {
   };
 
   return (
-    <div className=" flex flex-col min-h-screen bg-gray-50">
-      <Header
-        cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-        onCartClick={() => setIsCartOpen(true)}
-        isAuthenticated={isAuthenticated}
-      />
-
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <motion.main
-        key={location.pathname}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
@@ -150,8 +122,6 @@ export function MainContent() {
 
       <Footer />
 
- 
-
       <AnimatePresence>
         {notification.visible && (
           <motion.div
@@ -192,21 +162,9 @@ export function MainContent() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {isCartOpen && (
-        <Cart
-          items={cartItems}
-          onClose={() => setIsCartOpen(false)}
-          onUpdateQuantity={updateQuantity}
-          onRemoveItem={removeItem}
-          onCheckout={handleCheckout}
-        />
-      )}
     </div>
   );
 }
-
-
 
 function App() {
   return (

@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { RootState } from "../store/store";
 import { useTranslation } from "react-i18next";
-import Header from "../components/Header";
+import { Home } from "lucide-react";
 
 export default function Dashboard() {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.auth.user);
-  const isAuthenticated = useSelector((state: RootState) => !!state.auth);
 
   if (!user) {
     return <Navigate to="/login" />;
@@ -15,17 +14,20 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header
-        cartItemsCount={0}
-        onCartClick={() => {}}
-        isAuthenticated={isAuthenticated}
-      />
-
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            {t("dashboard.welcome", { name: user.fullName })}
-          </h1>
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900">
+              {t("dashboard.welcome", { name: user.fullName })}
+            </h1>
+            <Link
+              to="/"
+              className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+            >
+              <Home className="h-5 w-5" />
+              <span>Main Page</span>
+            </Link>
+          </div>
 
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-xl font-semibold mb-4">

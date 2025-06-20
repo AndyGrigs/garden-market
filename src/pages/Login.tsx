@@ -3,7 +3,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../store/api/authApi";
 import { setUser} from "../store/slices/authSlice";
-import { LogIn } from "lucide-react";
+import { LogIn, Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 
@@ -59,6 +59,17 @@ export default function Login() {
               </Link>
             </p>
           </div>
+          
+          <div className="flex justify-center">
+            <Link
+              to="/"
+              className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+            >
+              <Home className="h-5 w-5" />
+              <span>Main Page</span>
+            </Link>
+          </div>
+
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">

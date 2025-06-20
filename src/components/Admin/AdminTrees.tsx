@@ -1,35 +1,49 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useCreateTreeMutation,
   useGetTreesQuery,
   useUpdateTreeMutation,
   useDeleteTreeMutation,
 } from "../../store/api/treesApi";
+import { setTrees, addTree, updateTree as updateTreeAction, removeTree, setEditingTree } from "../../store/slices/treeSlice";
 import TreeModal from "./TreeModal";
 import { Tree, TreeFormData } from "../../types/ITree";
 import { useDeleteImageMutation } from '../../store/api/uploadApi';
 import { useLanguage } from '../../hooks/useLanguage';
 import { t } from 'i18next';
 import { BASE_URL } from '../../config';
+import { RootState } from "../../store/store";
 
 interface AdminTreesProps {
   selectedCategoryId: string;
 }
 
 const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editTreeData, setEditTreeData] = useState<TreeFormData | null>(null);
-  // const { data: trees, isLoading } = useGetTreesQuery();
-  const { data: trees, isLoading } = useGetTreesQuery(undefined, {
-  refetchOnMountOrArgChange: true,
-});
+  
+  // Get data from Redux store
+  const { trees, editingTree } = useSelector((state: RootState) => state.tree);
+  
+  // API hooks
+  const { data: apiTrees, isLoading } = useGetTreesQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   const [createTree] = useCreateTreeMutation();
   const [updateTree] = useUpdateTreeMutation();
   const [deleteTree] = useDeleteTreeMutation();
   const [deleteImage] = useDeleteImageMutation();
   const lang = useLanguage();
 
-  const filteredTrees = trees?.filter(
+  // Update Redux store when API data changes
+  useEffect(() => {
+    if (apiTrees) {
+      dispatch(setTrees(apiTrees));
+    }
+  }, [apiTrees, dispatch]);
+
+  const filteredTrees = trees.filter(
     (tree) => tree.category?._id === selectedCategoryId
   );
 
@@ -45,6 +59,8 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           await deleteImage(normalizedUrl).unwrap();
         }
         await deleteTree(id).unwrap();
+        // Update Redux store
+        dispatch(removeTree(id));
       } catch (error) {
         alert('Ошибка удаления товара...');
         console.error(error);
@@ -57,17 +73,10 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
   };
 
   const handleEditTree = (tree: Tree) => {
-      setEditTreeData({
-        title: tree.title,
-        description: tree.description,
-        price: tree.price,
-        stock: tree.stock,
-        imageUrl: tree.imageUrl,
-        category: tree.category?._id || "",
-        _id: tree._id,
-      });
-      setIsModalOpen(true);
-    };
+    // Set editing tree in Redux store
+    dispatch(setEditingTree(tree));
+    setIsModalOpen(true);
+  };
 
   const handleSubmitTree = async (treeData: TreeFormData) => {
     if (!isTreeDataValid(treeData)) {
@@ -76,18 +85,24 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
     }
 
     try {
-      if (editTreeData && editTreeData._id) {
-        await updateTree({
-          id: editTreeData._id,
+      if (editingTree && editingTree._id) {
+        // Update existing tree
+        const updatedTree = await updateTree({
+          id: editingTree._id,
           body: {
             ...treeData,
             category: {
+              _id: treeData.category,
               name: { ru: "", ro: "", en: "" },
             },
           },
         }).unwrap();
+        
+        // Update Redux store
+        dispatch(updateTreeAction(updatedTree));
       } else {
-        await createTree({
+        // Create new tree
+        const newTree = await createTree({
           title: treeData.title,
           description: treeData.description,
           price: treeData.price,
@@ -98,13 +113,22 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
             name: { ru: "", ro: "", en: "" },
           },
         }).unwrap();
+        
+        // Update Redux store
+        dispatch(addTree(newTree));
       }
+      
       setIsModalOpen(false);
-      setEditTreeData(null);
+      dispatch(setEditingTree(null));
     } catch (err) {
       alert("Ошибка создания/редактирования товара");
       console.error(err);
     }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    dispatch(setEditingTree(null));
   };
 
   if (!selectedCategoryId) {
@@ -134,7 +158,6 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredTrees?.map((tree) => (
             <div key={tree._id} className="border rounded-lg p-4 shadow-sm">
-
               <img
                 src={tree.imageUrl ? `${BASE_URL}${tree.imageUrl}` : "/placeholder.jpg"}
                 alt={getTreeTitle(tree.title)}
@@ -151,7 +174,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
               </p>
               <button
                 onClick={() => handleEditTree(tree)}
-                className="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 mr-2"
+                className="bg-yellow-500 mb-3 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 mr-2"
               >
                 Редактировать
               </button>
@@ -168,12 +191,17 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
 
       <TreeModal
         isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setEditTreeData(null);
-        }}
+        onClose={handleCloseModal}
         onSubmit={handleSubmitTree}
-        initialData={editTreeData || {
+        initialData={editingTree ? {
+          title: editingTree.title,
+          description: editingTree.description,
+          price: editingTree.price,
+          stock: editingTree.stock,
+          imageUrl: editingTree.imageUrl,
+          category: editingTree.category?._id || selectedCategoryId,
+          _id: editingTree._id,
+        } : {
           title: { ru: "", ro: "", en: "" },
           description: { ru: "", ro: "", en: "" },
           price: 0,

@@ -8,6 +8,7 @@ import AdminGuard from "./AdminGuard";
 import AdminPanel from "../pages/AdminPanel";
 import VerifyEmail from "../pages/VerifyEmail";
 import ContactPage from '../pages/ContactPage';
+import Layout from "./Layout";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -15,22 +16,23 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<MainContent />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route
+            path="admin"
+            element={
+              <AdminGuard>
+                <AdminPanel />
+              </AdminGuard>
+            }
+          />
+        </Route>
         <Route path="/verify-email" element={<VerifyEmail />} /> 
-        <Route path="/contact" element={<ContactPage />} /> 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<MainContent />} />
-        <Route
-          path="/admin"
-          element={
-            <AdminGuard>
-              <AdminPanel />
-            </AdminGuard>
-          }
-        />
       </Routes>
-        
     </AnimatePresence>
   );
 }
