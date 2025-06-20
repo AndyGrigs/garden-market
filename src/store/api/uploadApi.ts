@@ -15,7 +15,7 @@ export const uploadApi = createApi({
     }),
     deleteImage: builder.mutation<{ message: string }, string>({
       query: (filename) => ({
-        url: `/upload/${filename}`,
+        url: `/delete-image/${filename}`,
         method: "DELETE",
       }),
     }),

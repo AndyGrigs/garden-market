@@ -7,7 +7,7 @@ import TreeCard from './components/TreeCard';
 import Cart from './components/Cart';
 import ContactForm from './components/ContactForm';
 import { useGetTreesQuery } from './store/api/treesApi';
-import { CartItem, ContactForm as IContactForm, Tree } from './types';
+import { CartItem, ContactForm as IContactForm } from './types';
 import { useState } from 'react';
 import { MessageCircle, X, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import { AnimatePresence, motion } from 'framer-motion';
 import AuthLoader from './components/AuthLoader';
+import { Tree } from './types/ITree';
 
 export function MainContent() {
   const { data: trees, isLoading, error } = useGetTreesQuery();
@@ -47,7 +48,7 @@ export function MainContent() {
             : item
         );
       }
-      showNotification(t('cart.notifications.added', { name: tree.name }));
+      showNotification(t('cart.notifications.added', { name: tree.title }));
       return [...prev, { ...tree, quantity: 1 }];
     });
   };

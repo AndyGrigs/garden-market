@@ -23,7 +23,7 @@ export interface Tree {
   imageUrl?: string;
   stock: number;
   category?: {
-    _id: string;
+    _id?: string;
     name: TranslatedString;
   } | null;
 }

@@ -5,6 +5,7 @@ import { Category, TranslatedString } from "../../types/ICategories";
 import { TreeFormData } from "../../types/ITree";
 import { useDeleteImageMutation, useUploadImageMutation } from '../../store/api/uploadApi';
 import { t } from 'i18next';
+import { BASE_URL } from '../../config';
 
 interface Props {
   isOpen: boolean;
@@ -25,8 +26,6 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     }
   );
 
-// const [imageUrl, setImageUrl] = useState<string | null>(null);
-//   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
  const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
   const [deleteImage] = useDeleteImageMutation();
@@ -51,10 +50,6 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         category: initialData.category ?? "",
         imageUrl: initialData.imageUrl ?? "",
       });
-
-      // if (initialData.imageUrl) {
-      //  setPreviewUrl(`https://garden-market-backend.onrender.com${initialData.imageUrl}`);
-      // }
     }
   }, [initialData]);
 
@@ -85,7 +80,7 @@ const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     formData.append('image', event.target.files[0]);
     try {
       const response = await uploadImage(formData).unwrap();
-    // setImageUrl(response.imageUrl);
+   
     setForm(prev=>({...prev, imageUrl: response.imageUrl}))
     } catch (error) {
        alert("Не вдалося завантажити фото");
@@ -191,7 +186,7 @@ const handleDeleteImage = async () => {
           {form.imageUrl &&(
             <div className='mt-2'>
               <img
-                src={`https://garden-market-backend.onrender.com${form.imageUrl}`}
+                src={`${BASE_URL}${form.imageUrl}`}
                 alt='preview'
                 className='h-40 object-cover rounded'
               />
