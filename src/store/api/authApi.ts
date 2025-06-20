@@ -1,11 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { User } from "../../types/IUser";
+import { appBaseQuery } from './appBaseQuery';
 
-// interface User {
-//   id: string;
-//   email: string;
-//   fullName: string;
-// }
 
 interface AuthResponse {
   user: User;
@@ -29,16 +25,9 @@ interface ApiResponse {
   token: string;
 }
 
-// For demo purposes, we'll use a mock API
-// const MOCK_DELAY = 1000;
-// const MOCK_TOKEN = 'mock-jwt-token';
-
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4444",
-    credentials: "include",
-  }),
+  baseQuery: appBaseQuery,
   endpoints: (builder) => ({
     login: builder.mutation<AuthResponse, LoginRequest>({
       query: (credentials) => ({

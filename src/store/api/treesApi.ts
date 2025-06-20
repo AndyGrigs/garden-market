@@ -1,13 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { Tree } from "../../types/ITree";
+import { appBaseQuery } from './appBaseQuery';
 
 
 export const treesApi = createApi({
   reducerPath: "treesApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4444",
-    credentials: "include",
-  }),
+  baseQuery: appBaseQuery,
   tagTypes: ["Trees"],
   endpoints: (builder) => ({
     getTrees: builder.query<Tree[], void>({

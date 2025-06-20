@@ -4,6 +4,7 @@ import { Loader2 } from "lucide-react";
 import { Category, TranslatedString } from "../../types/ICategories";
 import { TreeFormData } from "../../types/ITree";
 import { useDeleteImageMutation, useUploadImageMutation } from '../../store/api/uploadApi';
+import { t } from 'i18next';
 
 interface Props {
   isOpen: boolean;
@@ -24,10 +25,9 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     }
   );
 
-  // ...existing code...
-const [imageUrl, setImageUrl] = useState<string | null>(null);
-// ...existing code...
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+// const [imageUrl, setImageUrl] = useState<string | null>(null);
+//   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
  const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
   const [deleteImage] = useDeleteImageMutation();
 
@@ -52,9 +52,9 @@ const [imageUrl, setImageUrl] = useState<string | null>(null);
         imageUrl: initialData.imageUrl ?? "",
       });
 
-      if (initialData.imageUrl) {
-        setPreviewUrl(`http://localhost:4444${initialData.imageUrl}`);
-      }
+      // if (initialData.imageUrl) {
+      //  setPreviewUrl(`https://garden-market-backend.onrender.com${initialData.imageUrl}`);
+      // }
     }
   }, [initialData]);
 
@@ -85,7 +85,8 @@ const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     formData.append('image', event.target.files[0]);
     try {
       const response = await uploadImage(formData).unwrap();
-    setImageUrl(response.imageUrl);
+    // setImageUrl(response.imageUrl);
+    setForm(prev=>({...prev, imageUrl: response.imageUrl}))
     } catch (error) {
        alert("Не вдалося завантажити фото");
       console.error(error);
@@ -93,15 +94,22 @@ const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
   }
 };
 
-// ...existing code...
-const handleDeleteImage = async (filename: string) => {
+
+const handleDeleteImage = async () => {
+  if(form.imageUrl){
   try {
-    await deleteImage(filename).unwrap();
-    // Remove image from your state or form
-  } catch (error) {
-    console.error("Помилка видалення зображення", error);
-      alert("Не вдалося видалити зображення");
+      const filename = form.imageUrl.split('/').pop();
+      if(filename){
+        await deleteImage(filename).unwrap();
+        setForm(prev=>({...prev, imageUrl: ""}))
+
+      }
+    } catch (error) {
+      console.error("Помилка видалення зображення", error);
+        alert("Не вдалося видалити зображення");
+    }
   }
+  
 };
 
 
@@ -120,7 +128,7 @@ const handleDeleteImage = async (filename: string) => {
       category: "",
       imageUrl: "",
     });
-    setPreviewUrl(null);
+    // setPreviewUrl(null);
     onClose();
   };
 
@@ -133,7 +141,7 @@ const handleDeleteImage = async (filename: string) => {
           e.preventDefault();
           handleSubmit();
         }}
-        className="bg-white w-full p-6 rounded-lg shadow-lg max-w-md"
+        className="bg-white w-full p-6 rounded-lg shadow-lg max-w-md max-h-[90vh] overflow-y-auto"
       >
         <h3 className="text-xl mb-6 text-center font-semibold">Додати товар</h3>
 
@@ -174,22 +182,22 @@ const handleDeleteImage = async (filename: string) => {
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1">Фото товару</label>
           <input type="file" accept="image/*" onChange={handleFileChange} />
-          {uploading && <Loader2 className="animate-spin" />}
-          {previewUrl && (
-            <img
-              src={previewUrl}
-              alt="preview"
-              className="mt-2 h-40 object-cover rounded"
-            />
+          {uploading && (
+            <div className='flex items-center mb-2'>
+              <Loader2 className="animate-spin" />
+            </div>
           )}
-          {imageUrl && (
-          <div>
-            <img src={imageUrl} alt="Uploaded" style={{ maxWidth: 200 }} />
-            <button onClick={() => handleDeleteImage(imageUrl.split('/').pop()!)} >
-              Delete Image
-            </button>
-          </div>
-        )}
+
+          {form.imageUrl &&(
+            <div className='mt-2'>
+              <img
+                src={`https://garden-market-backend.onrender.com${form.imageUrl}`}
+                alt='preview'
+                className='h-40 object-cover rounded'
+              />
+              <button type='button' onClick={handleDeleteImage} className='mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm'>{t('dashboard.deleteImage')}</button>
+            </div>
+          )}
         </div>
 
         <input

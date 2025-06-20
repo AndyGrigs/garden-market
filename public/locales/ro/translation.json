@@ -71,7 +71,9 @@
     "name": "Nume",
     "email": "Email",
     "orderHistory": "Istoric Comenzi",
-    "noOrders": "Nu există comenzi încă"
+    "noOrders": "Nu există comenzi încă",
+    "deleteImage": "Șterge",
+    "deleteTreeConfirm": "Doriți să ștergeți această imagine?"
   },
   "checkout": {
     "guestConfirm": "Doriți să continuați ca vizitator? Apăsați Anulare pentru a vă conecta.",

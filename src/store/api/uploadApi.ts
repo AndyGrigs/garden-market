@@ -1,9 +1,10 @@
 // store/api/uploadApi.ts
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { appBaseQuery } from './appBaseQuery';
 
 export const uploadApi = createApi({
   reducerPath: "uploadApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4444" }),
+  baseQuery: appBaseQuery,
   endpoints: (builder) => ({
     uploadImage: builder.mutation<{ imageUrl: string }, FormData>({
       query: (formData) => ({
