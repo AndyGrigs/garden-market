@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ShoppingCart, Leaf, LogOut, Menu, User, Shield } from "lucide-react";
+import {Leaf, LogOut, Menu, User } from "lucide-react";
 import { logout as logoutAction } from "../store/slices/authSlice";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -8,6 +8,8 @@ import MobileMenu from "./MobileMenu";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../store/api/authApi";
 import { RootState } from "../store/store";
+import AdminLink from '../shared/headerFolder/AdminLinks';
+import { UserLinks } from '../shared/headerFolder/UserLinks';
 
 interface HeaderProps {
   cartItemsCount: number;
@@ -26,6 +28,7 @@ export default function Header({
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.user);
+  const isAdmin = user?.role === "admin";
 
   const handleLogout = async () => {
     try {
@@ -46,33 +49,13 @@ export default function Header({
             <h1 className="text-2xl font-bold">{t("header.title")}</h1>
           </Link>
 
-          {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4">
-            <button
-              onClick={onCartClick}
-              className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
-            >
-              <ShoppingCart className="h-6 w-6" />
-              <span className="font-semibold">{cartItemsCount}</span>
-            </button>
             {isAuthenticated ? (
               <>
-                <Link
-                  to="/dashboard"
-                  className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
-                >
-                  <User className="h-6 w-6" />
-                  <span className="font-semibold">{t("header.dashboard")}</span>
-                </Link>
-
-                {user?.role === "admin" && (
-                  <Link
-                    to="/admin"
-                    className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
-                  >
-                    <Shield  className="h-6 w-6"/>
-                    <span className="font-semibold">{t('admin-panel')}</span>
-                  </Link>
+                {isAdmin ? (
+                  <AdminLink />
+                ) : (
+                  <UserLinks cartItemsCount={cartItemsCount} onCartClick={onCartClick} />
                 )}
                 <button
                   onClick={handleLogout}
