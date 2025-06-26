@@ -3,4 +3,5 @@
     email: string;
     fullName: string;
     role: 'user' | 'admin';
+    language?: string;
   }

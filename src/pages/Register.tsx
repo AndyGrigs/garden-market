@@ -11,6 +11,7 @@ export default function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [language, setLanguage] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function Register() {
     setError("");
 
     try {
-      const result = await register({ fullName, email, password }).unwrap();
+      const result = await register({ fullName, email, password, language}).unwrap();
       dispatch(setUser(result.user));
       navigate("/", { replace: true });
     } catch (err) {
@@ -119,6 +120,22 @@ export default function Register() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
                   placeholder={t("auth.register.password")}
                 />
+              </div>
+              <div>
+                <label htmlFor="language" className="sr-only">
+                  Preferred Language
+                </label>
+                <select
+                  id="language"
+                  name="language"
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
+                >
+                  <option value="en">English</option>
+                  <option value="ro">Română</option>
+                  <option value="ru">Русский</option>
+                </select>
               </div>
             </div>
 

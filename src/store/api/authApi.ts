@@ -15,6 +15,7 @@ interface LoginRequest {
 
 interface RegisterRequest extends LoginRequest {
   fullName: string;
+  language?: string;
 }
 
 interface ApiResponse {
@@ -22,6 +23,7 @@ interface ApiResponse {
   email: string;
   fullName: string;
   role: "user" | "admin";
+  language?: string;
   token: string;
 }
 
@@ -43,7 +45,8 @@ export const authApi = createApi({
             id: response._id,
             email: response.email,
             fullName: response.fullName,
-            role: response.role
+            role: response.role,
+            language: response.language
 
           },
           token: response.token,
@@ -59,6 +62,7 @@ export const authApi = createApi({
           email: data.email,
           fullName: data.fullName,
           password: data.password,
+          language: data.language || 'ru'
         },
       }),
       transformResponse: (response: ApiResponse) => {
@@ -67,8 +71,8 @@ export const authApi = createApi({
             id: response._id,
             email: response.email,
             fullName: response.fullName,
-            role: response.role
-
+            role: response.role,
+            language: response.language
           },
           token: response.token,
         };
