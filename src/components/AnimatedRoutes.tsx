@@ -9,6 +9,7 @@ import AdminPanel from "../pages/AdminPanel";
 import VerifyEmail from "../pages/VerifyEmail";
 import ContactPage from '../pages/ContactPage';
 import Layout from "./Layout";
+import ReviewPage from '../pages/ReviewPage';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -19,6 +20,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<Layout />}>
           <Route index element={<MainContent />} />
           <Route path="contact" element={<ContactPage />} />
+          <Route path="contact" element={<ReviewPage />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route
             path="admin"

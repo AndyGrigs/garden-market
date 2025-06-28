@@ -4,13 +4,15 @@ import { store } from './store/store';
 import Footer from './components/Footer';
 import TreeCard from './components/TreeCard';
 import ContactForm from './components/ContactForm';
+import ReviewsSection from './components/ReviewsSection';
 import { useGetTreesQuery } from './store/api/treesApi';
 import { CartItem, ContactForm as IContactForm } from './types';
 import { useState } from 'react';
-import { MessageCircle, X, CheckCircle } from 'lucide-react';
+import { MessageCircle, X, CheckCircle, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import AuthLoader from './components/AuthLoader';
+import ReviewForm from './components/ReviewForm';
 import { Tree } from './types/ITree';
 import { useLanguage } from './hooks/useLanguage';
 
@@ -22,6 +24,7 @@ interface OutletContext {
 export function MainContent() {
   const { data: trees, isLoading, error } = useGetTreesQuery();
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [notification, setNotification] = useState<{ message: string; visible: boolean }>({
     message: '',
     visible: false
@@ -108,17 +111,33 @@ export function MainContent() {
             </div>
           )}
         </section>
+
+        {/* Reviews Section */}
+        <ReviewsSection />
       </motion.main>
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsContactOpen(true)}
-        className="fixed bottom-6 right-6 bg-emerald-600 text-white p-4 rounded-full shadow-lg hover:bg-emerald-500 transition-colors duration-200 flex items-center justify-center"
-        aria-label={t('contact.title')}
-      >
-        <MessageCircle className="h-6 w-6" />
-      </motion.button>
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-6 right-6 flex flex-col space-y-3">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsReviewFormOpen(true)}
+          className="bg-yellow-500 text-white p-4 rounded-full shadow-lg hover:bg-yellow-400 transition-colors duration-200 flex items-center justify-center"
+          aria-label="Write Review"
+        >
+          <Star className="h-6 w-6" />
+        </motion.button>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsContactOpen(true)}
+          className="bg-emerald-600 text-white p-4 rounded-full shadow-lg hover:bg-emerald-500 transition-colors duration-200 flex items-center justify-center"
+          aria-label={t('contact.title')}
+        >
+          <MessageCircle className="h-6 w-6" />
+        </motion.button>
+      </div>
 
       <Footer />
 
@@ -160,6 +179,10 @@ export function MainContent() {
               </div>
             </motion.div>
           </motion.div>
+        )}
+
+        {isReviewFormOpen && (
+          <ReviewForm onClose={() => setIsReviewFormOpen(false)} />
         )}
       </AnimatePresence>
     </div>

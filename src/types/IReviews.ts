@@ -1,3 +1,5 @@
+import { TranslatedString } from './ITree';
+
 export interface Review {
   _id: string;
   userId: string;
@@ -12,7 +14,7 @@ export interface Review {
 }
 
 export interface ReviewFormData {
-  name: string;
+  name: TranslatedString;
   rating: number;
   comment: string;
   type: 'product' | 'website';
