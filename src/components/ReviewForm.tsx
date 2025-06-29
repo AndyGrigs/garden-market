@@ -15,9 +15,9 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
     const [name, setName] = useState('');
     const [comment, setComment] = useState('');
     const [hoveredRating, setHoveredRating] = useState(0);
-    const [type, setType] = useState<'product' | 'website'>(
-    productId ? 'product' : 'website'
-  );
+    // const [type, setType] = useState<'product' | 'website'>(
+    // productId ? 'product' : 'website'
+  // );
     const {t} = useTranslation();
 
     const [createReview, {isLoading}] = useCreateCategoryMutation();
@@ -28,7 +28,7 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
     const reviewData: ReviewFormData = {
       rating,
       comment,
-      type,
+      type: productId ? 'product' : 'website',
       ...(productId && { productId }),
       name: {
         ru: name,
@@ -116,7 +116,7 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
               />
             </div>
 
-            {!productId && (
+            {/* {!productId && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('reviews.reviewType')}
@@ -134,7 +134,7 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
                   </option>
                 </select>
               </div>
-            )}
+            )} */}
 
             <div className="flex justify-end space-x-3 pt-4">
               <button
