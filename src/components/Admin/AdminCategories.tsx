@@ -9,6 +9,7 @@ import {
 import { Category, TranslatedString } from "../../types/ICategories";
 import { useLanguage } from "../../hooks/useLanguage";
 import CategoryModal from "./CategoryModal";
+import { BASE_URL } from "../../config";
 
 interface AdminCategoriesProps {
   selectedCategoryId: string;
@@ -24,22 +25,18 @@ const AdminCategories = ({
   const [deleteCategory] = useDeleteCategoryMutation();
   const [updateCategory] = useUpdateCategoryMutation();
   
-
   const [newName, setNewName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   const lang = useLanguage();
 
-
   const handleDelete = async (id: string) => {
-  
     if (window.confirm("Вы уверены, что хотите удалить эту категорию?")) {
       try {
         await deleteCategory(id).unwrap();
       } catch {
         alert("Не удалось удалить");
-    
       }
     }
   };
@@ -64,103 +61,111 @@ const AdminCategories = ({
 
   return (
     <>
-    <div className="p-6 bg-white shadow">
-      <h2 className="text-2xl font-bold mb-4">Категорії</h2>
-      <button
-              onClick={() => setIsModalOpen(pr=>!pr)}
-              className="bg-emerald-600 mr-auto text-white px-4 py-2 rounded mb-4"
-            >
-              ➕ Додати категорію
-            </button>
-      
-     
+      <div className="p-6 bg-white shadow">
+        <h2 className="text-2xl font-bold mb-4">Категорії</h2>
+        <button
+          onClick={() => setIsModalOpen(pr => !pr)}
+          className="bg-emerald-600 mr-auto text-white px-4 py-2 rounded mb-4"
+        >
+          ➕ Додати категорію
+        </button>
 
-      {isLoading ? (
-        <p>Завантаження...</p>
-      ) : (
-        <ul className="space-y-2">
-          {categories?.map((cat: Category) => (
-            <li
-              key={cat._id}
-              className="flex justify-between items-center border-b pb-2"
-            >
-              {editingCategoryId === cat._id ? (
-                <>
-                  <input
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    className="border px-2 py-1 rounded mr-2"
-                  />
-                  <button
-                    onClick={() => handleUpdate(cat._id)}
-                    className="bg-emerald-500 text-white rounded px-3 py-1 mr-2"
-                  >
-                    Зберегти
-                  </button>
-                  <button
-                    onClick={() => {
-                      setEditingCategoryId("");
-                      setNewName("");
-                    }}
-                    className="bg-gray-400 text-white rounded px-3 py-1"
-                  >
-                    Скасувати
-                  </button>
-                </>
-              ) : (
-                <>
-                  <span
-                    onClick={() => onSelectCategory(cat._id)}
-                    className={`cursor-pointer ${
-                      selectedCategoryId === cat._id
-                        ? "text-emerald-600 font-bold"
-                        : "text-gray-800"
-                    }`}
-                  >
-                    {getCategoryName(cat.name)}
-                  </span>
-
-                  <div className="flex gap-2">
+        {isLoading ? (
+          <p>Завантаження...</p>
+        ) : (
+          <ul className="space-y-2">
+            {categories?.map((cat: Category) => (
+              <li
+                key={cat._id}
+                className="flex justify-between items-center border-b pb-2"
+              >
+                {editingCategoryId === cat._id ? (
+                  <>
+                    <input
+                      value={newName}
+                      onChange={(e) => setNewName(e.target.value)}
+                      className="border px-2 py-1 rounded mr-2"
+                    />
+                    <button
+                      onClick={() => handleUpdate(cat._id)}
+                      className="bg-emerald-500 text-white rounded px-3 py-1 mr-2"
+                    >
+                      Зберегти
+                    </button>
                     <button
                       onClick={() => {
-                        setEditingCategoryId(cat._id);
-                        setNewName(getCategoryName(cat.name));
+                        setEditingCategoryId("");
+                        setNewName("");
                       }}
-                      className="text-blue-500 text-sm hover:underline"
+                      className="bg-gray-400 text-white rounded px-3 py-1"
                     >
-                      Редагувати
+                      Скасувати
                     </button>
-                    <button
-                      onClick={() => handleDelete(cat._id)}
-                      className="text-red-500 text-sm hover:underline"
-                    >
-                      Видалити
-                    </button>
-                  </div>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-     <CategoryModal
-        onClose={() => setIsModalOpen(false)}
-        isOpen={isModalOpen}
-        onSubmit={async (data) => {
-          try {
-            await createCategory({
-              name: data,       // якщо генеруєте самі
-              imageUrl: data.imageUrl,        // передаєте сюди
-            }).unwrap();
-            setIsModalOpen(false);
-          } catch (err) {
-            console.error(err);
-            alert("Помилка створення категорії");
-          }
-        }}
-      />
-    </div>
-    
+                  </>
+                ) : (
+                  <>
+                    <div className="flex items-center gap-3">
+                      {/* Відображення зображення категорії */}
+                      {cat.imageUrl && (
+                        <img
+                          src={`${BASE_URL}${cat.imageUrl}`}
+                          alt={getCategoryName(cat.name)}
+                          className="w-12 h-12 object-cover rounded-md"
+                        />
+                      )}
+                      <span
+                        onClick={() => onSelectCategory(cat._id)}
+                        className={`cursor-pointer ${
+                          selectedCategoryId === cat._id
+                            ? "text-emerald-600 font-bold"
+                            : "text-gray-800"
+                        }`}
+                      >
+                        {getCategoryName(cat.name)}
+                      </span>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => {
+                          setEditingCategoryId(cat._id);
+                          setNewName(getCategoryName(cat.name));
+                        }}
+                        className="text-blue-500 text-sm hover:underline"
+                      >
+                        Редагувати
+                      </button>
+                      <button
+                        onClick={() => handleDelete(cat._id)}
+                        className="text-red-500 text-sm hover:underline"
+                      >
+                        Видалити
+                      </button>
+                    </div>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+        
+        <CategoryModal
+          onClose={() => setIsModalOpen(false)}
+          isOpen={isModalOpen}
+          onSubmit={async (data) => {
+            try {
+              await createCategory({
+                name: data,
+                imageUrl: data.imageUrl,
+              }).unwrap();
+              setIsModalOpen(false);
+            } catch (err) {
+              console.error(err);
+              alert("Помилка створення категорії");
+            }
+          }}
+        />
+      </div>
     </>
   );
 };
