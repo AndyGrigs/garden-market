@@ -14,7 +14,7 @@ export const categoryApi = createApi({
       providesTags: ['Category']
     }),
         
-    createCategory: builder.mutation<Category, { name: TranslatedString }>({
+    createCategory: builder.mutation<Category, Partial<Category>>({
       query: (body) => ({
         url: '/categories',
         method: 'POST',

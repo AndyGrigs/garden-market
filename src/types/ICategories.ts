@@ -9,4 +9,5 @@ export interface Category {
   _id: string;
   name: TranslatedString;
   slug: string;
+  imageUrl?: string; 
 }

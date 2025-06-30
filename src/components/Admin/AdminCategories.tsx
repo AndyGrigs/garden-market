@@ -27,7 +27,7 @@ const AdminCategories = ({
 
   const [newName, setNewName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string>("");
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   const lang = useLanguage();
 
@@ -148,7 +148,10 @@ const AdminCategories = ({
         isOpen={isModalOpen}
         onSubmit={async (data) => {
           try {
-            await createCategory({ name: data }).unwrap();
+            await createCategory({
+              name: data,       // якщо генеруєте самі
+              imageUrl: data.imageUrl,        // передаєте сюди
+            }).unwrap();
             setIsModalOpen(false);
           } catch (err) {
             console.error(err);

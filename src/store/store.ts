@@ -6,6 +6,7 @@ import categoryReducer from './slices/categorySlice';
 import treeReducer from './slices/treeSlice';
 import { categoryApi } from './api/categoryApi';
 import { uploadApi } from './api/uploadApi';
+import { reviewApi } from './api/reviewApi';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     [treesApi.reducerPath]: treesApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [uploadApi.reducerPath]: uploadApi.reducer,
+    [reviewApi.reducerPath]: reviewApi.reducer, 
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -23,6 +25,7 @@ export const store = configureStore({
       .concat(treesApi.middleware)
       .concat(categoryApi.middleware)
       .concat(uploadApi.middleware)
+      .concat(reviewApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
