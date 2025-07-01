@@ -79,6 +79,25 @@
     "guestProcessing": "Processing guest checkout...",
     "processing": "Processing checkout..."
   },
+  "reviews": {
+    "customerReviews": "Customer Reviews",
+    "noReviews": "No reviews yet. Be the first to share your experience!",
+    "writeReview": "Write Review",
+    "writeProductReview": "Write Product Review",
+    "writeWebsiteReview": "Write Website Review",
+    "reviewingProduct": "Reviewing product",
+    "rating": "Rating",
+    "comment": "Comment",
+    "commentPlaceholder": "Share your experience...",
+    "reviewType": "Review Type",
+    "websiteReview": "Website Review",
+    "generalProductReview": "General Product Review",
+    "submitReview": "Submit Review",
+    "success": "Thank you for your review!",
+    "error": "Failed to submit review. Please try again.",
+    "reviewFor": "Review for",
+    "allReviews": "All Reviews"
+  },
   "footer": {
     "description": "Your trusted source for beautiful garden trees and expert advice.",
     "quickLinks": "Quick Links",

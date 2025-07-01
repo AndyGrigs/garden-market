@@ -79,6 +79,25 @@
     "guestProcessing": "Обработка заказа как гость...",
     "processing": "Обработка заказа..."
   },
+   "reviews": {
+    "customerReviews": "Отзывы Клиентов",
+    "noReviews": "Пока нет отзывов. Будьте первым, кто поделится своим опытом!",
+    "writeReview": "Написать Отзыв",
+    "writeProductReview": "Написать Отзыв о Товаре",
+    "writeWebsiteReview": "Написать Отзыв о Сайте",
+    "reviewingProduct": "Отзыв о товаре",
+    "rating": "Оценка",
+    "comment": "Комментарий",
+    "commentPlaceholder": "Поделитесь своим опытом...",
+    "reviewType": "Тип Отзыва",
+    "websiteReview": "Отзыв о Сайте",
+    "generalProductReview": "Общий Отзыв о Товаре",
+    "submitReview": "Отправить Отзыв",
+    "success": "Спасибо за ваш отзыв!",
+    "error": "Не удалось отправить отзыв. Попробуйте еще раз.",
+    "reviewFor": "Отзыв для",
+    "allReviews": "Все Отзывы"
+  },
   "footer": {
     "description": "Ваш надежный источник красивых деревьев для сада и экспертных советов.",
     "quickLinks": "Быстрые ссылки",

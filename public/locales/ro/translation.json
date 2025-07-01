@@ -80,6 +80,25 @@
     "guestProcessing": "Se procesează comanda ca vizitator...",
     "processing": "Se procesează comanda..."
   },
+   "reviews": {
+    "customerReviews": "Recenzii Clienți",
+    "noReviews": "Nu există recenzii încă. Fii primul care își împărtășește experiența!",
+    "writeReview": "Scrie Recenzie",
+    "writeProductReview": "Scrie Recenzie Produs",
+    "writeWebsiteReview": "Scrie Recenzie Website",
+    "reviewingProduct": "Recenzând produsul",
+    "rating": "Evaluare",
+    "comment": "Comentariu",
+    "commentPlaceholder": "Împărtășește experiența ta...",
+    "reviewType": "Tip Recenzie",
+    "websiteReview": "Recenzie Website",
+    "generalProductReview": "Recenzie Generală Produs",
+    "submitReview": "Trimite Recenzie",
+    "success": "Mulțumim pentru recenzie!",
+    "error": "Nu s-a putut trimite recenzia. Încercați din nou.",
+    "reviewFor": "Recenzie pentru",
+    "allReviews": "Toate Recenziile"
+  },
   "footer": {
     "description": "Sursa dumneavoastră de încredere pentru copaci frumoși de grădină și sfaturi de specialitate.",
     "quickLinks": "Link-uri rapide",
