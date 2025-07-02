@@ -6,7 +6,6 @@
     "login": "Conectare",
     "dashboard": "Panou de Control",
     "admin-panel": "Admin"
-
   },
   "collection": {
     "title": "Colecția Noastră",
@@ -75,12 +74,28 @@
     "deleteImage": "Șterge",
     "deleteTreeConfirm": "Doriți să ștergeți această imagine?"
   },
+  "verification": {
+    "title": "Verifică Email-ul",
+    "subtitle": "Introdu codul de verificare trimis pe email",
+    "code": "Cod de Verificare",
+    "codePlaceholder": "Introdu codul de 3 cifre",
+    "verify": "Verifică Email",
+    "resend": "Retrimite Cod",
+    "verifying": "Se verifică...",
+    "resending": "Se retrimite...",
+    "success": "Email verificat cu succes! Redirecționare către login...",
+    "error": "Verificarea a eșuat. Verifică codul.",
+    "resendSuccess": "Codul de verificare a fost trimis cu succes!",
+    "resendError": "Nu s-a putut retrimite codul de verificare",
+    "alreadyVerified": "Deja verificat?",
+    "signInHere": "Conectează-te aici"
+  },
   "checkout": {
     "guestConfirm": "Doriți să continuați ca vizitator? Apăsați Anulare pentru a vă conecta.",
     "guestProcessing": "Se procesează comanda ca vizitator...",
     "processing": "Se procesează comanda..."
   },
-   "reviews": {
+  "reviews": {
     "customerReviews": "Recenzii Clienți",
     "noReviews": "Nu există recenzii încă. Fii primul care își împărtășește experiența!",
     "writeReview": "Scrie Recenzie",

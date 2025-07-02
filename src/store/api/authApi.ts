@@ -24,6 +24,7 @@ interface ApiResponse {
   fullName: string;
   role: "user" | "admin";
   language?: string;
+  isVerified?: boolean;
   token: string;
 }
 
@@ -46,15 +47,15 @@ export const authApi = createApi({
             email: response.email,
             fullName: response.fullName,
             role: response.role,
-            language: response.language
-
+            language: response.language,
+            isVerified: response.isVerified
           },
           token: response.token,
         };
       },
     }),
 
-    register: builder.mutation<AuthResponse, RegisterRequest>({
+    register: builder.mutation<{ message: string; requiresVerification: boolean }, RegisterRequest>({
       query: (data) => ({
         url: "/auth/register",
         method: "POST",
@@ -62,37 +63,44 @@ export const authApi = createApi({
           email: data.email,
           fullName: data.fullName,
           password: data.password,
-          language: data.language || 'ru'
+          language: data.language || 'en',
         },
       }),
-      transformResponse: (response: ApiResponse) => {
-        return {
-          user: {
-            id: response._id,
-            email: response.email,
-            fullName: response.fullName,
-            role: response.role,
-            language: response.language
-          },
-          token: response.token,
-        };
-      },
     }),
+
     getCurrentUser: builder.query<User, void>({
       query: () => ({
         url: "/auth/me",
         method: "GET",
       }),
+      transformResponse: (response: ApiResponse) => ({
+        id: response._id,
+        email: response.email,
+        fullName: response.fullName,
+        role: response.role,
+        language: response.language,
+        isVerified: response.isVerified
+      }),
     }),
+
     logout: builder.mutation<{ message: string }, void>({
       query: () => ({
         url: "/auth/logout",
         method: "POST",
       }),
     }),
-    verifyEmail: builder.mutation<{message: string}, {token: string}>({
+
+    verifyEmail: builder.mutation<{message: string}, {email: string; code: string}>({
       query: (body) => ({
         url: "/auth/verify-email",
+        method: "POST",
+        body,
+      })
+    }),
+
+    resendVerificationCode: builder.mutation<{message: string}, {email: string}>({
+      query: (body) => ({
+        url: "/auth/resend-verification-code", 
         method: "POST",
         body,
       })
@@ -100,5 +108,11 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery, useLogoutMutation, useVerifyEmailMutation } =
-  authApi;
+export const { 
+  useLoginMutation, 
+  useRegisterMutation, 
+  useGetCurrentUserQuery, 
+  useLogoutMutation, 
+  useVerifyEmailMutation,
+  useResendVerificationCodeMutation 
+} = authApi;

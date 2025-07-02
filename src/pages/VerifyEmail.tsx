@@ -1,73 +1,233 @@
-import { useSearchParams, Link } from "react-router-dom";
-import { useVerifyEmailMutation } from "../store/api/authApi";
-import { useEffect } from "react";
-import { Home } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  useVerifyEmailMutation,
+  useResendVerificationCodeMutation,
+} from "../store/api/authApi";
+import { Home, Mail, RefreshCw } from "lucide-react";
+import { motion } from "framer-motion";
+import { ErrorResponse } from "../types/IUser";
 
 const VerifyEmail = () => {
-  const [params] = useSearchParams();
-  const [verifyEmail, { isLoading, isError, isSuccess, data }] =
-    useVerifyEmailMutation();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState(searchParams.get("email") || "");
+  const [code, setCode] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const [verifyEmail, { isLoading: isVerifying }] = useVerifyEmailMutation();
+  const [resendCode, { isLoading: isResending }] =
+    useResendVerificationCodeMutation();
+
+  
 
   useEffect(() => {
-    const token = params.get("token");
-    if (token) {
-      verifyEmail({ token });
+    const emailParam = searchParams.get("email");
+    if (emailParam) {
+      setEmail(emailParam);
     }
-  }, [params, verifyEmail]);
+  }, [searchParams]);
 
-  useEffect(() => {
-    if (isSuccess && data) {
-      alert(data.message);
+  const handleVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setMessage("");
+
+    if (!email || !code) {
+      setError("Please enter both email and verification code");
+      return;
     }
 
-    if (isError) {
-      alert("Verification failed");
+    try {
+      const response = await verifyEmail({ email, code }).unwrap();
+      setMessage(response.message);
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (err: ErrorResponse | unknown) {
+      setError(
+        (err as ErrorResponse)?.data?.message ||
+          "Verification failed. Please check your code."
+      );
     }
-  }, [isSuccess, isError, data]);
+  };
+
+  const handleResendCode = async () => {
+    setError("");
+    setMessage("");
+
+    if (!email) {
+      setError("Please enter your email address");
+      return;
+    }
+
+    try {
+      const response = await resendCode({ email }).unwrap();
+      setMessage(response.message);
+    } catch (err: ErrorResponse | unknown) {
+      setError(
+        (err as ErrorResponse)?.data?.message ||
+          "Failed to resend verification code"
+      );
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8 text-center">
-        <div className="mb-6">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-md w-full space-y-8"
+      >
+        <div className="text-center">
+          <Mail className="mx-auto h-12 w-12 text-emerald-600" />
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+            Verify Your Email
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Enter the verification code sent to your email
+          </p>
+        </div>
+
+        <div className="flex justify-center">
           <Link
             to="/"
-            className="inline-flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+            className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
           >
             <Home className="h-5 w-5" />
             <span>Main Page</span>
           </Link>
         </div>
-        
-        {isLoading && (
-          <div>
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Verifying your email...</p>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="bg-white rounded-lg shadow-md p-8"
+        >
+          <form onSubmit={handleVerify} className="space-y-6">
+            {message && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md"
+              >
+                {message}
+              </motion.div>
+            )}
+
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md"
+              >
+                {error}
+              </motion.div>
+            )}
+
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Email Address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                placeholder="Enter your email"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="code"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Verification Code
+              </label>
+              <input
+                id="code"
+                name="code"
+                type="text"
+                required
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-center text-lg font-mono tracking-widest"
+                placeholder="Enter 3-digit code"
+                maxLength={3}
+                pattern="[0-9]{3}"
+              />
+            </div>
+
+            <div className="space-y-4">
+              <button
+                type="submit"
+                disabled={isVerifying}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isVerifying ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    className="rounded-full h-5 w-5 border-b-2 border-white"
+                  />
+                ) : (
+                  "Verify Email"
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleResendCode}
+                disabled={isResending}
+                className="w-full flex justify-center items-center space-x-2 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isResending ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    className="rounded-full h-4 w-4 border-b-2 border-gray-600"
+                  />
+                ) : (
+                  <>
+                    <RefreshCw className="h-4 w-4" />
+                    <span>Resend Code</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Already verified?{" "}
+              <Link
+                to="/login"
+                className="font-medium text-emerald-600 hover:text-emerald-500"
+              >
+                Sign in here
+              </Link>
+            </p>
           </div>
-        )}
-        
-        {isSuccess && data && (
-          <div>
-            <div className="text-green-600 text-5xl mb-4">✓</div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Email Confirmed!</h2>
-            <p className="text-gray-600 mb-6">{data.message}</p>
-          </div>
-        )}
-        
-        {isError && (
-          <div>
-            <div className="text-red-600 text-5xl mb-4">✗</div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Verification Failed</h2>
-            <p className="text-gray-600 mb-6">There was a problem confirming your email.</p>
-          </div>
-        )}
-        
-        {!isLoading && !isSuccess && !isError && (
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Email Verification</h2>
-            <p className="text-gray-600">Processing verification...</p>
-          </div>
-        )}
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

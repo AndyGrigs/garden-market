@@ -1,35 +1,49 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useRegisterMutation } from "../store/api/authApi";
-import { setUser } from "../store/slices/authSlice";
 import { UserPlus, Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
+import { motion } from "framer-motion";
+import { ErrorResponse } from "../types/IUser";
 
 export default function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [language, setLanguage] = useState("");
+  const [language, setLanguage] = useState("en");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [register, { isLoading }] = useRegisterMutation();
   const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     try {
-      const result = await register({ fullName, email, password, language}).unwrap();
-      dispatch(setUser(result.user));
-      navigate("/", { replace: true });
-    } catch (err) {
-      setError(t("auth.register.error"));
-      console.log(err);
+      const result = await register({
+        fullName,
+        email,
+        password,
+        language,
+      }).unwrap();
+
+      if (result.requiresVerification) {
+        setSuccess(result.message);
+        setTimeout(() => {
+          navigate(`/verify-email?email=${encodeURIComponent(email)}`);
+        }, 2000);
+      } else {
+        navigate("/login");
+      }
+    } catch (err: ErrorResponse | unknown) {
+      setError(
+        (err as ErrorResponse)?.data?.message || t("auth.register.error")
+      );
     }
   };
 
@@ -42,7 +56,12 @@ export default function Register() {
       />
 
       <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-md w-full space-y-8"
+        >
           <div className="text-center">
             <UserPlus className="mx-auto h-12 w-12 text-emerald-600" />
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
@@ -58,7 +77,7 @@ export default function Register() {
               </Link>
             </p>
           </div>
-          
+
           <div className="flex justify-center">
             <Link
               to="/"
@@ -69,12 +88,33 @@ export default function Register() {
             </Link>
           </div>
 
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
-                {error}
-              </div>
+          <motion.form
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="mt-8 space-y-6"
+            onSubmit={handleSubmit}
+          >
+            {success && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md"
+              >
+                {success}
+              </motion.div>
             )}
+
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md"
+              >
+                {error}
+              </motion.div>
+            )}
+
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <label htmlFor="name" className="sr-only">
@@ -117,7 +157,7 @@ export default function Register() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
                   placeholder={t("auth.register.password")}
                 />
               </div>
@@ -145,13 +185,23 @@ export default function Register() {
                 disabled={isLoading}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
               >
-                {isLoading
-                  ? t("auth.register.loading")
-                  : t("auth.register.submit")}
+                {isLoading ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    className="rounded-full h-5 w-5 border-b-2 border-white"
+                  />
+                ) : (
+                  t("auth.register.submit")
+                )}
               </button>
             </div>
-          </form>
-        </div>
+          </motion.form>
+        </motion.div>
       </div>
     </div>
   );

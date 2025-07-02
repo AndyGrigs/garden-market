@@ -79,6 +79,22 @@
     "guestProcessing": "Processing guest checkout...",
     "processing": "Processing checkout..."
   },
+  "verification": {
+    "title": "Verify Your Email",
+    "subtitle": "Enter the verification code sent to your email",
+    "code": "Verification Code",
+    "codePlaceholder": "Enter 3-digit code",
+    "verify": "Verify Email",
+    "resend": "Resend Code",
+    "verifying": "Verifying...",
+    "resending": "Resending...",
+    "success": "Email verified successfully! Redirecting to login...",
+    "error": "Verification failed. Please check your code.",
+    "resendSuccess": "Verification code sent successfully!",
+    "resendError": "Failed to resend verification code",
+    "alreadyVerified": "Already verified?",
+    "signInHere": "Sign in here"
+  },
   "reviews": {
     "customerReviews": "Customer Reviews",
     "noReviews": "No reviews yet. Be the first to share your experience!",
@@ -109,5 +125,4 @@
     "followUs": "Follw Us",
     "rights": "All rights reserved."
   }
- 
 }
