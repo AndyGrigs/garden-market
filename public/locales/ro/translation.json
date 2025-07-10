@@ -15,6 +15,7 @@
   "tree": {
     "addToCart": "Adaugă în coș",
     "height": "Înălțime",
+    "priceLabel": "Preț: ₴{{price}}",
     "maintenance": {
       "low": "Scăzut",
       "medium": "Mediu",
@@ -72,7 +73,16 @@
     "orderHistory": "Istoric Comenzi",
     "noOrders": "Nu există comenzi încă",
     "deleteImage": "Șterge",
-    "deleteTreeConfirm": "Doriți să ștergeți această imagine?"
+    "deleteTreeConfirm": "Doriți să ștergeți această imagine?",
+    "invalidTreeData": "Datele pentru creare/modificare a produsului sunt incorrecte",
+     "deleteTreeError": "Eroare la ștergerea produsului...",
+    "createEditTreeError": "Eroare la crearea/editarea produsului",
+    "selectCategoryPrompt": "Selectați o categorie pentru a vedea produsele",
+    "selectedCategoryProducts": "Produse în categoria selectată",
+    "addProduct": "➕ Adaugă produs",
+    "edit": "Editează",
+    "delete": "Șterge"
+    
   },
   "verification": {
     "title": "Verifică Email-ul",

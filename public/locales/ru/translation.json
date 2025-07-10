@@ -15,6 +15,7 @@
   "tree": {
     "addToCart": "В корзину",
     "height": "Высота",
+    "priceLabel": "Цена: ₴{{price}}",
     "maintenance": {
       "low": "Низкий",
       "medium": "Средний",
@@ -72,7 +73,8 @@
     "orderHistory": "История заказов",
     "noOrders": "Пока нет заказов",
     "deleteImage": "Удалить",
-    "deleteTreeConfirm": "Ты уверен, что хочешь удалить этот товар и фото?"
+    "deleteTreeConfirm": "Ты уверен, что хочешь удалить этот товар и фото?",
+    "invalidTreeData": "Некорректные данные для создания/изменения товара"
   },
    "verification": {
       "title": "Подтвердите Email",
@@ -88,7 +90,14 @@
       "resendSuccess": "Код подтверждения успешно отправлен!",
       "resendError": "Не удалось повторно отправить код подтверждения",
       "alreadyVerified": "Уже подтверждено?",
-      "signInHere": "Войдите здесь"
+      "signInHere": "Войдите здесь",
+      "deleteTreeError": "Ошибка удаления товара...",
+      "createEditTreeError": "Ошибка создания/редактирования товара",
+      "selectCategoryPrompt": "Выберите категорию для просмотра товаров",
+      "selectedCategoryProducts": "Товары в избранной категории",
+      "addProduct": "➕ Добавить товар",
+      "edit": "Редактировать",
+      "delete": "Удалить"
     },
   "checkout": {
     "guestConfirm": "Хотите продолжить как гость? Нажмите Отмена, чтобы войти в систему.",

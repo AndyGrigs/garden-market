@@ -15,6 +15,7 @@
   "tree": {
     "addToCart": "Add to Cart",
     "height": "Height",
+    "priceLabel": "Price: ₴{{price}}",
     "maintenance": {
       "low": "Low",
       "medium": "Medium",
@@ -72,7 +73,15 @@
     "orderHistory": "Order History",
     "noOrders": "No orders yet",
     "deleteImage": "Delete",
-    "deleteTreeConfirm": "Do you want to delete this image?"
+    "deleteTreeConfirm": "Do you want to delete this image?",
+    "invalidTreeData": "Incorrect data for creating/editing the product",
+    "deleteTreeError": "Failed to delete the product...",
+    "createEditTreeError": "Failed to create/edit the product",
+    "selectCategoryPrompt": "Select a category to view products",
+    "selectedCategoryProducts": "Products in the selected category",
+    "addProduct": "➕ Add product",
+    "edit": "Edit",
+   "delete": "Delete"
   },
   "checkout": {
     "guestConfirm": "Would you like to proceed as a guest? Click Cancel to login instead.",

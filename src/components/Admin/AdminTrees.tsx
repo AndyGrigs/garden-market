@@ -22,11 +22,10 @@ interface AdminTreesProps {
 const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  // Get data from Redux store
+
   const { trees, editingTree } = useSelector((state: RootState) => state.tree);
   
-  // API hooks
+
   const { data: apiTrees, isLoading } = useGetTreesQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
@@ -36,7 +35,6 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
   const [deleteImage] = useDeleteImageMutation();
   const lang = useLanguage();
 
-  // Update Redux store when API data changes
   useEffect(() => {
     if (apiTrees) {
       dispatch(setTrees(apiTrees));
@@ -62,7 +60,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
         // Update Redux store
         dispatch(removeTree(id));
       } catch (error) {
-        alert('Ошибка удаления товара...');
+        alert(t('dashboard.deleteTreeError'));
         console.error(error);
       }
     }
@@ -73,20 +71,19 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
   };
 
   const handleEditTree = (tree: Tree) => {
-    // Set editing tree in Redux store
     dispatch(setEditingTree(tree));
     setIsModalOpen(true);
   };
 
   const handleSubmitTree = async (treeData: TreeFormData) => {
     if (!isTreeDataValid(treeData)) {
-      alert("Некоректні дані для створення/редагування товару");
+      alert(t('dashboard.invalidTreedata'));
       return;
     }
 
     try {
       if (editingTree && editingTree._id) {
-        // Update existing tree
+       
         const updatedTree = await updateTree({
           id: editingTree._id,
           body: {
@@ -121,7 +118,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
       setIsModalOpen(false);
       dispatch(setEditingTree(null));
     } catch (err) {
-      alert("Ошибка создания/редактирования товара");
+      alert(t('dashboard.createEditTreeError'));
       console.error(err);
     }
   };
@@ -135,7 +132,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
     return (
       <div className="p-6 bg-white shadow rounded">
         <h3 className="text-xl font-semibold mb-4">
-          Выберите категорию для просмотра товаров
+          {t('dashboard.selectCategoryPrompt')}
         </h3>
       </div>
     );
@@ -144,16 +141,16 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
   return (
     <div className="p-6 bg-white shadow rounded">
       <h3 className="text-xl font-semibold mb-4">
-        Товары в избранной категории
+        {t('dashboard.selectedCategoryProducts')}
       </h3>
       <button
         onClick={() => setIsModalOpen(true)}
         className="bg-emerald-600 text-white px-4 py-2 mb-3 ml-auto rounded hover:bg-emerald-700"
       >
-        ➕ Добавить товар
+        ➕ {t('dashboard.addProduct')}
       </button>
       {isLoading ? (
-        <div className="text-center">Загрузка...</div>
+        <div className="text-center">{t('collection.loading')}</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredTrees?.map((tree) => (
@@ -167,22 +164,24 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
                 {getTreeTitle(tree.title)}
               </h4>
               <p className="text-gray-600 mb-2">
-                Цена: ₴{tree.price}
+               { t('tree.priceLabel', { price: tree.price })}
               </p>
-              <p className="text-gray-600 mb-2">
-                В наличии: {tree.stock}
-              </p>
+              {/* <p className="text-gray-600 mb-2">
+                t('tree.inStockLabel', { stock: tree.stock })
+              </p> */}
               <button
+
+
                 onClick={() => handleEditTree(tree)}
                 className="bg-yellow-500 mb-3 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 mr-2"
               >
-                Редактировать
+               {t('dashboard.edit')}
               </button>
               <button
                 onClick={() => handleDeleteTree(tree._id, tree.imageUrl)}
                 className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
               >
-                Удалить
+                {t('dashboard.delete')}
               </button>
             </div>
           ))}
