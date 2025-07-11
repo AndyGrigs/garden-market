@@ -68,6 +68,10 @@ export function MainContent() {
     setIsContactOpen(false);
   };
 
+  console.log('Trees data:', trees);
+  console.log('Is loading:', isLoading);
+  console.log('Error:', error);
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <motion.main
@@ -79,7 +83,7 @@ export function MainContent() {
       >
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-gray-800 mb-8">
-            {t('collection.title')}
+            {t('collection.title') || "Collection"}
           </h2>
           {isLoading ? (
             <div className="flex justify-center items-center min-h-[400px]">
@@ -91,23 +95,34 @@ export function MainContent() {
             </div>
           ) : error ? (
             <div className="text-center text-red-600">
-              {t('collection.error')}
+              {t('collection.error') || "Error loading collection"}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {trees?.map((tree, index) => (
-                <motion.div
-                  key={tree._id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <TreeCard
-                    tree={tree}
-                    onAddToCart={addToCart}
-                  />
-                </motion.div>
-              ))}
+              {Array.isArray(trees) ? (
+                trees.map((tree, index) => (
+                  <motion.div
+                    key={tree._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <TreeCard
+                      tree={tree}
+                      onAddToCart={addToCart}
+                    />
+                  </motion.div>
+                ))
+              ) : (
+                <div className="col-span-full text-center text-gray-600 py-12">
+                  <p>No trees available at the moment.</p>
+                  {trees && !Array.isArray(trees) && (
+                    <p className="text-sm mt-2">
+                      Data format issue: Expected array but got {typeof trees}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </section>
