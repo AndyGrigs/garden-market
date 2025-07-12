@@ -5,10 +5,11 @@ import Footer from './components/Footer';
 import TreeCard from './components/TreeCard';
 import ContactForm from './components/ContactForm';
 import ReviewsSection from './components/ReviewsSection';
+import CategorySidebar from './components/CategorySidebar';
 import { useGetTreesQuery } from './store/api/treesApi';
 import { CartItem, ContactForm as IContactForm } from './types';
 import { useState } from 'react';
-import { MessageCircle, X, CheckCircle, Star } from 'lucide-react';
+import { MessageCircle, X, CheckCircle, Star, Filter } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import AuthLoader from './components/AuthLoader';
@@ -25,6 +26,8 @@ export function MainContent() {
   const { data: trees, isLoading, error } = useGetTreesQuery();
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [notification, setNotification] = useState<{ message: string; visible: boolean }>({
     message: '',
     visible: false
@@ -68,6 +71,10 @@ export function MainContent() {
     setIsContactOpen(false);
   };
 
+  // Filter trees by selected category
+  const filteredTrees = selectedCategoryId 
+    ? trees?.filter(tree => tree.category?._id === selectedCategoryId)
+    : trees;
   console.log('Trees data:', trees);
   console.log('Is loading:', isLoading);
   console.log('Error:', error);
@@ -79,57 +86,95 @@ export function MainContent() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
-        className="container flex-1 mx-auto px-4 py-8"
+        className="flex-1"
       >
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">
-            {t('collection.title') || "Collection"}
-          </h2>
-          {isLoading ? (
-            <div className="flex justify-center items-center min-h-[400px]">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className="rounded-full h-12 w-12 border-b-2 border-emerald-600"
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Desktop Category Sidebar */}
+            <div className="hidden lg:block w-80 flex-shrink-0">
+              <CategorySidebar
+                selectedCategoryId={selectedCategoryId}
+                onCategorySelect={setSelectedCategoryId}
               />
             </div>
-          ) : error ? (
-            <div className="text-center text-red-600">
-              {t('collection.error') || "Error loading collection"}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {Array.isArray(trees) ? (
-                trees.map((tree, index) => (
-                  <motion.div
-                    key={tree._id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <TreeCard
-                      tree={tree}
-                      onAddToCart={addToCart}
+
+            {/* Main Content */}
+            <div className="flex-1">
+              {/* Mobile Category Filter Button */}
+              <div className="lg:hidden mb-6">
+                <button
+                  onClick={() => setIsCategoryMenuOpen(true)}
+                  className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+                >
+                  <Filter className="h-5 w-5" />
+                  <span>{t('categories.filter')}</span>
+                </button>
+              </div>
+
+              <section className="mb-12">
+                <h2 className="text-3xl font-bold text-gray-800 mb-8">
+                  {selectedCategoryId 
+                    ? t('collection.categoryTitle') 
+                    : t('collection.title') || "Collection"
+                  }
+                </h2>
+                {isLoading ? (
+                  <div className="flex justify-center items-center min-h-[400px]">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="rounded-full h-12 w-12 border-b-2 border-emerald-600"
                     />
-                  </motion.div>
-                ))
-              ) : (
-                <div className="col-span-full text-center text-gray-600 py-12">
-                  <p>No trees available at the moment.</p>
-                  {trees && !Array.isArray(trees) && (
-                    <p className="text-sm mt-2">
-                      Data format issue: Expected array but got {typeof trees}
-                    </p>
-                  )}
-                </div>
-              )}
+                  </div>
+                ) : error ? (
+                  <div className="text-center text-red-600">
+                    {t('collection.error') || "Error loading collection"}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    {Array.isArray(filteredTrees) ? (
+                      filteredTrees.map((tree, index) => (
+                        <motion.div
+                          key={tree._id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          <TreeCard
+                            tree={tree}
+                            onAddToCart={addToCart}
+                          />
+                        </motion.div>
+                      ))
+                    ) : (
+                      <div className="col-span-full text-center text-gray-600 py-12">
+                        <p>No trees available at the moment.</p>
+                        {trees && !Array.isArray(trees) && (
+                          <p className="text-sm mt-2">
+                            Data format issue: Expected array but got {typeof trees}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
             </div>
-          )}
-        </section>
+          </div>
+        </div>
 
         {/* Reviews Section */}
         <ReviewsSection />
       </motion.main>
+
+      {/* Mobile Category Menu */}
+      <CategorySidebar
+        selectedCategoryId={selectedCategoryId}
+        onCategorySelect={setSelectedCategoryId}
+        isMobile={true}
+        isOpen={isCategoryMenuOpen}
+        onClose={() => setIsCategoryMenuOpen(false)}
+      />
 
       {/* Floating Action Buttons */}
       <div className="fixed bottom-6 right-6 flex flex-col space-y-3">

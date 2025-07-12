@@ -9,6 +9,7 @@ import AdminPanel from "../pages/AdminPanel";
 import VerifyEmail from "../pages/VerifyEmail";
 import ContactPage from '../pages/ContactPage';
 import ReviewPage from "../pages/ReviewPage";
+import ResetPassword from "../pages/ResetPassword";
 import Layout from "./Layout";
 
 function AnimatedRoutes() {
@@ -32,6 +33,7 @@ function AnimatedRoutes() {
           />
         </Route>
         <Route path="/verify-email" element={<VerifyEmail />} /> 
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

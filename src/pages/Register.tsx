@@ -11,13 +11,15 @@ export default function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [language, setLanguage] = useState("en");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterMutation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  // Auto-detect language from browser
+  const detectedLanguage = i18n.language || navigator.language.split('-')[0] || 'en';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +31,7 @@ export default function Register() {
         fullName,
         email,
         password,
-        language,
+        language: detectedLanguage,
       }).unwrap();
 
       if (result.requiresVerification) {
@@ -55,7 +57,17 @@ export default function Register() {
         isAuthenticated={false}
       />
 
-      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="absolute top-4 right-4">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+          >
+            <Home className="h-5 w-5" />
+            <span>Main Page</span>
+          </Link>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -78,14 +90,10 @@ export default function Register() {
             </p>
           </div>
 
-          <div className="flex justify-center">
-            <Link
-              to="/"
-              className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
-            >
-              <Home className="h-5 w-5" />
-              <span>Main Page</span>
-            </Link>
+          <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
+            <p className="text-sm text-blue-700">
+              {t("auth.register.languageDetected")}: <strong>{detectedLanguage.toUpperCase()}</strong>
+            </p>
           </div>
 
           <motion.form
@@ -115,7 +123,7 @@ export default function Register() {
               </motion.div>
             )}
 
-            <div className="rounded-md shadow-sm -space-y-px">
+            <div className="rounded-md shadow-sm space-y-3">
               <div>
                 <label htmlFor="name" className="sr-only">
                   {t("auth.register.name")}
@@ -127,7 +135,7 @@ export default function Register() {
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
                   placeholder={t("auth.register.name")}
                 />
               </div>
@@ -142,7 +150,7 @@ export default function Register() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
                   placeholder={t("auth.register.email")}
                 />
               </div>
@@ -157,25 +165,9 @@ export default function Register() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
                   placeholder={t("auth.register.password")}
                 />
-              </div>
-              <div>
-                <label htmlFor="language" className="sr-only">
-                  Preferred Language
-                </label>
-                <select
-                  id="language"
-                  name="language"
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
-                >
-                  <option value="en">English</option>
-                  <option value="ro">Română</option>
-                  <option value="ru">Русский</option>
-                </select>
               </div>
             </div>
 
