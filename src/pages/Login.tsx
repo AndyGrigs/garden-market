@@ -142,7 +142,7 @@ export default function Login() {
                     onClick={() => setShowForgotPassword(true)}
                     className="text-sm text-emerald-600 hover:text-emerald-500"
                   >
-                    {t("auth.login.forgotPassword")}
+                    {t("auth.forgotPassword")}
                   </button>
                 </div>
 
@@ -167,10 +167,10 @@ export default function Login() {
               >
                 <div className="text-center">
                   <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    {t("auth.forgotPassword.title")}
+                    {t("auth.resetPassword.title")}
                   </h3>
                   <p className="text-sm text-gray-600">
-                    {t("auth.forgotPassword.subtitle")}
+                    {t("auth.resetPassword.subtitle")}
                   </p>
                 </div>
 
@@ -219,7 +219,7 @@ export default function Login() {
                     disabled={isForgotLoading}
                     className="flex-1 py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
                   >
-                    {isForgotLoading ? t("auth.forgotPassword.sending") : t("auth.forgotPassword.send")}
+                    {isForgotLoading ? t("auth.resetPassword.sending") : t("auth.resetPassword.submit")}
                   </button>
                 </div>
               </motion.form>

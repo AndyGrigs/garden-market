@@ -1,4 +1,7 @@
 {
+  "common": {
+  "cancel": "Anulează"
+},
   "header": {
     "title": "Covaci de Grădină",
     "cart": "Coș",
@@ -45,6 +48,7 @@
     "success": "Vă mulțumim pentru mesaj! Vă vom contacta în curând."
   },
   "auth": {
+    "forgotPassword": "Ai uitat parola?",
     "login": {
       "title": "Conectează-te la cont",
       "email": "Adresă de email",
@@ -63,7 +67,24 @@
       "loading": "Se creează contul...",
       "error": "Înregistrarea a eșuat",
       "login": "Sau conectează-te la contul tău"
-    }
+    },
+    "resetPassword": {
+        "languageDetected": "Limba detectată",
+        "title": "Resetează parola",
+        "subtitle": "Introduceți noua parolă mai jos.",
+        "newPassword": "Parolă nouă",
+        "newPasswordPlaceholder": "Introduceți noua parolă",
+        "confirmPassword": "Confirmă parola",
+        "confirmPasswordPlaceholder": "Reintroduceți noua parolă",
+        "submit": "Resetează parola",
+        "sending": "Trimite e-mail de resetare a parolei",
+        "backToLogin": "Înapoi la autentificare?",
+        "invalidOrMissingToken": "Token de resetare invalid sau lipsă",
+        "invalidToken": "Token de resetare invalid",
+        "passwordsDoNotMatch": "Parolele nu coincid",
+        "passwordTooShort": "Parola trebuie să aibă cel puțin 6 caractere",
+        "resetFailed": "Resetarea parolei a eșuat. Vă rugăm să încercați din nou."
+      }
   },
   "dashboard": {
     "welcome": "Bine ai venit, {{name}}!",
