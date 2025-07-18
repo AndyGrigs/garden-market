@@ -27,26 +27,22 @@ export default function Register() {
     setSuccess("");
 
     try {
-      const result = await register({
-        fullName,
-        email,
-        password,
-        language: detectedLanguage,
-      }).unwrap();
+  const result = await register({
+    fullName,
+    email,
+    password,
+    language: detectedLanguage,
+  }).unwrap();
 
-      if (result.requiresVerification) {
-        setSuccess(result.message);
-        setTimeout(() => {
-          navigate(`/verify-email?email=${encodeURIComponent(email)}`);
-        }, 2000);
-      } else {
-        navigate("/login");
-      }
-    } catch (err: ErrorResponse | unknown) {
-      setError(
-        (err as ErrorResponse)?.data?.message || t("auth.register.error")
-      );
-    }
+  setSuccess(result.message);
+  setTimeout(() => {
+    navigate(`/verify-email?email=${encodeURIComponent(email)}`);
+  }, 2000);
+} catch (err: ErrorResponse | unknown) {
+  setError(
+    (err as ErrorResponse)?.data?.message || t("auth.register.error")
+  );
+}
   };
 
   return (

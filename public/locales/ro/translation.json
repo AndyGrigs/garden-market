@@ -39,6 +39,12 @@
       "addedAnother": "Încă un {{name}} a fost adăugat în coș"
     }
   },
+
+   "categories": {
+      "noCategories": "Nu există categorii...",
+      "all": "Toate categorii",
+      "title": "Titlu categorie"
+},
   "contact": {
     "title": "Contactează-ne",
     "name": "Nume",

@@ -30,6 +30,11 @@
       "2": "Perfect cone-shaped evergreen for small spaces"
     }
   },
+  "categories": {
+  "noCategories": "No categories found...",
+  "all": "All categories",
+  "title": "Category Title"
+},
   "cart": {
     "title": "Shopping Cart",
     "total": "Total",

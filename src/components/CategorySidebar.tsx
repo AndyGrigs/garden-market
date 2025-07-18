@@ -100,7 +100,8 @@ export default function CategorySidebar({
                 {t('categories.all')}
               </motion.button>
 
-              {categories?.map((category) => (
+              {Array.isArray(categories) && categories.length > 0 ? (
+                categories?.map((category) => (
                 <motion.button
                   key={category._id}
                   whileHover={{ scale: 1.02 }}
@@ -126,7 +127,12 @@ export default function CategorySidebar({
                     {getCategoryName(category.name)}
                   </span>
                 </motion.button>
-              ))}
+              ))
+              ): (
+                <div className="text-gray-500 px-4 py-3">
+                  {t('categories.noCategories')}
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
