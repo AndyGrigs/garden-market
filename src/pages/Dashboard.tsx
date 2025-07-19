@@ -10,20 +10,20 @@ import { motion } from "framer-motion";
 export default function Dashboard() {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.auth.user);
-  
-  const { data: orders, isLoading: ordersLoading } = useGetUserOrdersQuery(
-    user?.id || '', 
-    { skip: !user?.id }
+  const userId = user?.id ?? "";
+  const { data: orders, isLoading: ordersLoading, error: ordersError } = useGetUserOrdersQuery(
+    userId
   );
   
-  const { data: userReviews, isLoading: reviewsLoading } = useGetUserReviewsQuery(
-    user?.id || '', 
-    { skip: !user?.id }
+  const { data: userReviews, isLoading: reviewsLoading, error: reviewsError } = useGetUserReviewsQuery(
+    userId
   );
-
+  
   if (!user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace />;
   }
+  
+  
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -100,6 +100,10 @@ export default function Dashboard() {
                   className="rounded-full h-8 w-8 border-b-2 border-emerald-600"
                 />
               </div>
+            ) : ordersError ? (
+              <div className="text-center text-red-600 py-8">
+                <p>Failed to load orders</p>
+              </div>
             ) : !orders || orders.length === 0 ? (
               <div className="text-gray-600 text-center py-8">
                 {t("dashboard.noOrders")}
@@ -164,6 +168,10 @@ export default function Dashboard() {
                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                   className="rounded-full h-8 w-8 border-b-2 border-emerald-600"
                 />
+              </div>
+            ) : reviewsError ? (
+              <div className="text-center text-red-600 py-8">
+                <p>Failed to load reviews</p>
               </div>
             ) : !userReviews || userReviews.length === 0 ? (
               <div className="text-gray-600 text-center py-8">

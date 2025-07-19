@@ -41,6 +41,12 @@ export const authApi = createApi({
       transformResponse: (
         response: ApiResponse
       ): AuthResponse | Promise<AuthResponse> => {
+        // Store token in cookies for persistence
+        const token = response.token;
+        if (token) {
+          document.cookie = `token=${token}; path=/; max-age=${7 * 24 * 60 * 60}; secure; samesite=strict`;
+        }
+        
         return {
           user: {
             id: response._id,
