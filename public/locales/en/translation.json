@@ -38,7 +38,9 @@
   "notDeleted": "Not deleted",
   "confirm":  "Sunteți sigur că doriți să ștereti această categorie?",
   "failUpdate": "Failed to update category",
-  "add":  "Add category"
+  "add":  "Add category",
+  "delete": "Delete",
+  "edit":"Edit"
 
 },
   "cart": {

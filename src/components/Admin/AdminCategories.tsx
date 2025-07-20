@@ -101,7 +101,7 @@ const AdminCategories = ({
                       }}
                       className="bg-gray-400 text-white rounded px-3 py-1"
                     >
-                      Скасувати
+                      {t('common.cancel')}
                     </button>
                   </>
                 ) : (
@@ -135,13 +135,13 @@ const AdminCategories = ({
                         }}
                         className="text-blue-500 text-sm hover:underline"
                       >
-                        Редагувати
+                        {t('categories.edit')}
                       </button>
                       <button
                         onClick={() => handleDelete(cat._id)}
                         className="text-red-500 text-sm hover:underline"
                       >
-                        Видалити
+                        {t('categories.delete')}
                       </button>
                     </div>
                   </>

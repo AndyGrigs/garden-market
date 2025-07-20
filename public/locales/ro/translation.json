@@ -48,7 +48,9 @@
       "notDeleted": "Nu a fost șters",
       "confirm":  "Sunteți sigur că doriți să ștereti această categorie?",
       "failUpdate": "Nu s-a putut actualiza categoria",
-      "add": "Adăuga categorie"
+      "add": "Adăuga categorie",
+      "delete": "Șterge",
+      "edit":"Editează"
 
 },
   "contact": {

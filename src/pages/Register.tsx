@@ -86,12 +86,6 @@ export default function Register() {
             </p>
           </div>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
-            <p className="text-sm text-blue-700">
-              {t("auth.register.languageDetected")}: <strong>{detectedLanguage.toUpperCase()}</strong>
-            </p>
-          </div>
-
           <motion.form
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
