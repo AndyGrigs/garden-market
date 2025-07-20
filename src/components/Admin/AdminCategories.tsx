@@ -10,6 +10,8 @@ import { Category, TranslatedString } from "../../types/ICategories";
 import { useLanguage } from "../../hooks/useLanguage";
 import CategoryModal from "./CategoryModal";
 import { BASE_URL } from "../../config";
+import { t } from 'i18next';
+import { Loader } from 'lucide-react';
 
 interface AdminCategoriesProps {
   selectedCategoryId: string;
@@ -32,11 +34,11 @@ const AdminCategories = ({
   const lang = useLanguage();
 
   const handleDelete = async (id: string) => {
-    if (window.confirm("Вы уверены, что хотите удалить эту категорию?")) {
+    if (window.confirm(t('categories.confirm'))) {
       try {
         await deleteCategory(id).unwrap();
       } catch {
-        alert("Не удалось удалить");
+        alert(t('categories.notDeleted'));
       }
     }
   };
@@ -51,7 +53,7 @@ const AdminCategories = ({
       setEditingCategoryId("");
       setNewName("");
     } catch {
-      alert("Не вдалося оновити категорію");
+      alert(t('categories.failUpdate'));
     }
   };
 
@@ -67,11 +69,11 @@ const AdminCategories = ({
           onClick={() => setIsModalOpen(pr => !pr)}
           className="bg-emerald-600 mr-auto text-white px-4 py-2 rounded mb-4"
         >
-          ➕ Додати категорію
+          ➕ {t('categories.add')}
         </button>
 
         {isLoading ? (
-          <p>Завантаження...</p>
+          <Loader/>
         ) : (
           <ul className="space-y-2">
             {categories?.map((cat: Category) => (
@@ -90,7 +92,7 @@ const AdminCategories = ({
                       onClick={() => handleUpdate(cat._id)}
                       className="bg-emerald-500 text-white rounded px-3 py-1 mr-2"
                     >
-                      Зберегти
+                      {t('common.save')}
                     </button>
                     <button
                       onClick={() => {

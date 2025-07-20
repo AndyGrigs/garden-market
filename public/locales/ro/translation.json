@@ -1,6 +1,7 @@
 {
   "common": {
-  "cancel": "Anulează"
+  "cancel": "Anulează",
+  "save": "Salva"
 },
   "header": {
     "title": "Covaci de Grădină",
@@ -43,7 +44,12 @@
    "categories": {
       "noCategories": "Nu există categorii...",
       "all": "Toate categorii",
-      "title": "Titlu categorie"
+      "title": "Titlu categorie",
+      "notDeleted": "Nu a fost șters",
+      "confirm":  "Sunteți sigur că doriți să ștereti această categorie?",
+      "failUpdate": "Nu s-a putut actualiza categoria",
+      "add": "Adăuga categorie"
+
 },
   "contact": {
     "title": "Contactează-ne",

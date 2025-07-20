@@ -1,6 +1,7 @@
 {
 "common": {
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "save": "Save"
 },
 
   "header": {
@@ -33,7 +34,12 @@
   "categories": {
   "noCategories": "No categories found...",
   "all": "All categories",
-  "title": "Category Title"
+  "title": "Category Title",
+  "notDeleted": "Not deleted",
+  "confirm":  "Sunteți sigur că doriți să ștereti această categorie?",
+  "failUpdate": "Failed to update category",
+  "add":  "Add category"
+
 },
   "cart": {
     "title": "Shopping Cart",
