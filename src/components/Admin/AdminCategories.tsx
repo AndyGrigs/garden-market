@@ -151,7 +151,7 @@ const AdminCategories = ({
           </ul>
         )}
         
-        <CategoryModal
+        {/* <CategoryModal
           onClose={() => setIsModalOpen(false)}
           isOpen={isModalOpen}
           onSubmit={async (data) => {
@@ -166,7 +166,28 @@ const AdminCategories = ({
               alert("Помилка створення категорії");
             }
           }}
-        />
+        /> */}
+        <CategoryModal
+  onClose={() => setIsModalOpen(false)}
+  isOpen={isModalOpen}
+  onSubmit={async (data) => {
+    try {
+      // ✅ FIX: data hat jetzt das richtige Format { ru, ro, en, imageUrl? }
+      await createCategory({
+        name: {
+          ru: data.ru,
+          ro: data.ro, 
+          en: data.en
+        },
+        imageUrl: data.imageUrl, // imageUrl ist jetzt optional
+      }).unwrap();
+      setIsModalOpen(false);
+    } catch (err) {
+      console.error(err);
+      alert("Помилка створення категорії");
+    }
+  }}
+/>
       </div>
     </>
   );

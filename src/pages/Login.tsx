@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLoginMutation, useForgotPasswordMutation } from "../store/api/authApi";
-import { setUser} from "../store/slices/authSlice";
+import { loginSuccess} from "../store/slices/authSlice";
 import { LogIn, Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
@@ -25,20 +25,38 @@ export default function Login() {
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setError("");
 
-    try {
-      const result = await login({ email, password }).unwrap();
-      dispatch(setUser(result.user));
-      navigate(from, { replace: true });
-    } catch (err) {
-      setError(t("auth.login.error"));
-      console.log(err);
-    }
-  };
+  //   try {
+  //     const result = await login({ email, password }).unwrap();
+  //     dispatch(setUser(result.user));
+  //     navigate(from, { replace: true });
+  //   } catch (err) {
+  //     setError(t("auth.login.error"));
+  //     console.log(err);
+  //   }
+  // };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
 
+  try {
+    const result = await login({ email, password }).unwrap();
+    
+    dispatch(loginSuccess({
+      user: result.user,
+      token: result.token
+    }));
+    
+    console.log('✅ Login erfolgreich, Token gespeichert:', result.token);
+    navigate(from, { replace: true });
+  } catch (err) {
+    setError(t("auth.login.error"));
+    console.log('❌ Login Error:', err);
+  }
+};
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
