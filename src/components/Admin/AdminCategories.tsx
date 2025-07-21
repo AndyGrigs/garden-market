@@ -12,6 +12,7 @@ import CategoryModal from "./CategoryModal";
 import { BASE_URL } from "../../config";
 import { t } from 'i18next';
 import { Loader } from 'lucide-react';
+import { EditCategoryModal } from './EditCategoryModal';
 
 interface AdminCategoriesProps {
   selectedCategoryId: string;
@@ -26,11 +27,17 @@ const AdminCategories = ({
   const [createCategory] = useCreateCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
   const [updateCategory] = useUpdateCategoryMutation();
+
   
   const [newName, setNewName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   
+
   const lang = useLanguage();
 
   const handleDelete = async (id: string) => {
@@ -42,6 +49,8 @@ const AdminCategories = ({
       }
     }
   };
+
+
 
   const handleUpdate = async (id: string) => {
     if (!newName?.trim()) return;
@@ -151,43 +160,34 @@ const AdminCategories = ({
           </ul>
         )}
         
-        {/* <CategoryModal
-          onClose={() => setIsModalOpen(false)}
-          isOpen={isModalOpen}
-          onSubmit={async (data) => {
-            try {
-              await createCategory({
-                name: data,
-                imageUrl: data.imageUrl,
-              }).unwrap();
-              setIsModalOpen(false);
-            } catch (err) {
-              console.error(err);
-              alert("Помилка створення категорії");
-            }
-          }}
-        /> */}
+    
         <CategoryModal
-  onClose={() => setIsModalOpen(false)}
-  isOpen={isModalOpen}
-  onSubmit={async (data) => {
-    try {
-      // ✅ FIX: data hat jetzt das richtige Format { ru, ro, en, imageUrl? }
-      await createCategory({
-        name: {
-          ru: data.ru,
-          ro: data.ro, 
-          en: data.en
-        },
-        imageUrl: data.imageUrl, // imageUrl ist jetzt optional
-      }).unwrap();
-      setIsModalOpen(false);
-    } catch (err) {
-      console.error(err);
-      alert("Помилка створення категорії");
-    }
-  }}
-/>
+            onClose={() => setIsModalOpen(false)}
+            isOpen={isModalOpen}
+            onSubmit={async (data) => {
+              try {
+                await createCategory({
+                  name: {
+                    ru: data.ru,
+                    ro: data.ro, 
+                    en: data.en
+                  },
+                  imageUrl: data.imageUrl,
+                }).unwrap();
+                setIsModalOpen(false);
+              } catch (err) {
+                console.error(err);
+                alert("Помилка створення категорії");
+               }
+             }}
+          />
+
+          
+            <button onClick={() => setIsEditModalOpen(true)}>
+              test
+            </button>
+
+            <EditCategoryModal isOpen={isEditModalOpen} onClose={()=> setIsEditModalOpen(false)}/>
       </div>
     </>
   );
