@@ -1,3 +1,5 @@
+// src/components/Admin/AdminCategories.tsx - ВИПРАВЛЕНА ВЕРСІЯ
+
 import { useState } from "react";
 import {
   useCreateCategoryMutation,
@@ -28,21 +30,19 @@ const AdminCategories = ({
   const [deleteCategory] = useDeleteCategoryMutation();
   const [updateCategory] = useUpdateCategoryMutation();
 
+
   
-  const [newName, setNewName] = useState("");
-  const [editingCategoryId, setEditingCategoryId] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-
+  
+  
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  
 
   const lang = useLanguage();
 
   const handleDelete = async (id: string) => {
     if (window.confirm(t('categories.confirm'))) {
-      try {
+      try { 
         await deleteCategory(id).unwrap();
       } catch {
         alert(t('categories.notDeleted'));
@@ -51,24 +51,41 @@ const AdminCategories = ({
   };
 
 
-
-  const handleUpdate = async (id: string) => {
-    if (!newName?.trim()) return;
-    try {
-      await updateCategory({
-        id,
-        name: { [lang]: newName },
-      }).unwrap();
-      setEditingCategoryId("");
-      setNewName("");
-    } catch {
-      alert(t('categories.failUpdate'));
-    }
-  };
-
   const getCategoryName = (name: TranslatedString): string => {
     return name[lang as keyof typeof name] || name.ru || "Unnamed";
   };
+
+  const handleEditClick = (category: Category) => {
+    setEditingCategory(category);
+    setIsEditModalOpen(true); 
+  };
+
+ 
+  const handleUpdateCategory = async (updatedName: TranslatedString) => {
+    if(!editingCategory) return;
+
+    try {
+      console.log('📤 Відправляємо на сервер:', {
+        id: editingCategory._id,
+        name: updatedName
+      });
+
+      await updateCategory({
+        id: editingCategory._id,
+        name: updatedName
+      }).unwrap();
+      
+      console.log('✅ Категорія оновлена!');
+      
+     
+      setIsEditModalOpen(false);
+      setEditingCategory(null);
+      
+    } catch (error) {
+      console.error('❌ Error to update:', error);
+      alert("We can not update category...(");
+    }
+  };        
 
   return (
     <>
@@ -82,7 +99,10 @@ const AdminCategories = ({
         </button>
 
         {isLoading ? (
-          <Loader/>
+          <div className="flex justify-center items-center py-4">
+            <Loader className="animate-spin" />
+            <span className="ml-2">Завантаження...</span>
+          </div>
         ) : (
           <ul className="space-y-2">
             {categories?.map((cat: Category) => (
@@ -90,104 +110,83 @@ const AdminCategories = ({
                 key={cat._id}
                 className="flex justify-between items-center border-b pb-2"
               >
-                {editingCategoryId === cat._id ? (
-                  <>
-                    <input
-                      value={newName}
-                      onChange={(e) => setNewName(e.target.value)}
-                      className="border px-2 py-1 rounded mr-2"
+            
+                <div className="flex items-center gap-3">
+                  {cat.imageUrl && (
+                    <img
+                      src={`${BASE_URL}${cat.imageUrl}`}
+                      alt={getCategoryName(cat.name)}
+                      className="w-12 h-12 object-cover rounded-md"
                     />
-                    <button
-                      onClick={() => handleUpdate(cat._id)}
-                      className="bg-emerald-500 text-white rounded px-3 py-1 mr-2"
-                    >
-                      {t('common.save')}
-                    </button>
-                    <button
-                      onClick={() => {
-                        setEditingCategoryId("");
-                        setNewName("");
-                      }}
-                      className="bg-gray-400 text-white rounded px-3 py-1"
-                    >
-                      {t('common.cancel')}
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex items-center gap-3">
-                      {/* Відображення зображення категорії */}
-                      {cat.imageUrl && (
-                        <img
-                          src={`${BASE_URL}${cat.imageUrl}`}
-                          alt={getCategoryName(cat.name)}
-                          className="w-12 h-12 object-cover rounded-md"
-                        />
-                      )}
-                      <span
-                        onClick={() => onSelectCategory(cat._id)}
-                        className={`cursor-pointer ${
-                          selectedCategoryId === cat._id
-                            ? "text-emerald-600 font-bold"
-                            : "text-gray-800"
-                        }`}
-                      >
-                        {getCategoryName(cat.name)}
-                      </span>
-                    </div>
+                  )}
+                  <span
+                    onClick={() => onSelectCategory(cat._id)}
+                    className={`cursor-pointer ${
+                      selectedCategoryId === cat._id
+                        ? "text-emerald-600 font-bold"
+                        : "text-gray-800"
+                    }`}
+                  >
+                    {getCategoryName(cat.name)}
+                  </span>
+                </div>
 
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => {
-                          setEditingCategoryId(cat._id);
-                          setNewName(getCategoryName(cat.name));
-                        }}
-                        className="text-blue-500 text-sm hover:underline"
-                      >
-                        {t('categories.edit')}
-                      </button>
-                      <button
-                        onClick={() => handleDelete(cat._id)}
-                        className="text-red-500 text-sm hover:underline"
-                      >
-                        {t('categories.delete')}
-                      </button>
-                    </div>
-                  </>
-                )}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleEditClick(cat)}
+                    className="text-blue-500 text-sm hover:underline"
+                  >
+                    {t('categories.edit')}
+                  </button>
+                  <button
+                    onClick={() => handleDelete(cat._id)}
+                    className="text-red-500 text-sm hover:underline"
+                  >
+                    {t('categories.delete')}
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
         )}
         
-    
+        {/* Модалка створення */}
         <CategoryModal
-            onClose={() => setIsModalOpen(false)}
-            isOpen={isModalOpen}
-            onSubmit={async (data) => {
-              try {
-                await createCategory({
-                  name: {
-                    ru: data.ru,
-                    ro: data.ro, 
-                    en: data.en
-                  },
-                  imageUrl: data.imageUrl,
-                }).unwrap();
-                setIsModalOpen(false);
-              } catch (err) {
-                console.error(err);
-                alert("Помилка створення категорії");
-               }
-             }}
+          onClose={() => setIsModalOpen(false)}
+          isOpen={isModalOpen}
+          onSubmit={async (data) => {
+            try {
+              await createCategory({
+                name: {
+                  ru: data.ru,
+                  ro: data.ro, 
+                  en: data.en
+                },
+                imageUrl: data.imageUrl,
+              }).unwrap();
+              setIsModalOpen(false);
+            } catch (err) {
+              console.error(err);
+              alert("Помилка створення категорії");
+            }
+          }}
+        />
+
+       
+
+        {/* Модалка редагування */}
+        {editingCategory && (
+          <EditCategoryModal
+            isOpen={isEditModalOpen}
+            onClose={() => {
+              setIsEditModalOpen(false);  
+              setEditingCategory(null);
+            }}
+            initialData={editingCategory.name}
+            categoryName={getCategoryName(editingCategory.name)}
+            onSubmit={handleUpdateCategory}
           />
-
-          
-            <button onClick={() => setIsEditModalOpen(true)}>
-              test
-            </button>
-
-            <EditCategoryModal isOpen={isEditModalOpen} onClose={()=> setIsEditModalOpen(false)}/>
+        )}
       </div>
     </>
   );
