@@ -1,4 +1,4 @@
-// src/components/Admin/EditCategoryModal.tsx - З фоткою
+// src/components/Admin/EditCategoryModal.tsx - ВИПРАВЛЕНА ВЕРСІЯ
 import { useState, FormEvent, useEffect } from 'react';
 import { TranslatedString } from '../../types/ICategories';
 import { useUploadImageMutation, useDeleteImageMutation } from "../../store/api/uploadApi";
@@ -8,7 +8,7 @@ import { BASE_URL } from "../../config";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: TranslatedString & { imageUrl?: string }) => void; // ✅ Додали imageUrl
+  onSubmit: (data: TranslatedString & { imageUrl?: string }) => void;
   initialData?: TranslatedString;
   categoryName?: string;
   initialImageUrl?: string; // ✅ Додали початкове зображення
@@ -27,29 +27,22 @@ export const EditCategoryModal = ({
   const [imageUrl, setImageUrl] = useState<string>(initialImageUrl);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   
-  // ✅ API хуки для роботи з зображеннями
   const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
   const [deleteImage] = useDeleteImageMutation();
 
-  // Оновлюємо дані при зміні пропсів
+  // ✅ FIX: Правильно оновлюємо дані при зміні пропсів
   useEffect(() => {
-    if (initialData) {
-      setFormData(initialData);
-    }
-    if (initialImageUrl) {
-      setImageUrl(initialImageUrl);
-    }
-  }, [initialData, initialImageUrl]);
-
-  useEffect(() => {
-    if (isOpen && initialData) {
+    if (isOpen) {
+      console.log('🔄 Модалка відкрилась з даними:', { initialData, initialImageUrl });
+      
       setFormData({
-        ru: initialData.ru || "",
-        ro: initialData.ro || "",
-        en: initialData.en || ""
+        ru: initialData?.ru || "",
+        ro: initialData?.ro || "",
+        en: initialData?.en || ""
       });
+      
       setImageUrl(initialImageUrl || "");
-      setSelectedFile(null); // Скидаємо вибраний файл
+      setSelectedFile(null);
     }
   }, [isOpen, initialData, initialImageUrl]);
 
@@ -60,22 +53,22 @@ export const EditCategoryModal = ({
     }));
   };
 
-  // ✅ Обробка вибору файлу
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setSelectedFile(e.target.files[0]);
       // Показуємо превью
       const previewUrl = URL.createObjectURL(e.target.files[0]);
       setImageUrl(previewUrl);
+      console.log('📷 Вибрано новий файл для завантаження');
     }
   };
 
-  // ✅ Видалення зображення
   const handleDeleteImage = async () => {
     if (imageUrl && !imageUrl.startsWith('blob:')) {
       try {
         const filename = imageUrl.split("/").pop();
         if (filename) {
+          console.log('🗑️ Видаляємо файл:', filename);
           await deleteImage(filename).unwrap();
         }
       } catch (error) {
@@ -86,12 +79,14 @@ export const EditCategoryModal = ({
     // Скидаємо зображення
     setImageUrl("");
     setSelectedFile(null);
+    console.log('✅ Зображення видалено');
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    if (formData.ru?.trim() ?? false) {
+    // ✅ FIX: Правильна валідація
+    if (!formData.ru?.trim()) {
       alert('Поле RU обов\'язкове!');
       return;
     }
@@ -99,7 +94,7 @@ export const EditCategoryModal = ({
     try {
       let finalImageUrl = imageUrl;
 
-      // ✅ Якщо вибрано новий файл - завантажуємо його
+      // Якщо вибрано новий файл - завантажуємо його
       if (selectedFile) {
         console.log('📤 Завантажуємо нове зображення...');
         const form = new FormData();
@@ -110,8 +105,12 @@ export const EditCategoryModal = ({
         console.log('✅ Зображення завантажено:', finalImageUrl);
       }
 
-      // ✅ Відправляємо дані з imageUrl
-      console.log('📤 Відправляємо дані:', { ...formData, imageUrl: finalImageUrl });
+      // Відправляємо дані з imageUrl
+      console.log('📤 Відправляємо дані:', { 
+        ...formData, 
+        imageUrl: finalImageUrl 
+      });
+      
       onSubmit({ ...formData, imageUrl: finalImageUrl });
       onClose();
       
@@ -180,18 +179,19 @@ export const EditCategoryModal = ({
           <div>
             <label className="block text-sm font-medium mb-2">Зображення категорії</label>
             
-            {/* Поточне зображення */}
+            {/* ✅ Поточне зображення - показуємо якщо є */}
             {imageUrl && (
               <div className="mb-3">
                 <img
                   src={imageUrl.startsWith('blob:') ? imageUrl : `${BASE_URL}${imageUrl}`}
                   alt="Зображення категорії"
-                  className="w-32 h-32 object-cover rounded-lg border"
+                  className="w-full h-40 object-cover rounded-lg border"
                 />
                 <button
                   type="button"
                   onClick={handleDeleteImage}
                   className="mt-2 text-red-600 text-sm hover:underline flex items-center gap-1"
+                  disabled={uploading}
                 >
                   <X size={16} />
                   Видалити зображення
@@ -199,7 +199,7 @@ export const EditCategoryModal = ({
               </div>
             )}
 
-            {/* Завантаження нового зображення */}
+            {/* ✅ Завантаження нового зображення */}
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
               <input
                 type="file"
@@ -207,10 +207,13 @@ export const EditCategoryModal = ({
                 onChange={handleFileChange}
                 className="hidden"
                 id="image-upload"
+                disabled={uploading}
               />
               <label
                 htmlFor="image-upload"
-                className="cursor-pointer flex flex-col items-center gap-2 text-gray-600 hover:text-gray-800"
+                className={`cursor-pointer flex flex-col items-center gap-2 text-gray-600 hover:text-gray-800 ${
+                  uploading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
               >
                 <Upload size={24} />
                 <span className="text-sm">

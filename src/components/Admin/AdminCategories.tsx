@@ -61,31 +61,41 @@ const AdminCategories = ({
   };
 
  
-  const handleUpdateCategory = async (updatedName: TranslatedString) => {
-    if(!editingCategory) return;
+ const handleUpdateCategory = async (updatedData: TranslatedString & { imageUrl?: string }) => {
+  if (!editingCategory) return;
 
-    try {
-      console.log('📤 Відправляємо на сервер:', {
-        id: editingCategory._id,
-        name: updatedName
-      });
+  try {
+    console.log('📤 Відправляємо на сервер:', {
+      id: editingCategory._id,
+      name: {
+        ru: updatedData.ru,
+        ro: updatedData.ro,
+        en: updatedData.en
+      },
+      imageUrl: updatedData.imageUrl
+    });
 
-      await updateCategory({
-        id: editingCategory._id,
-        name: updatedName
-      }).unwrap();
-      
-      console.log('✅ Категорія оновлена!');
-      
-     
-      setIsEditModalOpen(false);
-      setEditingCategory(null);
-      
-    } catch (error) {
-      console.error('❌ Error to update:', error);
-      alert("We can not update category...(");
-    }
-  };        
+    // ✅ Відправляємо і назву і зображення
+    await updateCategory({
+      id: editingCategory._id,
+      name: {
+        ru: updatedData.ru,
+        ro: updatedData.ro,
+        en: updatedData.en
+      },
+      imageUrl: updatedData.imageUrl // ✅ Обов'язково додай imageUrl
+    }).unwrap();
+    
+    console.log('✅ Категорія оновлена!');
+    
+    setIsEditModalOpen(false);
+    setEditingCategory(null);
+    
+  } catch (error) {
+    console.error('❌ Error to update:', error);
+    alert("Не вдалося оновити категорію");
+  }
+};    
 
   return (
     <>
@@ -176,17 +186,18 @@ const AdminCategories = ({
 
         {/* Модалка редагування */}
         {editingCategory && (
-          <EditCategoryModal
-            isOpen={isEditModalOpen}
-            onClose={() => {
-              setIsEditModalOpen(false);  
-              setEditingCategory(null);
-            }}
-            initialData={editingCategory.name}
-            categoryName={getCategoryName(editingCategory.name)}
-            onSubmit={handleUpdateCategory}
-          />
-        )}
+        <EditCategoryModal
+          isOpen={isEditModalOpen}
+          onClose={() => {
+            setIsEditModalOpen(false);
+            setEditingCategory(null);
+          }}
+          initialData={editingCategory.name}
+          initialImageUrl={editingCategory.imageUrl} // ✅ ДОДАЙ ЦЮ ЛІНІЮ!
+          categoryName={getCategoryName(editingCategory.name)}
+          onSubmit={handleUpdateCategory}
+        />
+      )}
       </div>
     </>
   );

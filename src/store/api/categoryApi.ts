@@ -60,14 +60,28 @@ export const categoryApi = createApi({
       invalidatesTags: ['Category']
     }),
 
-    updateCategory: builder.mutation<Category, { id: string; name: TranslatedString }>({
-      query: ({ id, name }) => ({
-        url: `/categories/${id}`,
-        method: 'PATCH',
-        body: { name }
-      }),
+     updateCategory: builder.mutation<Category, { 
+      id: string; 
+      name: TranslatedString;
+      imageUrl?: string;
+    }>({
+      query: ({ id, name, imageUrl }) => {
+       
+        const body: { name: TranslatedString; imageUrl?: string } = { name };
+        
+        if (imageUrl !== undefined) {
+          body.imageUrl = imageUrl;
+        }
+        
+        return {
+          url: `/categories/${id}`,
+          method: 'PATCH',
+          body
+        };
+      },
       invalidatesTags: ['Category']
     }),
+      
       
     deleteCategory: builder.mutation<{ message: string }, string>({
       query: (id) => ({
