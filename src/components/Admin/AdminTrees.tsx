@@ -1,216 +1,364 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  useCreateTreeMutation,
-  useGetTreesQuery,
-  useUpdateTreeMutation,
-  useDeleteTreeMutation,
-} from "../../store/api/treesApi";
-import { setTrees, addTree, updateTree as updateTreeAction, removeTree, setEditingTree } from "../../store/slices/treeSlice";
-import TreeModal from "./TreeModal";
-import { Tree, TreeFormData } from "../../types/ITree";
-import { useDeleteImageMutation } from '../../store/api/uploadApi';
-import { useLanguage } from '../../hooks/useLanguage';
+// src/components/Admin/TreeModal.tsx - ВИПРАВЛЕНА ВЕРСІЯ
+import { useEffect, useState } from "react";
+import { useGetCategoriesQuery } from "../../store/api/categoryApi";
+import { Loader2, X, Upload } from "lucide-react";
+import { Category, TranslatedString } from "../../types/ICategories";
+import { TreeFormData } from "../../types/ITree";
+import { useDeleteImageMutation, useUploadImageMutation } from '../../store/api/uploadApi';
 import { t } from 'i18next';
 import { BASE_URL } from '../../config';
-import { RootState } from "../../store/store";
 
-interface AdminTreesProps {
-  selectedCategoryId: string;
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (treeData: TreeFormData) => void;
+  initialData?: TreeFormData;
 }
 
-const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
-  const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const { trees, editingTree } = useSelector((state: RootState) => state.tree);
-  
-
-  const { data: apiTrees, isLoading } = useGetTreesQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-  });
-  const [createTree] = useCreateTreeMutation();
-  const [updateTree] = useUpdateTreeMutation();
-  const [deleteTree] = useDeleteTreeMutation();
-  const [deleteImage] = useDeleteImageMutation();
-  const lang = useLanguage();
-
-  useEffect(() => {
-    if (apiTrees) {
-      dispatch(setTrees(apiTrees));
+const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
+  const [form, setForm] = useState<TreeFormData>(
+    initialData || {
+      title: { ru: "", ro: "", en: "" },
+      description: { ru: "", ro: "", en: "" },
+      price: 0,
+      stock: 0,
+      category: "",
+      imageUrl: "",
     }
-  }, [apiTrees, dispatch]);
-
-  const filteredTrees = trees.filter(
-    (tree) => tree.category?._id === selectedCategoryId
   );
 
-  const isTreeDataValid = (treeData: TreeFormData) => {
-    return treeData.title?.ru && treeData.title?.en && treeData.title?.ro && treeData.category;
-  };
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // ✅ Додав для превью
+  const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
+  const [deleteImage] = useDeleteImageMutation();
 
-  const handleDeleteTree = async (id: string, imageUrl?: string) => {
-    if (window.confirm(t('dashboard.deleteTreeConfirm'))) {
-      try {
-        if (imageUrl) {
-          const normalizedUrl = imageUrl.startsWith("/uploads/") ? imageUrl.replace("/uploads/", "") : imageUrl;
-          await deleteImage(normalizedUrl).unwrap();
-        }
-        await deleteTree(id).unwrap();
-        // Update Redux store
-        dispatch(removeTree(id));
-      } catch (error) {
-        alert(t('dashboard.deleteTreeError'));
-        console.error(error);
-      }
-    }
-  };
+  const { data: categories } = useGetCategoriesQuery();
 
-  const getTreeTitle = (title: { [key: string]: string }) => {
-    return title?.[lang] || "";
-  };
-
-  const handleEditTree = (tree: Tree) => {
-    dispatch(setEditingTree(tree));
-    setIsModalOpen(true);
-  };
-
-  const handleSubmitTree = async (treeData: TreeFormData) => {
-    if (!isTreeDataValid(treeData)) {
-      alert(t('dashboard.invalidTreedata'));
-      return;
-    }
-
-    try {
-      if (editingTree && editingTree._id) {
-       
-        const updatedTree = await updateTree({
-          id: editingTree._id,
-          body: {
-            ...treeData,
-            category: {
-              _id: treeData.category,
-              name: { ru: "", ro: "", en: "" },
-            },
-          },
-        }).unwrap();
-        
-        // Update Redux store
-        dispatch(updateTreeAction(updatedTree));
-      } else {
-        // Create new tree
-        const newTree = await createTree({
-          title: treeData.title,
-          description: treeData.description,
-          price: treeData.price,
-          stock: treeData.stock,
-          imageUrl: treeData.imageUrl,
-          category: {
-            _id: treeData.category,
-            name: { ru: "", ro: "", en: "" },
-          },
-        }).unwrap();
-        
-        // Update Redux store
-        dispatch(addTree(newTree));
-      }
+  // ✅ ВИПРАВЛЕНО: Правильно оновлюємо форму при зміні initialData
+  useEffect(() => {
+    if (isOpen) {
+      console.log('🔄 TreeModal відкрилась з даними:', initialData);
       
-      setIsModalOpen(false);
-      dispatch(setEditingTree(null));
-    } catch (err) {
-      alert(t('dashboard.createEditTreeError'));
-      console.error(err);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    dispatch(setEditingTree(null));
-  };
-
-  if (!selectedCategoryId) {
-    return (
-      <div className="p-6 bg-white shadow rounded">
-        <h3 className="text-xl font-semibold mb-4">
-          {t('dashboard.selectCategoryPrompt')}
-        </h3>
-      </div>
-    );
-  }
-
-  return (
-    <div className="p-6 bg-white shadow rounded">
-      <h3 className="text-xl font-semibold mb-4">
-        {t('dashboard.selectedCategoryProducts')}
-      </h3>
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="bg-emerald-600 text-white px-4 py-2 mb-3 ml-auto rounded hover:bg-emerald-700"
-      >
-        ➕ {t('dashboard.addProduct')}
-      </button>
-      {isLoading ? (
-        <div className="text-center">{t('collection.loading')}</div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredTrees?.map((tree) => (
-            <div key={tree._id} className="border rounded-lg p-4 shadow-sm">
-              <img
-                src={tree.imageUrl ? `${BASE_URL}${tree.imageUrl}` : "/placeholder.jpg"}
-                alt={getTreeTitle(tree.title)}
-                className="w-full h-32 object-cover rounded mb-2"
-              />
-              <h4 className="font-semibold text-lg mb-2">
-                {getTreeTitle(tree.title)}
-              </h4>
-              <p className="text-gray-600 mb-2">
-               { t('tree.priceLabel', { price: tree.price })}
-              </p>
-              {/* <p className="text-gray-600 mb-2">
-                t('tree.inStockLabel', { stock: tree.stock })
-              </p> */}
-              <button
-
-
-                onClick={() => handleEditTree(tree)}
-                className="bg-yellow-500 mb-3 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 mr-2"
-              >
-               {t('dashboard.edit')}
-              </button>
-              <button
-                onClick={() => handleDeleteTree(tree._id, tree.imageUrl)}
-                className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
-              >
-                {t('dashboard.delete')}
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <TreeModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onSubmit={handleSubmitTree}
-        initialData={editingTree ? {
-          title: editingTree.title,
-          description: editingTree.description,
-          price: editingTree.price,
-          stock: editingTree.stock,
-          imageUrl: editingTree.imageUrl,
-          category: editingTree.category?._id || selectedCategoryId,
-          _id: editingTree._id,
-        } : {
+      if (initialData) {
+        setForm({
+          title: {
+            ru: initialData.title?.ru ?? "",
+            ro: initialData.title?.ro ?? "",
+            en: initialData.title?.en ?? "",
+          },
+          description: {
+            ru: initialData.description?.ru ?? "",
+            ro: initialData.description?.ro ?? "",
+            en: initialData.description?.en ?? "",
+          },
+          price: initialData.price ?? 0,
+          stock: initialData.stock ?? 0,
+          category: initialData.category ?? "",
+          imageUrl: initialData.imageUrl ?? "",
+          _id: initialData._id
+        });
+      } else {
+        // Для нового товару
+        setForm({
           title: { ru: "", ro: "", en: "" },
           description: { ru: "", ro: "", en: "" },
           price: 0,
           stock: 0,
+          category: "",
           imageUrl: "",
-          category: selectedCategoryId,
-        }}
-      />
+        });
+      }
+      
+      setSelectedFile(null);
+    }
+  }, [isOpen, initialData]);
+
+  const handleLangChange = (
+    field: keyof Pick<TreeFormData, "title" | "description">,
+    lang: keyof TranslatedString,
+    value: string
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        [lang]: value,
+      },
+    }));
+  };
+
+  const handleChange = <T extends keyof TreeFormData>(
+    field: T,
+    value: TreeFormData[T]
+  ) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // ✅ ВИПРАВЛЕНО: Спочатку показуємо превью, потім завантажуємо
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setSelectedFile(file);
+      
+      // Показуємо превью
+      const previewUrl = URL.createObjectURL(file);
+      setForm(prev => ({ ...prev, imageUrl: previewUrl }));
+      
+      console.log('📷 Вибрано файл для завантаження:', file.name);
+    }
+  };
+
+  // ✅ ВИПРАВЛЕНО: Правильне видалення фотки
+  const handleDeleteImage = async () => {
+    if (form.imageUrl && !form.imageUrl.startsWith('blob:')) {
+      try {
+        const filename = form.imageUrl.split('/').pop();
+        if (filename) {
+          console.log('🗑️ Видаляємо файл:', filename);
+          await deleteImage(filename).unwrap();
+        }
+      } catch (error) {
+        console.error("Помилка видалення зображення", error);
+        alert("Не вдалося видалити зображення");
+      }
+    }
+    
+    // Скидаємо зображення
+    setForm(prev => ({ ...prev, imageUrl: "" }));
+    setSelectedFile(null);
+    console.log('✅ Зображення видалено');
+  };
+
+  // ✅ ВИПРАВЛЕНО: Завантажуємо фото перед відправкою
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Валідація
+    if (!(form.title.ru ?? "").trim() || form.price <= 0 || !form.category) {
+      alert("Назва (RU), ціна та категорія обов'язкові");
+      return;
+    }
+
+    try {
+      let finalImageUrl = form.imageUrl;
+
+      // ✅ Якщо є новий файл - завантажуємо його
+      if (selectedFile) {
+        console.log('📤 Завантажуємо нове зображення...');
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+        
+        const response = await uploadImage(formData).unwrap();
+        finalImageUrl = response.imageUrl;
+        console.log('✅ Зображення завантажено:', finalImageUrl);
+      }
+
+      // Відправляємо дані з фінальним imageUrl
+      const finalData = {
+        ...form,
+        imageUrl: finalImageUrl
+      };
+      
+      console.log('📤 Відправляємо дані товару:', finalData);
+      onSubmit(finalData);
+      
+      // Очищаємо форму
+      setForm({
+        title: { ru: "", ro: "", en: "" },
+        description: { ru: "", ro: "", en: "" },
+        price: 0,
+        stock: 0,
+        category: "",
+        imageUrl: "",
+      });
+      setSelectedFile(null);
+      onClose();
+      
+    } catch (error) {
+      console.error('❌ Помилка створення/редагування товару:', error);
+      alert("Помилка збереження товару");
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white w-full p-6 rounded-lg shadow-lg max-w-md max-h-[90vh] overflow-y-auto"
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold">
+            {initialData?._id ? 'Редагувати товар' : 'Додати товар'}
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Назви */}
+        <h4 className="font-semibold mb-2">Назва</h4>
+        {["ru", "ro", "en"].map((lang) => (
+          <input
+            key={lang}
+            className="border border-green-600 px-3 py-2 mb-2 rounded w-full"
+            placeholder={`Назва (${lang.toUpperCase()})`}
+            value={form.title[lang as keyof TranslatedString]}
+            onChange={(e) =>
+              handleLangChange(
+                "title",
+                lang as keyof TranslatedString,
+                e.target.value
+              )
+            }
+            required={lang === 'ru'}
+          />
+        ))}
+
+        {/* Описи */}
+        <h4 className="font-semibold mb-2 mt-4">Опис</h4>
+        {["ru", "ro", "en"].map((lang) => (
+          <textarea
+            key={lang}
+            className="border border-green-600 px-3 py-2 mb-2 rounded w-full h-20"
+            placeholder={`Опис (${lang.toUpperCase()})`}
+            value={form.description[lang as keyof TranslatedString]}
+            onChange={(e) =>
+              handleLangChange(
+                "description",
+                lang as keyof TranslatedString,
+                e.target.value
+              )
+            }
+          />
+        ))}
+
+        {/* Ціна і кількість */}
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Ціна</label>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              className="border border-green-600 px-3 py-2 rounded w-full"
+              placeholder="0"
+              value={form.price || ""}
+              onChange={(e) => handleChange("price", parseFloat(e.target.value) || 0)}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Кількість</label>
+            <input
+              type="number"
+              min="0"
+              className="border border-green-600 px-3 py-2 rounded w-full"
+              placeholder="0"
+              value={form.stock || ""}
+              onChange={(e) => handleChange("stock", parseInt(e.target.value) || 0)}
+            />
+          </div>
+        </div>
+
+        {/* Категорія */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">Категорія</label>
+          <select
+            className="border border-green-600 px-3 py-2 rounded w-full"
+            value={form.category}
+            onChange={(e) => handleChange("category", e.target.value)}
+            required
+          >
+            <option value="">Оберіть категорію</option>
+            {categories?.map((cat: Category) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name?.ru || cat.name?.en || cat.name?.ro}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* ✅ ВИПРАВЛЕНО: Фото товару */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Фото товару</label>
+          
+          {/* Поточне зображення */}
+          {form.imageUrl && (
+            <div className="mb-3">
+              <img
+                src={form.imageUrl.startsWith('blob:') ? form.imageUrl : `${BASE_URL}${form.imageUrl}`}
+                alt="Зображення товару"
+                className="w-full h-40 object-cover rounded border"
+              />
+              <button
+                type="button"
+                onClick={handleDeleteImage}
+                className="mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
+                disabled={uploading}
+              >
+                {t('dashboard.deleteImage')}
+              </button>
+            </div>
+          )}
+
+          {/* Завантаження нового зображення */}
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+              id="tree-image-upload"
+              disabled={uploading}
+            />
+            <label
+              htmlFor="tree-image-upload"
+              className={`cursor-pointer flex flex-col items-center gap-2 text-gray-600 hover:text-gray-800 ${
+                uploading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              <Upload size={24} />
+              <span className="text-sm">
+                {form.imageUrl ? 'Замінити зображення' : 'Завантажити зображення'}
+              </span>
+            </label>
+          </div>
+
+          {/* Індикатор завантаження */}
+          {uploading && (
+            <div className="flex items-center gap-2 mt-2 text-blue-600">
+              <Loader2 className="animate-spin" size={16} />
+              <span className="text-sm">Завантаження...</span>
+            </div>
+          )}
+        </div>
+
+        {/* Кнопки */}
+        <div className="flex gap-2 pt-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+            disabled={uploading}
+          >
+            Скасувати
+          </button>
+          <button
+            type="submit"
+            className="flex-1 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+            disabled={uploading}
+          >
+            {uploading ? 'Збереження...' : 'Зберегти'}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
 
-export default AdminTrees;
+export default TreeModal;
