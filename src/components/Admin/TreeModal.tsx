@@ -1,6 +1,7 @@
+// src/components/Admin/TreeModal.tsx - ВИПРАВЛЕНА ВЕРСІЯ
 import { useEffect, useState } from "react";
 import { useGetCategoriesQuery } from "../../store/api/categoryApi";
-import { Loader2 } from "lucide-react";
+import { Loader2, X, Upload } from "lucide-react";
 import { Category, TranslatedString } from "../../types/ICategories";
 import { TreeFormData } from "../../types/ITree";
 import { useDeleteImageMutation, useUploadImageMutation } from '../../store/api/uploadApi';
@@ -26,32 +27,50 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     }
   );
 
-
- const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // ✅ Додав для превью
+  const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
   const [deleteImage] = useDeleteImageMutation();
 
   const { data: categories } = useGetCategoriesQuery();
 
+  // ✅ ВИПРАВЛЕНО: Правильно оновлюємо форму при зміні initialData
   useEffect(() => {
-    if (initialData) {
-      setForm({
-        title: {
-          ru: initialData.title?.ru ?? "",
-          ro: initialData.title?.ro ?? "",
-          en: initialData.title?.en ?? "",
-        },
-        description: {
-          ru: initialData.description?.ru ?? "",
-          ro: initialData.description?.ro ?? "",
-          en: initialData.description?.en ?? "",
-        },
-        price: initialData.price ?? 0,
-        stock: initialData.stock ?? 0,
-        category: initialData.category ?? "",
-        imageUrl: initialData.imageUrl ?? "",
-      });
+    if (isOpen) {
+      console.log('🔄 TreeModal відкрилась з даними:', initialData);
+      
+      if (initialData) {
+        setForm({
+          title: {
+            ru: initialData.title?.ru ?? "",
+            ro: initialData.title?.ro ?? "",
+            en: initialData.title?.en ?? "",
+          },
+          description: {
+            ru: initialData.description?.ru ?? "",
+            ro: initialData.description?.ro ?? "",
+            en: initialData.description?.en ?? "",
+          },
+          price: initialData.price ?? 0,
+          stock: initialData.stock ?? 0,
+          category: initialData.category ?? "",
+          imageUrl: initialData.imageUrl ?? "",
+          _id: initialData._id
+        });
+      } else {
+        // Для нового товару
+        setForm({
+          title: { ru: "", ro: "", en: "" },
+          description: { ru: "", ro: "", en: "" },
+          price: 0,
+          stock: 0,
+          category: "",
+          imageUrl: "",
+        });
+      }
+      
+      setSelectedFile(null);
     }
-  }, [initialData]);
+  }, [isOpen, initialData]);
 
   const handleLangChange = (
     field: keyof Pick<TreeFormData, "title" | "description">,
@@ -74,57 +93,90 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  if (event.target.files && event.target.files[0]) {
-    const formData = new FormData();
-    formData.append('image', event.target.files[0]);
-    try {
-      const response = await uploadImage(formData).unwrap();
-   
-    setForm(prev=>({...prev, imageUrl: response.imageUrl}))
-    } catch (error) {
-       alert("Не вдалося завантажити фото");
-      console.error(error);
+  // ✅ ВИПРАВЛЕНО: Спочатку показуємо превью, потім завантажуємо
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setSelectedFile(file);
+      
+      // Показуємо превью
+      const previewUrl = URL.createObjectURL(file);
+      setForm(prev => ({ ...prev, imageUrl: previewUrl }));
+      
+      console.log('📷 Вибрано файл для завантаження:', file.name);
     }
-  }
-};
+  };
 
-
-const handleDeleteImage = async () => {
-  if(form.imageUrl){
-  try {
-      const filename = form.imageUrl.split('/').pop();
-      if(filename){
-        await deleteImage(filename).unwrap();
-        setForm(prev=>({...prev, imageUrl: ""}))
-
-      }
-    } catch (error) {
-      console.error("Помилка видалення зображення", error);
+  // ✅ ВИПРАВЛЕНО: Правильне видалення фотки
+  const handleDeleteImage = async () => {
+    if (form.imageUrl && !form.imageUrl.startsWith('blob:')) {
+      try {
+        const filename = form.imageUrl.split('/').pop();
+        if (filename) {
+          console.log('🗑️ Видаляємо файл:', filename);
+          await deleteImage(filename).unwrap();
+        }
+      } catch (error) {
+        console.error("Помилка видалення зображення", error);
         alert("Не вдалося видалити зображення");
+      }
     }
-  }
-  
-};
+    
+    // Скидаємо зображення
+    setForm(prev => ({ ...prev, imageUrl: "" }));
+    setSelectedFile(null);
+    console.log('✅ Зображення видалено');
+  };
 
-
-  const handleSubmit = () => {
+  // ✅ ВИПРАВЛЕНО: Завантажуємо фото перед відправкою
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Валідація
     if (!(form.title.ru ?? "").trim() || form.price <= 0 || !form.category) {
-      alert("Название (ru), цена и категория обязательны");
+      alert("Назва (RU), ціна та категорія обов'язкові");
       return;
     }
 
-    onSubmit(form);
-    setForm({
-      title: { ru: "", ro: "", en: "" },
-      description: { ru: "", ro: "", en: "" },
-      price: 0,
-      stock: 0,
-      category: "",
-      imageUrl: "",
-    });
-    // setPreviewUrl(null);
-    onClose();
+    try {
+      let finalImageUrl = form.imageUrl;
+
+      // ✅ Якщо є новий файл - завантажуємо його
+      if (selectedFile) {
+        console.log('📤 Завантажуємо нове зображення...');
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+        
+        const response = await uploadImage(formData).unwrap();
+        finalImageUrl = response.imageUrl;
+        console.log('✅ Зображення завантажено:', finalImageUrl);
+      }
+
+      // Відправляємо дані з фінальним imageUrl
+      const finalData = {
+        ...form,
+        imageUrl: finalImageUrl
+      };
+      
+      console.log('📤 Відправляємо дані товару:', finalData);
+      onSubmit(finalData);
+      
+      // Очищаємо форму
+      setForm({
+        title: { ru: "", ro: "", en: "" },
+        description: { ru: "", ro: "", en: "" },
+        price: 0,
+        stock: 0,
+        category: "",
+        imageUrl: "",
+      });
+      setSelectedFile(null);
+      onClose();
+      
+    } catch (error) {
+      console.error('❌ Помилка створення/редагування товару:', error);
+      alert("Помилка збереження товару");
+    }
   };
 
   if (!isOpen) return null;
@@ -132,15 +184,24 @@ const handleDeleteImage = async () => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
+        onSubmit={handleSubmit}
         className="bg-white w-full p-6 rounded-lg shadow-lg max-w-md max-h-[90vh] overflow-y-auto"
       >
-        <h3 className="text-xl mb-6 text-center font-semibold">Додати товар</h3>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold">
+            {initialData?._id ? 'Редагувати товар' : 'Додати товар'}
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            <X size={20} />
+          </button>
+        </div>
 
-        <h4 className="font-semibold mb-1">Назва</h4>
+        {/* Назви */}
+        <h4 className="font-semibold mb-2">Назва</h4>
         {["ru", "ro", "en"].map((lang) => (
           <input
             key={lang}
@@ -154,14 +215,16 @@ const handleDeleteImage = async () => {
                 e.target.value
               )
             }
+            required={lang === 'ru'}
           />
         ))}
 
-        <h4 className="font-semibold mb-1 mt-2">Опис</h4>
+        {/* Описи */}
+        <h4 className="font-semibold mb-2 mt-4">Опис</h4>
         {["ru", "ro", "en"].map((lang) => (
           <textarea
             key={lang}
-            className="border border-green-600 px-3 py-2 mb-2 rounded w-full"
+            className="border border-green-600 px-3 py-2 mb-2 rounded w-full h-20"
             placeholder={`Опис (${lang.toUpperCase()})`}
             value={form.description[lang as keyof TranslatedString]}
             onChange={(e) =>
@@ -174,68 +237,123 @@ const handleDeleteImage = async () => {
           />
         ))}
 
+        {/* Ціна і кількість */}
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Ціна</label>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              className="border border-green-600 px-3 py-2 rounded w-full"
+              placeholder="0"
+              value={form.price || ""}
+              onChange={(e) => handleChange("price", parseFloat(e.target.value) || 0)}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Кількість</label>
+            <input
+              type="number"
+              min="0"
+              className="border border-green-600 px-3 py-2 rounded w-full"
+              placeholder="0"
+              value={form.stock || ""}
+              onChange={(e) => handleChange("stock", parseInt(e.target.value) || 0)}
+            />
+          </div>
+        </div>
+
+        {/* Категорія */}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Фото товару</label>
-          <input type="file" accept="image/*" onChange={handleFileChange} />
-          {uploading && (
-            <div className='flex items-center mb-2'>
-              <Loader2 className="animate-spin" />
+          <label className="block text-sm font-medium mb-1">Категорія</label>
+          <select
+            className="border border-green-600 px-3 py-2 rounded w-full"
+            value={form.category}
+            onChange={(e) => handleChange("category", e.target.value)}
+            required
+          >
+            <option value="">Оберіть категорію</option>
+            {categories?.map((cat: Category) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name?.ru || cat.name?.en || cat.name?.ro}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* ✅ ВИПРАВЛЕНО: Фото товару */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Фото товару</label>
+          
+          {/* Поточне зображення */}
+          {form.imageUrl && (
+            <div className="mb-3">
+              <img
+                src={form.imageUrl.startsWith('blob:') ? form.imageUrl : `${BASE_URL}${form.imageUrl}`}
+                alt="Зображення товару"
+                className="w-full h-40 object-cover rounded border"
+              />
+              <button
+                type="button"
+                onClick={handleDeleteImage}
+                className="mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
+                disabled={uploading}
+              >
+                {t('dashboard.deleteImage')}
+              </button>
             </div>
           )}
 
-          {form.imageUrl &&(
-            <div className='mt-2'>
-              <img
-                src={`${BASE_URL}${form.imageUrl}`}
-                alt='preview'
-                className='h-40 object-cover rounded'
-              />
-              <button type='button' onClick={handleDeleteImage} className='mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm'>{t('dashboard.deleteImage')}</button>
+          {/* Завантаження нового зображення */}
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+              id="tree-image-upload"
+              disabled={uploading}
+            />
+            <label
+              htmlFor="tree-image-upload"
+              className={`cursor-pointer flex flex-col items-center gap-2 text-gray-600 hover:text-gray-800 ${
+                uploading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              <Upload size={24} />
+              <span className="text-sm">
+                {form.imageUrl ? 'Замінити зображення' : 'Завантажити зображення'}
+              </span>
+            </label>
+          </div>
+
+          {/* Індикатор завантаження */}
+          {uploading && (
+            <div className="flex items-center gap-2 mt-2 text-blue-600">
+              <Loader2 className="animate-spin" size={16} />
+              <span className="text-sm">Завантаження...</span>
             </div>
           )}
         </div>
 
-        <input
-          type="number"
-          className="border px-3 py-2 rounded w-full mb-2"
-          placeholder="Ціна"
-          value={form.price}
-          onChange={(e) => handleChange("price", Number(e.target.value))}
-        />
-        <input
-          type="number"
-          className="border px-3 py-2 rounded w-full mb-4"
-          placeholder="На складі"
-          value={form.stock}
-          onChange={(e) => handleChange("stock", Number(e.target.value))}
-        />
-
-        <select
-          className="border px-3 py-2 rounded w-full mb-4"
-          value={form.category}
-          onChange={(e) => handleChange("category", e.target.value)}
-        >
-          <option value="">Оберіть категорію</option>
-          {categories?.map((cat: Category) => (
-            <option key={cat._id} value={cat._id}>
-              {cat.name.ru}
-            </option>
-          ))}
-        </select>
-
-        <div className="flex justify-end gap-2">
+        {/* Кнопки */}
+        <div className="flex gap-2 pt-4">
           <button
             type="button"
             onClick={onClose}
-            className="bg-gray-400 text-white px-4 py-2 rounded"
+            className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+            disabled={uploading}
           >
             Скасувати
           </button>
           <button
             type="submit"
-            className="bg-emerald-600 text-white px-4 py-2 rounded"
+            className="flex-1 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+            disabled={uploading}
           >
-            Зберегти
+            {uploading ? 'Збереження...' : 'Зберегти'}
           </button>
         </div>
       </form>

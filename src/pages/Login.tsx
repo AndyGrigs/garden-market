@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLoginMutation, useForgotPasswordMutation } from "../store/api/authApi";
-import { loginSuccess} from "../store/slices/authSlice";
+
 import { LogIn, Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { motion, AnimatePresence } from "framer-motion";
+import { setUser } from '../store/slices/authSlice';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -25,36 +26,21 @@ export default function Login() {
 
   const from = location.state?.from?.pathname || "/";
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setError("");
 
-  //   try {
-  //     const result = await login({ email, password }).unwrap();
-  //     dispatch(setUser(result.user));
-  //     navigate(from, { replace: true });
-  //   } catch (err) {
-  //     setError(t("auth.login.error"));
-  //     console.log(err);
-  //   }
-  // };
-const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   setError("");
 
   try {
     const result = await login({ email, password }).unwrap();
-    
-    dispatch(loginSuccess({
-      user: result.user,
-      token: result.token
-    }));
-    
-    console.log('✅ Login erfolgreich, Token gespeichert:', result.token);
-    navigate(from, { replace: true });
+   
+    if (result.user) {
+      dispatch(setUser(result.user));
+      navigate(from, { replace: true });
+    }
   } catch (err) {
     setError(t("auth.login.error"));
-    console.log('❌ Login Error:', err);
+    console.log(err);
   }
 };
   const handleForgotPassword = async (e: React.FormEvent) => {
@@ -65,10 +51,13 @@ const handleSubmit = async (e: React.FormEvent) => {
     try {
       const result = await forgotPassword({ email: forgotEmail }).unwrap();
       setForgotMessage(result.message);
-    } catch (err: unknown) {
-      // @ts-expect-error: err may have data property from RTK Query
-      setError(err?.data?.message || "Failed to send reset email");
-    }
+    }catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
+}
   };
   return (
     <div className="min-h-screen bg-gray-50">
