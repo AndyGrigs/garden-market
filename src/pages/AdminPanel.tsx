@@ -5,7 +5,7 @@ import AdminCategories from "../components/Admin/AdminCategories";
 import AdminTrees from "../components/Admin/AdminTrees";
 
 const AdminPanel = () => {
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
   
   return (
     <div className="min-h-screen bg-gray-50">

@@ -29,12 +29,7 @@ const AdminCategories = ({
   const [createCategory] = useCreateCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
   const [updateCategory] = useUpdateCategoryMutation();
-
-
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
@@ -75,7 +70,7 @@ const AdminCategories = ({
       imageUrl: updatedData.imageUrl
     });
 
-    // ✅ Відправляємо і назву і зображення
+
     await updateCategory({
       id: editingCategory._id,
       name: {
@@ -83,7 +78,7 @@ const AdminCategories = ({
         ro: updatedData.ro,
         en: updatedData.en
       },
-      imageUrl: updatedData.imageUrl // ✅ Обов'язково додай imageUrl
+      imageUrl: updatedData.imageUrl 
     }).unwrap();
     
     console.log('✅ Категорія оновлена!');
@@ -107,6 +102,16 @@ const AdminCategories = ({
         >
           ➕ {t('categories.add')}
         </button>
+
+        <div className='mb-4'>
+          <button onClick={()=> selectedCategoryId('all')}
+            className={`w-full text-left p-3 rounded border transition-colors ${
+              selectedCategoryId === 'all' ? 'bg-emerald-100 border-emerald-500' : 'bg-gray-50 border-gray-200 hover: bg-gray-100' 
+            }` }
+            >
+            All products
+          </button>
+        </div>
 
         {isLoading ? (
           <div className="flex justify-center items-center py-4">
