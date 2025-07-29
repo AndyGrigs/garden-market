@@ -104,7 +104,7 @@ const AdminCategories = ({
         </button>
 
         <div className='mb-4'>
-          <button onClick={()=> selectedCategoryId('all')}
+          <button onClick={()=> onSelectCategory('all')}
             className={`w-full text-left p-3 rounded border transition-colors ${
               selectedCategoryId === 'all' ? 'bg-emerald-100 border-emerald-500' : 'bg-gray-50 border-gray-200 hover: bg-gray-100' 
             }` }
