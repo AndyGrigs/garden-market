@@ -24,7 +24,6 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { trees, editingTree } = useSelector((state: RootState) => state.tree);
-  
 
   const { data: apiTrees, isLoading } = useGetTreesQuery(undefined, {
     refetchOnMountOrArgChange: true,
@@ -41,9 +40,10 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
     }
   }, [apiTrees, dispatch]);
 
-  const filteredTrees = trees.filter(
-    (tree) => tree.category?._id === selectedCategoryId
-  );
+  // ✅ FIX: Korrigierte Filterlogik
+  const filteredTrees = selectedCategoryId === 'all' 
+    ? trees 
+    : trees.filter((tree) => tree.category?._id === selectedCategoryId);
 
   const isTreeDataValid = (treeData: TreeFormData) => {
     return treeData.title?.ru && treeData.title?.en && treeData.title?.ro && treeData.category;
@@ -57,7 +57,6 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           await deleteImage(normalizedUrl).unwrap();
         }
         await deleteTree(id).unwrap();
-        // Update Redux store
         dispatch(removeTree(id));
       } catch (error) {
         alert(t('dashboard.deleteTreeError'));
@@ -67,7 +66,14 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
   };
 
   const getTreeTitle = (title: { [key: string]: string }) => {
-    return title?.[lang] || "";
+    return title?.[lang] || title?.en || title?.ru || "";
+  };
+
+  const getDisplayTitle = () => {
+    if (selectedCategoryId === "all") {
+      return "Всі товари";
+    }
+    return "Товари вибраної категорії";
   };
 
   const handleEditTree = (tree: Tree) => {
@@ -83,7 +89,6 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
 
     try {
       if (editingTree && editingTree._id) {
-       
         const updatedTree = await updateTree({
           id: editingTree._id,
           body: {
@@ -95,10 +100,8 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           },
         }).unwrap();
         
-        // Update Redux store
         dispatch(updateTreeAction(updatedTree));
       } else {
-        // Create new tree
         const newTree = await createTree({
           title: treeData.title,
           description: treeData.description,
@@ -111,7 +114,6 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           },
         }).unwrap();
         
-        // Update Redux store
         dispatch(addTree(newTree));
       }
       
@@ -128,20 +130,11 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
     dispatch(setEditingTree(null));
   };
 
-  if (!selectedCategoryId) {
-    return (
-      <div className="p-6 bg-white shadow rounded">
-        <h3 className="text-xl font-semibold mb-4">
-          {t('dashboard.selectCategoryPrompt')}
-        </h3>
-      </div>
-    );
-  }
-
+  // ✅ FIX: Entferne die alte Bedingung - zeige immer den Inhalt
   return (
     <div className="p-6 bg-white shadow rounded">
       <h3 className="text-xl font-semibold mb-4">
-        {t('dashboard.selectedCategoryProducts')}
+        {getDisplayTitle()}
       </h3>
       <button
         onClick={() => setIsModalOpen(true)}
@@ -149,42 +142,58 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
       >
         ➕ {t('dashboard.addProduct')}
       </button>
+      
       {isLoading ? (
         <div className="text-center">{t('collection.loading')}</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredTrees?.map((tree) => (
-            <div key={tree._id} className="border rounded-lg p-4 shadow-sm">
-              <img
-                src={tree.imageUrl ? `${BASE_URL}${tree.imageUrl}` : "/placeholder.jpg"}
-                alt={getTreeTitle(tree.title)}
-                className="w-full h-32 object-cover rounded mb-2"
-              />
-              <h4 className="font-semibold text-lg mb-2">
-                {getTreeTitle(tree.title)}
-              </h4>
-              <p className="text-gray-600 mb-2">
-               { t('tree.priceLabel', { price: tree.price })}
+          {filteredTrees?.length > 0 ? (
+            filteredTrees.map((tree) => (
+              <div key={tree._id} className="border rounded-lg p-4 shadow-sm">
+                <img
+                  src={tree.imageUrl ? `${BASE_URL}${tree.imageUrl}` : "/placeholder.jpg"}
+                  alt={getTreeTitle(tree.title)}
+                  className="w-full h-32 object-cover rounded mb-2"
+                />
+                <h4 className="font-semibold text-lg mb-2">
+                  {getTreeTitle(tree.title)}
+                </h4>
+                <p className="text-gray-600 mb-2">
+                  {t('tree.priceLabel', { price: tree.price })}
+                </p>
+                {/* ✅ FIX: Zeige Kategorie-Info */}
+                <p className="text-sm text-gray-500 mb-2">
+                  Kategorie: {tree.category?.name?.ru || tree.category?.name?.en || "Ohne Kategorie"}
+                </p>
+                <button
+                  onClick={() => handleEditTree(tree)}
+                  className="bg-yellow-500 mb-3 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 mr-2"
+                >
+                  {t('dashboard.edit')}
+                </button>
+                <button
+                  onClick={() => handleDeleteTree(tree._id, tree.imageUrl)}
+                  className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
+                >
+                  {t('dashboard.delete')}
+                </button>
+              </div>
+            ))
+          ) : (
+            // ✅ FIX: Bessere "Keine Produkte" Nachricht
+            <div className="col-span-3 text-center text-gray-500 py-8">
+              <p>
+                {selectedCategoryId === 'all' 
+                  ? "Keine Produkte vorhanden" 
+                  : "Keine Produkte in dieser Kategorie"}
               </p>
-              {/* <p className="text-gray-600 mb-2">
-                t('tree.inStockLabel', { stock: tree.stock })
-              </p> */}
-              <button
-
-
-                onClick={() => handleEditTree(tree)}
-                className="bg-yellow-500 mb-3 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 mr-2"
-              >
-               {t('dashboard.edit')}
-              </button>
-              <button
-                onClick={() => handleDeleteTree(tree._id, tree.imageUrl)}
-                className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
-              >
-                {t('dashboard.delete')}
-              </button>
+              <p className="text-sm mt-2">
+                {selectedCategoryId === 'all'
+                  ? "Füge dein erstes Produkt hinzu"
+                  : "Wähle eine andere Kategorie oder füge Produkte hinzu"}
+              </p>
             </div>
-          ))}
+          )}
         </div>
       )}
 
@@ -198,7 +207,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           price: editingTree.price,
           stock: editingTree.stock,
           imageUrl: editingTree.imageUrl,
-          category: editingTree.category?._id || selectedCategoryId,
+          category: editingTree.category?._id || (selectedCategoryId === 'all' ? '' : selectedCategoryId),
           _id: editingTree._id,
         } : {
           title: { ru: "", ro: "", en: "" },
@@ -206,7 +215,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           price: 0,
           stock: 0,
           imageUrl: "",
-          category: selectedCategoryId,
+          category: selectedCategoryId === 'all' ? '' : selectedCategoryId,
         }}
       />
     </div>
