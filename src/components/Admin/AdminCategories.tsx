@@ -106,7 +106,7 @@ const AdminCategories = ({
         <div className='mb-4'>
           <button onClick={()=> onSelectCategory('all')}
             className={`w-full text-left p-3 rounded border transition-colors ${
-              selectedCategoryId === 'all' ? 'bg-emerald-100 border-emerald-500' : 'bg-gray-50 border-gray-200 hover: bg-gray-100' 
+              selectedCategoryId === 'all' ? 'bg-emerald-100 border-emerald-500' : ' border-gray-200 hover: bg-gray-100' 
             }` }
             >
             All products
