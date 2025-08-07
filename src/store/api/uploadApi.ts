@@ -13,10 +13,11 @@ export const uploadApi = createApi({
         body: formData,
       }),
     }),
+
     deleteImage: builder.mutation<{ message: string }, string>({
       query: (filename) => ({
         url: `/delete-image/${filename}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
   }),
