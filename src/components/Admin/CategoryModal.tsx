@@ -3,6 +3,8 @@ import { TranslatedString } from "../../types/ICategories";
 import { useUploadImageMutation, useDeleteImageMutation } from "../../store/api/uploadApi";
 import { Loader2 } from "lucide-react";
 import { BASE_URL } from "../../config";
+import { t } from 'i18next';
+import toast from 'react-hot-toast';
 
 interface Props {
   isOpen: boolean;
@@ -31,7 +33,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         const res = await uploadImage(form).unwrap();
         setImageUrl(res.imageUrl);
       } catch (error) {
-        alert("Не вдалося завантажити фото");
+        toast.error(t('photo.fail'));
         console.error(error);
       }
     }
@@ -46,7 +48,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
           setImageUrl("");
         }
       } catch (error) {
-        alert("Не вдалося видалити зображення");
+        toast.error(t('photo.failDelete'));
         console.error(error);
       }
     }
@@ -54,7 +56,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
 
   const handleSubmit = () => {
     if (!formData.ru?.trim()) {
-      alert("Название по-русски обязательно!!!");
+      toast.error(t('common.nameRus'));
       return;
     }
     onSubmit({ ...formData, imageUrl });
@@ -72,10 +74,10 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
       role="dialog"
     >
       <div className="bg-white p-6 rounded shadow-lg w-96">
-        <h3 className="text-lg font-bold mb-4">Добавление категории</h3>
+        <h3 className="text-lg font-bold mb-4">{t('categories.add')}</h3>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Название (RU)</label>
+            <label className="block text-sm font-medium mb-1">{t('common.name')} (RU)</label>
             <input
               type="text"
               value={formData.ru}
@@ -85,7 +87,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Название (RO)</label>
+            <label className="block text-sm font-medium mb-1">{t('common.name')} (RO)</label>
             <input
               type="text"
               value={formData.ro}
@@ -95,7 +97,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Название (EN)</label>
+            <label className="block text-sm font-medium mb-1">{t('common.name')} (EN)</label>
             <input
               type="text"
               value={formData.en}
@@ -115,7 +117,6 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
             {uploading && (
               <div className="flex items-center mb-2">
                 <Loader2 className="animate-spin" />
-                <span className="ml-2">Завантаження...</span>
               </div>
             )}
             {imageUrl && (

@@ -5,7 +5,15 @@
   "allGoods": " All goods",
   "goodsInCategory": "Products of the selected category",
   "addFirstProduct": "Add your first product",
-  "selectCategory": " Select a different category or add products"
+  "selectCategory": " Select a different category or add products",
+  "name": "Name",
+  "nameRus": "Name in Russian is mandatory!!!"
+
+},
+
+"photo":{
+  "fail": "Failed to upload photo",
+  "failDelete": "Failed to delete image"
 },
 
   "header": {

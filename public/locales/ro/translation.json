@@ -4,8 +4,16 @@
   "save": "Salva",
   "allGoods": "Toate bunurile",
   "goodsInCategory": "Produse ale categoriei selectate",
-   "selectCategory": " Alege o categorie diferită sau adaugă produse"
+   "selectCategory": " Alege o categorie diferită sau adaugă produse",
+   "name": "Nume",
+   "nameRus": "Numele în rusă este obligatoriu!!!"
 },
+
+"photo":{
+  "fail": " Nu s-a putut încărca fotografia",
+  "failDelete": "Nu s-a putut șterge imaginea"
+},
+
   "header": {
     "title": "Covaci de Grădină",
     "cart": "Coș",

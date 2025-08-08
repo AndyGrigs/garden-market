@@ -16,6 +16,7 @@ import AuthLoader from './components/AuthLoader';
 import ReviewForm from './components/ReviewForm';
 import { Tree } from './types/ITree';
 import { useLanguage } from './hooks/useLanguage';
+import { Toaster } from 'react-hot-toast';
 
 interface OutletContext {
   cartItems: CartItem[];
@@ -75,9 +76,7 @@ export function MainContent() {
   const filteredTrees = selectedCategoryId 
     ? trees?.filter(tree => tree.category?._id === selectedCategoryId)
     : trees;
-  console.log('Trees data:', trees);
-  console.log('Is loading:', isLoading);
-  console.log('Error:', error);
+
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -245,6 +244,38 @@ export function MainContent() {
           <ReviewForm onClose={() => setIsReviewFormOpen(false)} />
         )}
       </AnimatePresence>
+              {/* ВАЖЛИВО: Додати Toaster компонент */}
+        <Toaster
+          position="bottom-right"
+          reverseOrder={false}
+          gutter={8}
+          containerClassName=""
+          containerStyle={{}}
+          toastOptions={{
+            // Налаштування за замовчуванням для всіх toast
+            duration: 4000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+            },
+            // Налаштування для різних типів
+            success: {
+              duration: 3000,
+              iconTheme: {
+                primary: '#10B981',
+                secondary: 'black',
+              },
+            },
+            error: {
+              duration: 5000,
+              iconTheme: {
+                primary: '#EF4444',
+                secondary: 'black',
+              },
+            },
+          }}
+        />
+
     </div>
   );
 }
