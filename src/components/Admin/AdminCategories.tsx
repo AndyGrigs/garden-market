@@ -60,17 +60,6 @@ const AdminCategories = ({
   if (!editingCategory) return;
 
   try {
-    console.log('📤 Відправляємо на сервер:', {
-      id: editingCategory._id,
-      name: {
-        ru: updatedData.ru,
-        ro: updatedData.ro,
-        en: updatedData.en
-      },
-      imageUrl: updatedData.imageUrl
-    });
-
-
     await updateCategory({
       id: editingCategory._id,
       name: {
@@ -81,21 +70,20 @@ const AdminCategories = ({
       imageUrl: updatedData.imageUrl 
     }).unwrap();
     
-    console.log('✅ Категорія оновлена!');
     
     setIsEditModalOpen(false);
     setEditingCategory(null);
     
   } catch (error) {
     console.error('❌ Error to update:', error);
-    alert("Не вдалося оновити категорію");
+    alert(t('categories.failUpdate'));
   }
 };    
 
   return (
     <>
       <div className="p-6 bg-white shadow">
-        <h2 className="text-2xl font-bold mb-4">Категорії</h2>
+        <h2 className="text-2xl font-bold mb-4">{t('categories.categories')}</h2>
         <button
           onClick={() => setIsModalOpen(pr => !pr)}
           className="bg-emerald-600 mr-auto text-white px-4 py-2 rounded mb-4"
@@ -116,7 +104,6 @@ const AdminCategories = ({
         {isLoading ? (
           <div className="flex justify-center items-center py-4">
             <Loader className="animate-spin" />
-            <span className="ml-2">Завантаження...</span>
           </div>
         ) : (
           <ul className="space-y-2">
@@ -182,7 +169,7 @@ const AdminCategories = ({
               setIsModalOpen(false);
             } catch (err) {
               console.error(err);
-              alert("Помилка створення категорії");
+              alert(t('categories.failCreate'));
             }
           }}
         />
@@ -198,7 +185,7 @@ const AdminCategories = ({
             setEditingCategory(null);
           }}
           initialData={editingCategory.name}
-          initialImageUrl={editingCategory.imageUrl} // ✅ ДОДАЙ ЦЮ ЛІНІЮ!
+          initialImageUrl={editingCategory.imageUrl}
           categoryName={getCategoryName(editingCategory.name)}
           onSubmit={handleUpdateCategory}
         />

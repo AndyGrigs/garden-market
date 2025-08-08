@@ -71,9 +71,9 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
 
   const getDisplayTitle = () => {
     if (selectedCategoryId === "all") {
-      return "Всі товари";
+      return t('common.allGoods');
     }
-    return "Товари вибраної категорії";
+    return t('common.goodsInCategory');
   };
 
   const handleEditTree = (tree: Tree) => {
@@ -130,7 +130,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
     dispatch(setEditingTree(null));
   };
 
-  // ✅ FIX: Entferne die alte Bedingung - zeige immer den Inhalt
+ 
   return (
     <div className="p-6 bg-white shadow rounded">
       <h3 className="text-xl font-semibold mb-4">
@@ -163,7 +163,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
                 </p>
                 {/* ✅ FIX: Zeige Kategorie-Info */}
                 <p className="text-sm text-gray-500 mb-2">
-                  Kategorie: {tree.category?.name?.ru || tree.category?.name?.en || "Ohne Kategorie"}
+                 {t('categories.categories')} {tree.category?.name?.ru || tree.category?.name?.en || "Ohne Kategorie"}
                 </p>
                 <button
                   onClick={() => handleEditTree(tree)}
@@ -180,17 +180,17 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
               </div>
             ))
           ) : (
-            // ✅ FIX: Bessere "Keine Produkte" Nachricht
+            
             <div className="col-span-3 text-center text-gray-500 py-8">
               <p>
                 {selectedCategoryId === 'all' 
-                  ? "Keine Produkte vorhanden" 
-                  : "Keine Produkte in dieser Kategorie"}
+                  ? t('categories.noCategories') 
+                  : t('categories.noGoods')}
               </p>
               <p className="text-sm mt-2">
                 {selectedCategoryId === 'all'
-                  ? "Füge dein erstes Produkt hinzu"
-                  : "Wähle eine andere Kategorie oder füge Produkte hinzu"}
+                  ? t('common.addFirstProduct')
+                  : t('common.selectCategory')}
               </p>
             </div>
           )}

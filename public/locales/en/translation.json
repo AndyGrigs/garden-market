@@ -1,7 +1,11 @@
 {
 "common": {
   "cancel": "Cancel",
-  "save": "Save"
+  "save": "Save",
+  "allGoods": " All goods",
+  "goodsInCategory": "Products of the selected category",
+  "addFirstProduct": "Add your first product",
+  "selectCategory": " Select a different category or add products"
 },
 
   "header": {
@@ -32,15 +36,18 @@
     }
   },
   "categories": {
-  "noCategories": "No categories found...",
-  "all": "All categories",
-  "title": "Category Title",
-  "notDeleted": "Not deleted",
-  "confirm":  "Sunteți sigur că doriți să ștereti această categorie?",
-  "failUpdate": "Failed to update category",
-  "add":  "Add category",
-  "delete": "Delete",
-  "edit":"Edit"
+      "categories": "categories",
+      "noCategories": "No categories found...",
+      "all": "All categories",
+      "title": "Category Title",
+      "notDeleted": "Not deleted",
+      "confirm":  "Sunteți sigur că doriți să ștereti această categorie?",
+      "failUpdate": "Failed to update category",
+      "add":  "Add category",
+      "delete": "Delete",
+      "edit":"Edit",
+      "failCreate": "Error creating category",
+      "noGoods": "No products in this category"
 
 },
   "cart": {
@@ -99,7 +106,7 @@
         "passwordsDoNotMatch": "Passwords do not match",
         "passwordTooShort": "Password must be at least 6 characters long",
         "resetFailed": "Failed to reset password. Please try again."
-  }
+    }
   },
 
 

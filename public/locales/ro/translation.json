@@ -1,7 +1,10 @@
 {
   "common": {
   "cancel": "Anulează",
-  "save": "Salva"
+  "save": "Salva",
+  "allGoods": "Toate bunurile",
+  "goodsInCategory": "Produse ale categoriei selectate",
+   "selectCategory": " Alege o categorie diferită sau adaugă produse"
 },
   "header": {
     "title": "Covaci de Grădină",
@@ -37,11 +40,13 @@
     "empty": "Coșul tău este gol",
     "notifications": {
       "added": "{{name}} a fost adăugat în coș",
-      "addedAnother": "Încă un {{name}} a fost adăugat în coș"
+      "addedAnother": "Încă un {{name}} a fost adăugat în coș",
+      "addFirstProduct": "Adăugați primul produs"
     }
   },
 
    "categories": {
+    "categories": "categorii",
       "noCategories": "Nu există categorii...",
       "all": "Toate categorii",
       "title": "Titlu categorie",
@@ -50,8 +55,9 @@
       "failUpdate": "Nu s-a putut actualiza categoria",
       "add": "Adăuga categorie",
       "delete": "Șterge",
-      "edit":"Editează"
-
+      "edit":"Editează",
+      "failCreate": "Erorare la crearea categoriei",
+      "noGoods": "Nu există produse în această categorie"
 },
   "contact": {
     "title": "Contactează-ne",
