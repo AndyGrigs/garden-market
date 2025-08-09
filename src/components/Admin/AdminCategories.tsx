@@ -1,4 +1,4 @@
-// src/components/Admin/AdminCategories.tsx - ВИПРАВЛЕНА ВЕРСІЯ
+
 
 import { useState } from "react";
 import {
@@ -15,6 +15,7 @@ import { BASE_URL } from "../../config";
 import { t } from 'i18next';
 import { Loader } from 'lucide-react';
 import { EditCategoryModal } from './EditCategoryModal';
+import toast from 'react-hot-toast';
 
 interface AdminCategoriesProps {
   selectedCategoryId: string;
@@ -76,7 +77,7 @@ const AdminCategories = ({
     
   } catch (error) {
     console.error('❌ Error to update:', error);
-    alert(t('categories.failUpdate'));
+    toast.error(t('categories.failUpdate'));
   }
 };    
 
@@ -97,7 +98,7 @@ const AdminCategories = ({
               selectedCategoryId === 'all' ? 'bg-emerald-100 border-emerald-500' : ' border-gray-200 hover: bg-gray-100' 
             }` }
             >
-            All products
+           {t('common.allProducts')}
           </button>
         </div>
 

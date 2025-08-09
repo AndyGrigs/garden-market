@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TranslatedString } from "../../types/ICategories";
 import { useUploadImageMutation, useDeleteImageMutation } from "../../store/api/uploadApi";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { BASE_URL } from "../../config";
 import { t } from 'i18next';
 import toast from 'react-hot-toast';
@@ -65,6 +65,12 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     onClose();
   };
 
+  const handleClose = () => {
+    setFormData({ ru: "", ro: "", en: "" });
+    setImageUrl("");
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -74,7 +80,16 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
       role="dialog"
     >
       <div className="bg-white p-6 rounded shadow-lg w-96">
-        <h3 className="text-lg font-bold mb-4">{t('categories.add')}</h3>
+        <div className='flex justify-between items-center mb-4'>
+          <h3 className="text-lg font-bold mb-4">{t('categories.add')}</h3>
+        <button
+            onClick={handleClose}
+            className="text-gray-400 hover:text-gray-600 p-1 rounded hover:bg-gray-100"
+            aria-label="close"
+          >
+            <X size={20} />
+        </button>
+        </div>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">{t('common.name')} (RU)</label>
@@ -83,7 +98,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
               value={formData.ru}
               onChange={(e) => handleChange("ru", e.target.value)}
               className="w-full border rounded px-3 py-2"
-              placeholder="Введите название на русском"
+              placeholder={t('common.enterNameRus')}
             />
           </div>
           <div>
@@ -93,7 +108,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
               value={formData.ro}
               onChange={(e) => handleChange("ro", e.target.value)}
               className="w-full border rounded px-3 py-2"
-              placeholder="Введите название на румынском"
+              placeholder={t('common.enterNameRom')}
             />
           </div>
           <div>
@@ -103,11 +118,11 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
               value={formData.en}
               onChange={(e) => handleChange("en", e.target.value)}
               className="w-full border rounded px-3 py-2"
-              placeholder="Введите название на английском"
+              placeholder={t('common.enterNameEng')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Фото категорії</label>
+            <label className="block text-sm font-medium mb-1">{t('categories.photo')}</label>
             <input
               type="file"
               accept="image/*"
@@ -131,7 +146,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
                   onClick={handleDeleteImage}
                   className="mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm"
                 >
-                  Видалити фото
+                 { t('photo.delete')}
                 </button>
               </div>
             )}
@@ -143,14 +158,14 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
             className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
             disabled={uploading}
           >
-            Отмена
+            {t('photo.delete')}
           </button>
           <button
             onClick={handleSubmit}
             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
             disabled={uploading}
           >
-            Сохранить
+            {t('common.save')}
           </button>
         </div>
       </div>

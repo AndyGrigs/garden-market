@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, useOutletContext } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import i18n from './i18n';
 import Footer from './components/Footer';
 import TreeCard from './components/TreeCard';
 import ContactForm from './components/ContactForm';
@@ -17,6 +18,8 @@ import ReviewForm from './components/ReviewForm';
 import { Tree } from './types/ITree';
 import { useLanguage } from './hooks/useLanguage';
 import { Toaster } from 'react-hot-toast';
+import { useGetCategoriesQuery } from './store/api/categoryApi';
+
 
 interface OutletContext {
   cartItems: CartItem[];
@@ -25,6 +28,7 @@ interface OutletContext {
 
 export function MainContent() {
   const { data: trees, isLoading, error } = useGetTreesQuery();
+  const {data: categories}= useGetCategoriesQuery();
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
@@ -77,6 +81,19 @@ export function MainContent() {
     ? trees?.filter(tree => tree.category?._id === selectedCategoryId)
     : trees;
 
+    
+const getSelectedCategoryName = () => {
+  if (!selectedCategoryId || !categories) return t('collection.title');
+  
+  const category = categories.find(cat => cat._id === selectedCategoryId);
+  if (!category) return t('collection.title');
+  
+ 
+  return category.name[i18n.language as keyof typeof category.name] || 
+         category.name.ru || 
+         category.name.en || 
+         'Категорія';
+};
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -113,7 +130,7 @@ export function MainContent() {
               <section className="mb-12">
                 <h2 className="text-3xl font-bold text-gray-800 mb-8">
                   {selectedCategoryId 
-                    ? t('collection.categoryTitle') 
+                    ? getSelectedCategoryName()
                     : t('collection.title') || "Collection"
                   }
                 </h2>
@@ -281,6 +298,8 @@ export function MainContent() {
 }
 
 function App() {
+
+
   return (
     <Provider store={store}>
       <Router>

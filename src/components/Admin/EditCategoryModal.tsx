@@ -1,4 +1,4 @@
-// src/components/Admin/EditCategoryModal.tsx - ВИПРАВЛЕНА ВЕРСІЯ
+// src/components/Admin/EditCategoryModal.tsx - Спрощена версія
 import { useState, FormEvent, useEffect } from 'react';
 import { TranslatedString } from '../../types/ICategories';
 import { useUploadImageMutation, useDeleteImageMutation } from "../../store/api/uploadApi";
@@ -11,7 +11,7 @@ interface Props {
   onSubmit: (data: TranslatedString & { imageUrl?: string }) => void;
   initialData?: TranslatedString;
   categoryName?: string;
-  initialImageUrl?: string; // ✅ Додали початкове зображення
+  initialImageUrl?: string;
 }
 
 export const EditCategoryModal = ({ 
@@ -20,17 +20,15 @@ export const EditCategoryModal = ({
   onSubmit, 
   initialData = { ru: "", ro: "", en: "" },
   categoryName = "Категорія",
-  initialImageUrl = "" // ✅ Початкове зображення
+  initialImageUrl = ""
 }: Props) => {
   
   const [formData, setFormData] = useState<TranslatedString>(initialData);
   const [imageUrl, setImageUrl] = useState<string>(initialImageUrl);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   
   const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
   const [deleteImage] = useDeleteImageMutation();
 
-  // ✅ FIX: Правильно оновлюємо дані при зміні пропсів
   useEffect(() => {
     if (isOpen) {
       console.log('🔄 Модалка відкрилась з даними:', { initialData, initialImageUrl });
@@ -42,7 +40,6 @@ export const EditCategoryModal = ({
       });
       
       setImageUrl(initialImageUrl || "");
-      setSelectedFile(null);
     }
   }, [isOpen, initialData, initialImageUrl]);
 
@@ -53,16 +50,25 @@ export const EditCategoryModal = ({
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // ✅ Завантаження нового фото (без заміни)
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
-      // Показуємо превью
-      const previewUrl = URL.createObjectURL(e.target.files[0]);
-      setImageUrl(previewUrl);
-      console.log('📷 Вибрано новий файл для завантаження');
+      try {
+        console.log('📤 Завантажуємо нове зображення...');
+        const form = new FormData();
+        form.append('image', e.target.files[0]);
+        
+        const uploadResult = await uploadImage(form).unwrap();
+        setImageUrl(uploadResult.imageUrl);
+        console.log('✅ Зображення завантажено:', uploadResult.imageUrl);
+      } catch (error) {
+        console.error('❌ Помилка завантаження:', error);
+        alert('Помилка завантаження фото!');
+      }
     }
   };
 
+  // ✅ Видалення поточного фото
   const handleDeleteImage = async () => {
     if (imageUrl && !imageUrl.startsWith('blob:')) {
       try {
@@ -78,46 +84,34 @@ export const EditCategoryModal = ({
     
     // Скидаємо зображення
     setImageUrl("");
-    setSelectedFile(null);
     console.log('✅ Зображення видалено');
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // ✅ FIX: Правильна валідація
     if (!formData.ru?.trim()) {
       alert('Поле RU обов\'язкове!');
       return;
     }
 
     try {
-      let finalImageUrl = imageUrl;
-
-      // Якщо вибрано новий файл - завантажуємо його
-      if (selectedFile) {
-        console.log('📤 Завантажуємо нове зображення...');
-        const form = new FormData();
-        form.append('image', selectedFile);
-        
-        const uploadResult = await uploadImage(form).unwrap();
-        finalImageUrl = uploadResult.imageUrl;
-        console.log('✅ Зображення завантажено:', finalImageUrl);
-      }
-
-      // Відправляємо дані з imageUrl
       console.log('📤 Відправляємо дані:', { 
         ...formData, 
-        imageUrl: finalImageUrl 
+        imageUrl: imageUrl
       });
       
-      onSubmit({ ...formData, imageUrl: finalImageUrl });
+      onSubmit({ ...formData, imageUrl: imageUrl });
       onClose();
       
     } catch (error) {
       console.error('❌ Помилка:', error);
       alert('Помилка збереження!');
     }
+  };
+
+  const handleClose = () => {
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -130,7 +124,7 @@ export const EditCategoryModal = ({
             Редагувати: {categoryName}
           </h3>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="text-gray-400 hover:text-gray-600 p-1"
           >
             <X size={20} />
@@ -175,13 +169,13 @@ export const EditCategoryModal = ({
             />
           </div>
 
-          {/* ✅ Секція зображення */}
+          {/* ✅ Спрощена секція зображення */}
           <div>
             <label className="block text-sm font-medium mb-2">Зображення категорії</label>
             
-            {/* ✅ Поточне зображення - показуємо якщо є */}
+            {/* Поточне зображення з кнопкою видалення */}
             {imageUrl && (
-              <div className="mb-3">
+              <div className="mb-4">
                 <img
                   src={imageUrl.startsWith('blob:') ? imageUrl : `${BASE_URL}${imageUrl}`}
                   alt="Зображення категорії"
@@ -190,37 +184,41 @@ export const EditCategoryModal = ({
                 <button
                   type="button"
                   onClick={handleDeleteImage}
-                  className="mt-2 text-red-600 text-sm hover:underline flex items-center gap-1"
+                  className="mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
                   disabled={uploading}
                 >
-                  <X size={16} />
-                  Видалити зображення
+                  🗑️ Видалити зображення
                 </button>
               </div>
             )}
 
-            {/* ✅ Завантаження нового зображення */}
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-                id="image-upload"
-                disabled={uploading}
-              />
-              <label
-                htmlFor="image-upload"
-                className={`cursor-pointer flex flex-col items-center gap-2 text-gray-600 hover:text-gray-800 ${
-                  uploading ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-              >
-                <Upload size={24} />
-                <span className="text-sm">
-                  {imageUrl ? 'Замінити зображення' : 'Завантажити зображення'}
-                </span>
-              </label>
-            </div>
+            {/* Завантаження нового зображення (тільки якщо немає поточного) */}
+            {!imageUrl && (
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                  id="image-upload"
+                  disabled={uploading}
+                />
+                <label
+                  htmlFor="image-upload"
+                  className={`cursor-pointer flex flex-col items-center gap-2 text-gray-600 hover:text-gray-800 ${
+                    uploading ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                >
+                  <Upload size={32} />
+                  <span className="text-sm font-medium">
+                    Завантажити зображення
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    JPG, PNG до 5MB
+                  </span>
+                </label>
+              </div>
+            )}
 
             {/* Індикатор завантаження */}
             {uploading && (
@@ -235,7 +233,7 @@ export const EditCategoryModal = ({
           <div className="flex gap-2 mt-6">
             <button 
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
               disabled={uploading}
             >

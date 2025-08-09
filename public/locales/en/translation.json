@@ -7,13 +7,17 @@
   "addFirstProduct": "Add your first product",
   "selectCategory": " Select a different category or add products",
   "name": "Name",
-  "nameRus": "Name in Russian is mandatory!!!"
-
+  "nameRus": "Name in Russian is mandatory!!!",
+  "enterNameRus": "Enter the name in Russian",
+  "enterNameEng": "Enter the name in English",
+  "enterNameRom": "Enter the name in Pomanian",
+  "allProducts": "All products"
 },
 
 "photo":{
   "fail": "Failed to upload photo",
-  "failDelete": "Failed to delete image"
+  "failDelete": "Failed to delete image",
+  "delete": "Delete photo"
 },
 
   "header": {
@@ -22,9 +26,10 @@
     "logout": "Logout",
     "login": "Login",
     "dashboard": "Dashboard",
-    "admin-panel": "Admin"
+    "adminPanel": "Admin Panel"
   },
   "collection": {
+     "categoryTitle": "{{categoryName}}",
     "title": "Our Collection",
     "loading": "Loading...",
     "error": "Failed to load trees. Please try again later."
@@ -55,7 +60,8 @@
       "delete": "Delete",
       "edit":"Edit",
       "failCreate": "Error creating category",
-      "noGoods": "No products in this category"
+      "noGoods": "No products in this category",
+      "photo": "Category photo"
 
 },
   "cart": {
@@ -132,7 +138,7 @@
     "createEditTreeError": "Failed to create/edit the product",
     "selectCategoryPrompt": "Select a category to view products",
     "selectedCategoryProducts": "Products in the selected category",
-    "addProduct": "➕ Add product",
+    "addProduct": "Add product",
     "edit": "Edit",
    "delete": "Delete"
   },

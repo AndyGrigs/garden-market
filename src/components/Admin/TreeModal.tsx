@@ -1,4 +1,4 @@
-// src/components/Admin/TreeModal.tsx - ВИПРАВЛЕНА ВЕРСІЯ
+// src/components/Admin/TreeModal.tsx - Спрощена версія
 import { useEffect, useState } from "react";
 import { useGetCategoriesQuery } from "../../store/api/categoryApi";
 import { Loader2, X, Upload } from "lucide-react";
@@ -27,13 +27,11 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     }
   );
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null); // ✅ Додав для превью
   const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
   const [deleteImage] = useDeleteImageMutation();
 
   const { data: categories } = useGetCategoriesQuery();
 
-  // ✅ ВИПРАВЛЕНО: Правильно оновлюємо форму при зміні initialData
   useEffect(() => {
     if (isOpen) {
       console.log('🔄 TreeModal відкрилась з даними:', initialData);
@@ -57,7 +55,6 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
           _id: initialData._id
         });
       } else {
-        // Для нового товару
         setForm({
           title: { ru: "", ro: "", en: "" },
           description: { ru: "", ro: "", en: "" },
@@ -67,8 +64,6 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
           imageUrl: "",
         });
       }
-      
-      setSelectedFile(null);
     }
   }, [isOpen, initialData]);
 
@@ -93,21 +88,25 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  // ✅ ВИПРАВЛЕНО: Спочатку показуємо превью, потім завантажуємо
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // ✅ Спрощене завантаження нового фото
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      setSelectedFile(file);
-      
-      // Показуємо превью
-      const previewUrl = URL.createObjectURL(file);
-      setForm(prev => ({ ...prev, imageUrl: previewUrl }));
-      
-      console.log('📷 Вибрано файл для завантаження:', file.name);
+      try {
+        console.log('📤 Завантажуємо нове зображення...');
+        const formData = new FormData();
+        formData.append('image', event.target.files[0]);
+        
+        const response = await uploadImage(formData).unwrap();
+        setForm(prev => ({ ...prev, imageUrl: response.imageUrl }));
+        console.log('✅ Зображення завантажено:', response.imageUrl);
+      } catch (error) {
+        alert("Не вдалося завантажити фото");
+        console.error(error);
+      }
     }
   };
 
-  // ✅ ВИПРАВЛЕНО: Правильне видалення фотки
+  // ✅ Спрощене видалення фото
   const handleDeleteImage = async () => {
     if (form.imageUrl && !form.imageUrl.startsWith('blob:')) {
       try {
@@ -124,42 +123,20 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     
     // Скидаємо зображення
     setForm(prev => ({ ...prev, imageUrl: "" }));
-    setSelectedFile(null);
     console.log('✅ Зображення видалено');
   };
 
-  // ✅ ВИПРАВЛЕНО: Завантажуємо фото перед відправкою
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Валідація
     if (!(form.title.ru ?? "").trim() || form.price <= 0 || !form.category) {
       alert("Назва (RU), ціна та категорія обов'язкові");
       return;
     }
 
     try {
-      let finalImageUrl = form.imageUrl;
-
-      // ✅ Якщо є новий файл - завантажуємо його
-      if (selectedFile) {
-        console.log('📤 Завантажуємо нове зображення...');
-        const formData = new FormData();
-        formData.append('image', selectedFile);
-        
-        const response = await uploadImage(formData).unwrap();
-        finalImageUrl = response.imageUrl;
-        console.log('✅ Зображення завантажено:', finalImageUrl);
-      }
-
-      // Відправляємо дані з фінальним imageUrl
-      const finalData = {
-        ...form,
-        imageUrl: finalImageUrl
-      };
-      
-      console.log('📤 Відправляємо дані товару:', finalData);
-      onSubmit(finalData);
+      console.log('📤 Відправляємо дані товару:', form);
+      onSubmit(form);
       
       // Очищаємо форму
       setForm({
@@ -170,7 +147,6 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         category: "",
         imageUrl: "",
       });
-      setSelectedFile(null);
       onClose();
       
     } catch (error) {
@@ -283,13 +259,13 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
           </select>
         </div>
 
-        {/* ✅ ВИПРАВЛЕНО: Фото товару */}
+        {/* ✅ Спрощена секція фото товару */}
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">Фото товару</label>
           
-          {/* Поточне зображення */}
+          {/* Поточне зображення з кнопкою видалення */}
           {form.imageUrl && (
-            <div className="mb-3">
+            <div className="mb-4">
               <img
                 src={form.imageUrl.startsWith('blob:') ? form.imageUrl : `${BASE_URL}${form.imageUrl}`}
                 alt="Зображення товару"
@@ -301,33 +277,38 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
                 className="mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
                 disabled={uploading}
               >
-                {t('dashboard.deleteImage')}
+                🗑️ {t('dashboard.deleteImage')}
               </button>
             </div>
           )}
 
-          {/* Завантаження нового зображення */}
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-              id="tree-image-upload"
-              disabled={uploading}
-            />
-            <label
-              htmlFor="tree-image-upload"
-              className={`cursor-pointer flex flex-col items-center gap-2 text-gray-600 hover:text-gray-800 ${
-                uploading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <Upload size={24} />
-              <span className="text-sm">
-                {form.imageUrl ? 'Замінити зображення' : 'Завантажити зображення'}
-              </span>
-            </label>
-          </div>
+          {/* Завантаження нового зображення (тільки якщо немає поточного) */}
+          {!form.imageUrl && (
+            <div className="border-2 border-dashed border-green-300 rounded-lg p-6">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+                id="tree-image-upload"
+                disabled={uploading}
+              />
+              <label
+                htmlFor="tree-image-upload"
+                className={`cursor-pointer flex flex-col items-center gap-2 text-gray-600 hover:text-gray-800 ${
+                  uploading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                <Upload size={32} />
+                <span className="text-sm font-medium">
+                  Завантажити зображення
+                </span>
+                <span className="text-xs text-gray-500">
+                  JPG, PNG до 5MB
+                </span>
+              </label>
+            </div>
+          )}
 
           {/* Індикатор завантаження */}
           {uploading && (

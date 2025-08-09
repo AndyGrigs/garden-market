@@ -4,14 +4,19 @@
   "save": "Salva",
   "allGoods": "Toate bunurile",
   "goodsInCategory": "Produse ale categoriei selectate",
-   "selectCategory": " Alege o categorie diferită sau adaugă produse",
-   "name": "Nume",
-   "nameRus": "Numele în rusă este obligatoriu!!!"
+  "selectCategory": " Alege o categorie diferită sau adaugă produse",
+  "name": "Nume",
+  "nameRus": "Numele în rusă este obligatoriu!!!",
+  "enterNameRus": "Introduce numele în rusă",
+  "enterNameEng": "Introduce numele în engleză",
+  "enterNameRom": "Introduce numele în Pomanian",
+  "allProducts": "Toate produsele"
 },
 
 "photo":{
   "fail": " Nu s-a putut încărca fotografia",
-  "failDelete": "Nu s-a putut șterge imaginea"
+  "failDelete": "Nu s-a putut șterge imaginea",
+  "delete": "Șterge foto"
 },
 
   "header": {
@@ -20,9 +25,10 @@
     "logout": "Deconectare",
     "login": "Conectare",
     "dashboard": "Panou de Control",
-    "admin-panel": "Admin"
+    "admin-panel": "Admin Panel"
   },
   "collection": {
+     "categoryTitle": "{{categoryName}}",
     "title": "Colecția Noastră",
     "loading": "Se încarcă...",
     "error": "Nu s-au putut încărca arborii. Vă rugăm să încercați mai târziu."
@@ -65,7 +71,8 @@
       "delete": "Șterge",
       "edit":"Editează",
       "failCreate": "Erorare la crearea categoriei",
-      "noGoods": "Nu există produse în această categorie"
+      "noGoods": "Nu există produse în această categorie",
+      "photo": "Foto categorie"
 },
   "contact": {
     "title": "Contactează-ne",
@@ -128,7 +135,7 @@
     "createEditTreeError": "Eroare la crearea/editarea produsului",
     "selectCategoryPrompt": "Selectați o categorie pentru a vedea produsele",
     "selectedCategoryProducts": "Produse în categoria selectată",
-    "addProduct": "➕ Adaugă produs",
+    "addProduct": "Adaugă produs",
     "edit": "Editează",
     "delete": "Șterge"
     
