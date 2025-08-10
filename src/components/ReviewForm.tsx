@@ -1,49 +1,83 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ReviewFormData } from '../types/IReviews';
-import { Star } from 'lucide-react';
 import { useCreateReviewMutation } from '../store/api/reviewApi';
-import toast from 'react-hot-toast';
+import { Star } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 interface ReviewFormProps {
-
   onClose: () => void;
   productId?: string;
   productName?: string;
 }
 
-const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
-    const [rating, setRating] = useState(5);
-    const [name, setName] = useState('');
-    const [comment, setComment] = useState('');
-    const [hoveredRating, setHoveredRating] = useState(0);
-    
-    const {t} = useTranslation();
+const ReviewForm = ({ onClose, productId, productName }: ReviewFormProps) => {
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState('');
+  const [hoveredRating, setHoveredRating] = useState(0);
+  const { t } = useTranslation();
 
-    const [createReview, {isLoading}] = useCreateReviewMutation();
+  // Отримуємо дані користувача з Redux
+  const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  
+  const [createReview, { isLoading }] = useCreateReviewMutation();
 
-    const handleSubmit = async (e: React.FormEvent) => {
+  // Якщо користувач не авторизований - показуємо повідомлення
+  if (!isAuthenticated) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
+          <div className="p-6 text-center">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">
+              Потрібна авторизація
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Щоб залишити відгук, необхідно увійти в аккаунт
+            </p>
+            <div className="flex justify-center space-x-3">
+              <button
+                onClick={onClose}
+                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+              >
+                Закрити
+              </button>
+              <button
+                onClick={() => {
+                  onClose();
+                  // Тут можна додати редирект на сторінку логіну
+                }}
+                className="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
+              >
+                Увійти в аккаунт
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const reviewData: ReviewFormData = {
-      name,
+    // Відправляємо тільки рейтинг і коментар
+    const reviewData = {
       rating,
       comment,
-      type: productId ? 'product' : 'website',
       ...(productId && { productId }),
     };
 
     try {
       await createReview(reviewData).unwrap();
-      toast.success(t('reviews.success'));
+      alert(t('reviews.success'));
       onClose();
     } catch (error) {
       console.error('Failed to create review:', error);
-      toast.error(t('reviews.error'));
+      alert(t('reviews.error'));
     }
   };
-    
-   return (
+
+  return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
         <div className="p-6">
@@ -60,19 +94,15 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
             </p>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                {t('reviews.name')}
-              </label>
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="w-full px-3 py-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder={t('reviews.namePlaceholder')}
-              />
+          {/* Показуємо ім'я авторизованого користувача */}
+          <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+            <p className="text-sm text-gray-600">Відгук від:</p>
+            <p className="font-semibold text-gray-800">{user?.fullName}</p>
+          </div>
 
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Рейтинг */}
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 {t('reviews.rating')}
               </label>
@@ -98,6 +128,7 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
               </div>
             </div>
 
+            {/* Коментар */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 {t('reviews.comment')}
@@ -112,6 +143,7 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
               />
             </div>
 
+            {/* Кнопки */}
             <div className="flex justify-end space-x-3 pt-4">
               <button
                 type="button"
@@ -133,6 +165,6 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
       </div>
     </div>
   );
-}
+};
 
-export default ReviewForm
+export default ReviewForm;

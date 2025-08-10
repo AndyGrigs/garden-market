@@ -2,7 +2,7 @@
 export interface Review {
   _id: string;
   userId: string;
-  userName: string;
+  // userName: string;
   rating: number;
   comment: string;
   type: 'product' | 'website';
@@ -13,7 +13,7 @@ export interface Review {
 }
 
 export interface ReviewFormData {
-  name: string;
+  // name: string;
   rating: number;
   comment: string;
   type: 'product' | 'website';
