@@ -35,7 +35,7 @@ export default function ReviewsSection() {
           </h2>
           <div className="text-center text-gray-600 py-12">
             <p className="text-lg">{t('reviews.noReviews')}</p>
-            <p className="text-sm mt-2">Станьте першим, хто залишить відгук!</p>
+            <p className="text-sm mt-2">{t('reviews.first')}</p>
           </div>
         </div>
       </section>
@@ -52,7 +52,7 @@ export default function ReviewsSection() {
           </h2>
           <div className="w-24 h-1 bg-emerald-600 mx-auto mb-4"></div>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Що кажуть наші клієнти про нас
+            {t('reviews.customerSays')}
           </p>
         </div>
 
