@@ -12,7 +12,8 @@
     "enterNameRus": "Введите название на русском",
     "enterNameEng": "Введите название на английском",
     "enterNameRom": "Введите название на румунском",
-    "allProducts": "Все товары"
+    "allProducts": "Все товары",
+    "submitting": "Отправка..."
   },
 
   "photo":{

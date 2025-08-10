@@ -1,5 +1,6 @@
 {
   "common": {
+
     "error": " Ceva s-a învârtit rău (. Încercați din nou mai târziu.",
     "cancel": "Anulează",
     "save": "Salva",
@@ -11,7 +12,8 @@
     "enterNameRus": "Introduce numele în rusă",
     "enterNameEng": "Introduce numele în engleză",
     "enterNameRom": "Introduce numele în Pomanian",
-    "allProducts": "Toate produsele"
+    "allProducts": "Toate produsele",
+    "submitting": "Se conectează..."
 },
 
 "photo":{
