@@ -14,6 +14,7 @@ import { useLanguage } from '../../hooks/useLanguage';
 import { t } from 'i18next';
 import { BASE_URL } from '../../config';
 import { RootState } from "../../store/store";
+import toast from 'react-hot-toast';
 
 interface AdminTreesProps {
   selectedCategoryId: string;
@@ -59,7 +60,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
         await deleteTree(id).unwrap();
         dispatch(removeTree(id));
       } catch (error) {
-        alert(t('dashboard.deleteTreeError'));
+        toast.error(t('dashboard.deleteTreeError'));
         console.error(error);
       }
     }
@@ -83,7 +84,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
 
   const handleSubmitTree = async (treeData: TreeFormData) => {
     if (!isTreeDataValid(treeData)) {
-      alert(t('dashboard.invalidTreedata'));
+      toast.error(t('dashboard.invalidTreedata'));
       return;
     }
 
@@ -120,7 +121,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
       setIsModalOpen(false);
       dispatch(setEditingTree(null));
     } catch (err) {
-      alert(t('dashboard.createEditTreeError'));
+      toast.error(t('dashboard.createEditTreeError'));
       console.error(err);
     }
   };

@@ -41,7 +41,7 @@ const AdminCategories = ({
       try { 
         await deleteCategory(id).unwrap();
       } catch {
-        alert(t('categories.notDeleted'));
+        toast.error(t('categories.notDeleted'));
       }
     }
   };
@@ -170,7 +170,7 @@ const AdminCategories = ({
               setIsModalOpen(false);
             } catch (err) {
               console.error(err);
-              alert(t('categories.failCreate'));
+              toast.error(t('categories.failCreate'));
             }
           }}
         />

@@ -7,6 +7,7 @@ import { TreeFormData } from "../../types/ITree";
 import { useDeleteImageMutation, useUploadImageMutation } from '../../store/api/uploadApi';
 import { t } from 'i18next';
 import { BASE_URL } from '../../config';
+import toast from 'react-hot-toast';
 
 interface Props {
   isOpen: boolean;
@@ -88,25 +89,21 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  // ✅ Спрощене завантаження нового фото
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       try {
-        console.log('📤 Завантажуємо нове зображення...');
         const formData = new FormData();
         formData.append('image', event.target.files[0]);
         
         const response = await uploadImage(formData).unwrap();
         setForm(prev => ({ ...prev, imageUrl: response.imageUrl }));
-        console.log('✅ Зображення завантажено:', response.imageUrl);
       } catch (error) {
-        alert("Не вдалося завантажити фото");
+        toast.error(t('common.error'));
         console.error(error);
       }
     }
   };
 
-  // ✅ Спрощене видалення фото
   const handleDeleteImage = async () => {
     if (form.imageUrl && !form.imageUrl.startsWith('blob:')) {
       try {
@@ -116,29 +113,25 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
           await deleteImage(filename).unwrap();
         }
       } catch (error) {
-        console.error("Помилка видалення зображення", error);
-        alert("Не вдалося видалити зображення");
+        toast.error(t('common.error'));
+        console.log(error)
       }
     }
     
-    // Скидаємо зображення
     setForm(prev => ({ ...prev, imageUrl: "" }));
-    console.log('✅ Зображення видалено');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!(form.title.ru ?? "").trim() || form.price <= 0 || !form.category) {
-      alert("Назва (RU), ціна та категорія обов'язкові");
+      toast.error(t('common.enterNameRus'));
       return;
     }
 
     try {
-      console.log('📤 Відправляємо дані товару:', form);
       onSubmit(form);
       
-      // Очищаємо форму
       setForm({
         title: { ru: "", ro: "", en: "" },
         description: { ru: "", ro: "", en: "" },
@@ -151,7 +144,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
       
     } catch (error) {
       console.error('❌ Помилка створення/редагування товару:', error);
-      alert("Помилка збереження товару");
+      toast.error(t('common.error'));
     }
   };
 

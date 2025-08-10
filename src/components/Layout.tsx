@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Cart from './Cart';
 import { CartItem } from '../types';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 
 export default function Layout() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -29,12 +30,12 @@ export default function Layout() {
   const handleCheckout = () => {
     if (!isAuthenticated) {
       if (window.confirm(t('checkout.guestConfirm'))) {
-        alert(t('checkout.guestProcessing'));
+        toast.success(t('checkout.guestProcessing'));
       } else {
         window.location.href = '/login';
       }
     } else {
-      alert(t('checkout.processing'));
+      toast.success(t('checkout.processing'));
     }
   };
 

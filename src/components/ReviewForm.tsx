@@ -4,6 +4,7 @@ import { useCreateReviewMutation } from '../store/api/reviewApi';
 import { Star } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import toast from 'react-hot-toast';
 
 interface ReviewFormProps {
   onClose: () => void;
@@ -67,11 +68,11 @@ const ReviewForm = ({ onClose, productId, productName }: ReviewFormProps) => {
 
     try {
       await createReview(reviewData).unwrap();
-      alert(t('reviews.success'));
+      toast.success(t('reviews.success'));
       onClose();
     } catch (error) {
       console.error('Failed to create review:', error);
-      alert(t('reviews.error'));
+      toast.error(t('reviews.error'));
     }
   };
 

@@ -17,7 +17,7 @@ import AuthLoader from './components/AuthLoader';
 import ReviewForm from './components/ReviewForm';
 import { Tree } from './types/ITree';
 import { useLanguage } from './hooks/useLanguage';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useGetCategoriesQuery } from './store/api/categoryApi';
 
 
@@ -72,7 +72,7 @@ export function MainContent() {
 
   const handleContactSubmit = (form: IContactForm) => {
     console.log('Contact form submitted:', form);
-    alert(t('contact.success'));
+    toast.success(t('contact.success'));
     setIsContactOpen(false);
   };
 

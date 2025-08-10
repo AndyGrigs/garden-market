@@ -4,6 +4,8 @@ import { TranslatedString } from '../../types/ICategories';
 import { useUploadImageMutation, useDeleteImageMutation } from "../../store/api/uploadApi";
 import { Loader2, X, Upload } from "lucide-react";
 import { BASE_URL } from "../../config";
+import toast from 'react-hot-toast';
+import { t } from 'i18next';
 
 interface Props {
   isOpen: boolean;
@@ -54,7 +56,6 @@ export const EditCategoryModal = ({
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       try {
-        console.log('📤 Завантажуємо нове зображення...');
         const form = new FormData();
         form.append('image', e.target.files[0]);
         
@@ -63,18 +64,16 @@ export const EditCategoryModal = ({
         console.log('✅ Зображення завантажено:', uploadResult.imageUrl);
       } catch (error) {
         console.error('❌ Помилка завантаження:', error);
-        alert('Помилка завантаження фото!');
+        toast.error('Error/Ошибка!');
       }
     }
   };
 
-  // ✅ Видалення поточного фото
   const handleDeleteImage = async () => {
     if (imageUrl && !imageUrl.startsWith('blob:')) {
       try {
         const filename = imageUrl.split("/").pop();
         if (filename) {
-          console.log('🗑️ Видаляємо файл:', filename);
           await deleteImage(filename).unwrap();
         }
       } catch (error) {
@@ -82,31 +81,25 @@ export const EditCategoryModal = ({
       }
     }
     
-    // Скидаємо зображення
     setImageUrl("");
-    console.log('✅ Зображення видалено');
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (!formData.ru?.trim()) {
-      alert('Поле RU обов\'язкове!');
+      toast.error(t('common.enterNameRus'));
       return;
     }
 
     try {
-      console.log('📤 Відправляємо дані:', { 
-        ...formData, 
-        imageUrl: imageUrl
-      });
       
       onSubmit({ ...formData, imageUrl: imageUrl });
       onClose();
       
     } catch (error) {
-      console.error('❌ Помилка:', error);
-      alert('Помилка збереження!');
+      console.error('❌:', error);
+      toast.error(t('collection.error'));
     }
   };
 

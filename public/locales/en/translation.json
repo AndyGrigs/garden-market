@@ -1,5 +1,6 @@
 {
 "common": {
+  "error": "Something has gone wrong (. Please try again later.",
   "cancel": "Cancel",
   "save": "Save",
   "allGoods": " All goods",
