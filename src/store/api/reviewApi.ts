@@ -8,19 +8,19 @@ export const reviewApi = createApi({
   tagTypes: ["Review"],
   endpoints: (builder) => ({
     getReviews: builder.query<Review[], void>({
-      query: () => "/reviews",
+      query: () => "/api/reviews",
       providesTags: ["Review"],
     }),
     createReview: builder.mutation<Review, ReviewFormData>({
       query: (reviewData) => ({
-        url: "/reviews",
+        url: "/api/reviews",
         method: "POST",
         body: reviewData,
       }),
       invalidatesTags: ["Review"],
     }),
     getUserReviews: builder.query<Review[], string>({
-      query: (userId) => `/reviews/user/${userId}`,
+      query: (userId) => `/api/reviews/user/${userId}`,
       providesTags: ["Review"],
     }),
   }),

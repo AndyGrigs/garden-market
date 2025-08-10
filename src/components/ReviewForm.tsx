@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import { useCreateCategoryMutation } from '../store/api/categoryApi';
 import { ReviewFormData } from '../types/IReviews';
 import { Star } from 'lucide-react';
+import { useCreateReviewMutation } from '../store/api/reviewApi';
+import toast from 'react-hot-toast';
 
 interface ReviewFormProps {
+
   onClose: () => void;
   productId?: string;
   productName?: string;
@@ -15,35 +17,29 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
     const [name, setName] = useState('');
     const [comment, setComment] = useState('');
     const [hoveredRating, setHoveredRating] = useState(0);
-    // const [type, setType] = useState<'product' | 'website'>(
-    // productId ? 'product' : 'website'
-  // );
+    
     const {t} = useTranslation();
 
-    const [createReview, {isLoading}] = useCreateCategoryMutation();
+    const [createReview, {isLoading}] = useCreateReviewMutation();
 
     const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const reviewData: ReviewFormData = {
+      name,
       rating,
       comment,
       type: productId ? 'product' : 'website',
       ...(productId && { productId }),
-      name: {
-        ru: name,
-        ro: '',
-        en: ''
-      },
     };
 
     try {
       await createReview(reviewData).unwrap();
-      alert(t('reviews.success'));
+      toast.success(t('reviews.success'));
       onClose();
     } catch (error) {
       console.error('Failed to create review:', error);
-      alert(t('reviews.error'));
+      toast.error(t('reviews.error'));
     }
   };
     
@@ -115,26 +111,6 @@ const ReviewForm = ({onClose, productId, productName}: ReviewFormProps) => {
                 placeholder={t('reviews.commentPlaceholder')}
               />
             </div>
-
-            {/* {!productId && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('reviews.reviewType')}
-                </label>
-                <select
-                  value={type}
-                  onChange={(e) =>
-                    setType(e.target.value as 'product' | 'website')
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                >
-                  <option value="website">{t('reviews.websiteReview')}</option>
-                  <option value="product">
-                    {t('reviews.generalProductReview')}
-                  </option>
-                </select>
-              </div>
-            )} */}
 
             <div className="flex justify-end space-x-3 pt-4">
               <button

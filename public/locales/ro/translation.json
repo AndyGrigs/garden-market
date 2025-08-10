@@ -1,16 +1,16 @@
 {
   "common": {
-  "cancel": "Anulează",
-  "save": "Salva",
-  "allGoods": "Toate bunurile",
-  "goodsInCategory": "Produse ale categoriei selectate",
-  "selectCategory": " Alege o categorie diferită sau adaugă produse",
-  "name": "Nume",
-  "nameRus": "Numele în rusă este obligatoriu!!!",
-  "enterNameRus": "Introduce numele în rusă",
-  "enterNameEng": "Introduce numele în engleză",
-  "enterNameRom": "Introduce numele în Pomanian",
-  "allProducts": "Toate produsele"
+    "cancel": "Anulează",
+    "save": "Salva",
+    "allGoods": "Toate bunurile",
+    "goodsInCategory": "Produse ale categoriei selectate",
+    "selectCategory": " Alege o categorie diferită sau adaugă produse",
+    "name": "Nume",
+    "nameRus": "Numele în rusă este obligatoriu!!!",
+    "enterNameRus": "Introduce numele în rusă",
+    "enterNameEng": "Introduce numele în engleză",
+    "enterNameRom": "Introduce numele în Pomanian",
+    "allProducts": "Toate produsele"
 },
 
 "photo":{
@@ -161,25 +161,24 @@
     "guestProcessing": "Se procesează comanda ca vizitator...",
     "processing": "Se procesează comanda..."
   },
-  "reviews": {
-    "customerReviews": "Recenzii Clienți",
-    "noReviews": "Nu există recenzii încă. Fii primul care își împărtășește experiența!",
-    "writeReview": "Scrie Recenzie",
-    "writeProductReview": "Scrie Recenzie Produs",
-    "writeWebsiteReview": "Scrie Recenzie Website",
-    "reviewingProduct": "Recenzând produsul",
+ "reviews": {
+    "customerReviews": "Recenzii clienți",
+    "noReviews": "Nu există recenzii încă",
+    "allReviews": "Toate recenziile",
+    "writeReview": "Scrie recenzie",
+    "writeProductReview": "Scrie recenzie produs",
+    "writeWebsiteReview": "Scrie recenzie site",
+    "reviewingProduct": "Recenzie pentru produs",
+    "name": "Numele tău",
+    "namePlaceholder": "Introdu numele tău",
     "rating": "Evaluare",
     "comment": "Comentariu",
     "commentPlaceholder": "Împărtășește experiența ta...",
-    "reviewType": "Tip Recenzie",
-    "websiteReview": "Recenzie Website",
-    "generalProductReview": "Recenzie Generală Produs",
-    "submitReview": "Trimite Recenzie",
-    "success": "Mulțumim pentru recenzie!",
-    "error": "Nu s-a putut trimite recenzia. Încercați din nou.",
-    "reviewFor": "Recenzie pentru",
-    "allReviews": "Toate Recenziile"
-  },
+    "submitReview": "Trimite recenzie",
+    "success": "Recenzia a fost trimisă cu succes!",
+    "error": "Nu s-a putut trimite recenzia",
+    "reviewFor": "Recenzie pentru"
+},
   "footer": {
     "description": "Sursa dumneavoastră de încredere pentru copaci frumoși de grădină și sfaturi de specialitate.",
     "quickLinks": "Link-uri rapide",
