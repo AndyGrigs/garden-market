@@ -11,6 +11,8 @@ import ContactPage from '../pages/ContactPage';
 import ReviewPage from "../pages/ReviewPage";
 import ResetPassword from "../pages/ResetPassword";
 import Layout from "./Layout";
+import About from '../pages/About';
+import TermsAndConditions from './TermsAndConditions';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -36,6 +38,8 @@ function AnimatedRoutes() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<About/>} />
+        <Route path="/terms" element={<TermsAndConditions />} />
       </Routes>
     </AnimatePresence>
   );
