@@ -11,7 +11,7 @@ export const reviewApi = createApi({
       query: () => "/api/reviews",
       providesTags: ["Review"],
     }),
-    createReview: builder.mutation<Review, ReviewFormData>({
+    createReview: builder.mutation<Review,  Partial<ReviewFormData>>({
       query: (reviewData) => ({
         url: "/api/reviews",
         method: "POST",

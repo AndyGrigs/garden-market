@@ -59,8 +59,6 @@ const ReviewForm = ({ onClose, productId, productName }: ReviewFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Відправляємо тільки рейтинг і коментар
     const reviewData = {
       rating,
       comment,

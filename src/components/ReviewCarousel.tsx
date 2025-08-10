@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 interface Review {
   _id: string;
-  name: string;
   rating: number;
   comment: string;
   createdAt: string;
@@ -140,9 +139,6 @@ export default function ReviewCarousel({ reviews }: ReviewCarouselProps) {
                 
                 {/* Author and Date */}
                 <div className="border-t pt-4 mt-auto">
-                  <p className="font-semibold text-gray-800">
-                    {review.name}
-                  </p>
                   {review.productName && (
                     <p className="text-sm text-gray-600">
                       {t('reviews.reviewFor')}: {review.productName}
