@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../hooks/useLanguage";
 import { BASE_URL } from "../config";
+import { useState } from 'react';
 
 interface CartProps {
   items: CartItem[];
@@ -22,6 +23,7 @@ export default function Cart({
 }: CartProps) {
   const { t } = useTranslation();
   const lang = useLanguage();
+  const [isExiting, setIsExiting] = useState(false);
   
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -32,10 +34,15 @@ export default function Cart({
     return title?.[lang] || title?.en || title?.ru || "Unknown";
   };
 
+  const handleClose = () => {
+    setIsExiting(true);
+  };
+
   if (items.length === 0) {
     return (
       <AnimatePresence>
         <motion.div
+          key="cart-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -48,11 +55,16 @@ export default function Cart({
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="bg-white w-full max-w-md h-full flex flex-col"
+            onAnimationComplete={(definition) => {
+              if (isExiting && definition === "exit") {
+                onClose();
+              }
+            }}
           >
             <div className="flex justify-between items-center p-4 border-b">
               <h2 className="text-xl font-bold">{t("cart.title")}</h2>
               <button
-                onClick={onClose}
+                onClick={handleClose}
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors"
               >
                 <X className="h-6 w-6" />
