@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {Leaf, LogOut, Menu, User } from "lucide-react";
+import {Leaf, LogOut, Menu, Package, User } from "lucide-react";
 import { logout as logoutAction } from "../store/slices/authSlice";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -29,6 +29,7 @@ export default function Header({
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.user);
   const isAdmin = user?.role === "admin";
+  const isSeller = user?.role === "seller";
 
   const handleLogout = async () => {
     try {
@@ -54,9 +55,16 @@ export default function Header({
               <>
                 {isAdmin ? (
                   <AdminLink />
-                ) : (
-                  <UserLinks cartItemsCount={cartItemsCount} onCartClick={onCartClick} />
-                )}
+                ) : isSeller ? ( 
+                  <Link 
+                    to="/seller" 
+                    className="flex items-center space-x-1 text-white hover:text-emerald-200"
+                  >
+                    <Package className="h-4 w-4" />
+                    <span>{t('seller.dashboard.title', { defaultValue: 'Панель продавця' })}</span>
+                  </Link>
+                ) : null}
+                <UserLinks cartItemsCount={cartItemsCount} onCartClick={onCartClick} />
                 <button
                   onClick={handleLogout}
                   className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"

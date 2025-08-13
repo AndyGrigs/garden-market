@@ -13,6 +13,8 @@ import ResetPassword from "../pages/ResetPassword";
 import Layout from "./Layout";
 import About from '../pages/About';
 import TermsAndConditions from './TermsAndConditions';
+import SellerGuard from './SellerGuard';
+import SellerDashboard from './SellerDasboard';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -31,6 +33,14 @@ function AnimatedRoutes() {
               <AdminGuard>
                 <AdminPanel />
               </AdminGuard>
+            }
+          />
+          <Route
+            path="seller"
+            element={
+              <SellerGuard>
+                <SellerDashboard />
+              </SellerGuard>
             }
           />
         </Route>

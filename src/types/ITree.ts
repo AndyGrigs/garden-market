@@ -26,4 +26,14 @@ export interface Tree {
     _id?: string;
     name: TranslatedString;
   } | null;
+  seller?: {
+    _id: string;
+    fullName: string;
+    sellerInfo?: {
+      nurseryName?: string;
+    };
+  };
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 }

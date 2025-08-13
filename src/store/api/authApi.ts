@@ -16,13 +16,21 @@ interface LoginRequest {
 interface RegisterRequest extends LoginRequest {
   fullName: string;
   language?: string;
+  role?: 'buyer' | 'seller';
+  sellerInfo?: {
+    nurseryName?: string;
+    address?: string;
+    phoneNumber?: string;
+    businessLicense?: string;
+    description?: string;
+  };
 }
 
 interface ApiResponse {
   _id: string;
   email: string;
   fullName: string;
-  role: "user" | "admin";
+  role: "user" | 'seller' | "admin";
   language?: string;
   isVerified?: boolean;
   token: string;
