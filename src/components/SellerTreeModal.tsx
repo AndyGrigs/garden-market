@@ -3,7 +3,7 @@ import { X, Upload, Loader2, Info } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Category } from '../types/ICategories';
-import { Tree } from '../types/ITree';
+import { Tree, TreeApiData } from '../types/ITree';
 import { useLanguage } from '../hooks/useLanguage';
 import { useGetCategoriesQuery } from '../store/api/categoryApi';
 import { useUploadImageMutation } from '../store/api/uploadApi';
@@ -29,27 +29,12 @@ interface TreeFormData {
   };
   price: number;
   stock: number;
-  category: string; // ⬅️ Це ID категорії (string)
+  category: string;
   imageUrl: string;
 }
 
-// ⬇️ ДОДАЙ НОВИЙ ІНТЕРФЕЙС ДЛЯ API
-interface TreeApiData {
-  title: {
-    ru: string;
-    ro: string;
-    en: string;
-  };
-  description: {
-    ru: string;
-    ro: string;
-    en: string;
-  };
-  price: number;
-  stock: number;
-  category: string; // API очікує ID як string
-  imageUrl: string;
-}
+
+
 const SellerTreeModal = ({ isOpen, onClose, editingTree }: SellerTreeModalProps) => {
   const { t } = useTranslation();
   const lang = useLanguage();
@@ -85,10 +70,9 @@ const SellerTreeModal = ({ isOpen, onClose, editingTree }: SellerTreeModalProps)
       });
       setImagePreview(editingTree.imageUrl ? `${import.meta.env.VITE_API_URL}${editingTree.imageUrl}` : "");
     } else {
-      // Очищення форми для нового товару
       setFormData({
-        title: { ru: "", ro: "", en: "" }, // тільки ru заповнюється продавцем
-        description: { ru: "", ro: "", en: "" }, // тільки ru заповнюється продавцем
+        title: { ru: "", ro: "", en: "" },
+        description: { ru: "", ro: "", en: "" },
         price: 0,
         stock: 0,
         category: "",
@@ -168,37 +152,37 @@ const SellerTreeModal = ({ isOpen, onClose, editingTree }: SellerTreeModalProps)
       const imageUrl = await uploadImageToServer();
 
       // ⬇️ ВАЖЛИВО: Для нових товарів очищуємо переклади
-      const treeData = {
-        ...formData,
-        imageUrl,
-        // Якщо це новий товар, очищаємо переклади (залишаємо тільки ru)
-        title: editingTree 
-          ? formData.title // зберігаємо існуючі переклади при редагуванні
-          : { ru: formData.title.ru, ro: "", en: "" }, // для нових товарів тільки ru
-        description: editingTree
-          ? formData.description // зберігаємо існуючі переклади при редагуванні  
-          : { ru: formData.description.ru, ro: "", en: "" }, // для нових товарів тільки ru
-      };
+      const treeData: TreeApiData =  {
+      title: editingTree 
+        ? formData.title
+        : { ru: formData.title.ru, ro: "", en: "" },
+      description: editingTree
+        ? formData.description  
+        : { ru: formData.description.ru, ro: "", en: "" },
+      price: formData.price,
+      stock: formData.stock,
+      category: formData.category, // ⬅️ Тут передаємо ID як string
+      imageUrl,
+    }
 
       if (editingTree) {
-        // Редагування існуючого товару (продавець може змінити тільки ru версію)
-        await updateTree({
-          id: editingTree._id,
-          data: {
-            ...treeData,
-            // При редагуванні зберігаємо існуючі переклади та оновлюємо тільки ru
-            title: {
-              ru: formData.title.ru,
-              ro: editingTree.title.ro, // зберігаємо існуючий переклад
-              en: editingTree.title.en,  // зберігаємо існуючий переклад
-            },
-            description: {
-              ru: formData.description.ru,
-              ro: editingTree.description.ro, // зберігаємо існуючий переклад
-              en: editingTree.description.en,  // зберігаємо існуючий переклад
-            }
+      await updateTree({
+        id: editingTree._id,
+        data: {
+          ...treeData,
+          title: {
+            ru: formData.title.ru,
+            ro: editingTree.title.ro,
+            en: editingTree.title.en,
           },
-        }).unwrap();
+          description: {
+            ru: formData.description.ru,
+            ro: editingTree.description.ro,
+            en: editingTree.description.en,
+          }
+        },
+      }).unwrap();
+      
         
         toast.success(t('seller.updateSuccess', { defaultValue: 'Товар успішно оновлено' }));
       } else {

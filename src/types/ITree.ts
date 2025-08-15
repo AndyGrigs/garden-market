@@ -37,3 +37,20 @@ export interface Tree {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface TreeApiData {
+  title: {
+    ru: string;
+    ro: string;
+    en: string;
+  };
+  description: {
+    ru: string;
+    ro: string;
+    en: string;
+  };
+  price: number;
+  stock: number;
+  category: string; 
+  imageUrl: string;
+}

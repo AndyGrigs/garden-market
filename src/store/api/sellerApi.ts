@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { appBaseQuery } from './appBaseQuery';
-import { Tree } from '../../types/ITree';
+import { Tree, TreeApiData } from '../../types/ITree';
 
 export const sellerApi = createApi({
   reducerPath: "sellerApi",
@@ -15,24 +15,27 @@ export const sellerApi = createApi({
     }),
     
     // Створити товар
-    createSellerTree: builder.mutation<Tree, Partial<Tree>>({
-      query: (tree) => ({
+
+    createSellerTree: builder.mutation<Tree, TreeApiData>({
+        query: (tree) => ({
         url: "/seller/trees",
         method: "POST",
         body: tree,
-      }),
-      invalidatesTags: ["SellerTree"],
-    }),
+  }),
+  invalidatesTags: ["SellerTree"],
+}),
+
     
     // Оновити товар
-    updateSellerTree: builder.mutation<Tree, { id: string; data: Partial<Tree> }>({
-      query: ({ id, data }) => ({
-        url: `/seller/trees/${id}`,
-        method: "PATCH",
-        body: data,
-      }),
-      invalidatesTags: ["SellerTree"],
-    }),
+  // Оновити товар  
+updateSellerTree: builder.mutation<Tree, { id: string; data: TreeApiData }>({
+  query: ({ id, data }) => ({
+    url: `/seller/trees/${id}`,
+    method: "PATCH",
+    body: data,
+  }),
+  invalidatesTags: ["SellerTree"],
+}),
     
     // Видалити товар
     deleteSellerTree: builder.mutation<void, string>({
