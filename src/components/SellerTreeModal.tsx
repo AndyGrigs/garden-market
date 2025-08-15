@@ -106,7 +106,7 @@ const SellerTreeModal = ({ isOpen, onClose, editingTree }: SellerTreeModalProps)
       formDataImage.append("image", imageFile);
       
       const result = await uploadImage(formDataImage).unwrap();
-      return result.url;
+      return result.imageUrl || "";
     } catch (error) {
       console.error("Image upload error:", error);
       throw new Error(t('seller.imageUploadError', { defaultValue: 'Помилка завантаження зображення' }));
@@ -205,9 +205,12 @@ const SellerTreeModal = ({ isOpen, onClose, editingTree }: SellerTreeModalProps)
 
   if (!isOpen) return null;
 
-  const getCategoryName = (category: Category) => {
-    return category?.name?.[lang] || category?.name?.en || category?.name?.ru || "Unknown";
-  };
+  const getCategoryName = (category: Category | undefined) => {
+  return category?.name?.[lang as keyof typeof category.name] || 
+         category?.name?.en || 
+         category?.name?.ru || 
+         "Unknown";
+};
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
