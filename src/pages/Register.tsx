@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useRegisterMutation } from "../store/api/authApi";
-import { UserPlus, Home } from "lucide-react";
+import { UserPlus, Home, Users, ShoppingCart } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { motion } from "framer-motion";
@@ -11,6 +11,14 @@ export default function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<'buyer' | 'seller'>('buyer');
+  const [sellerInfo, setSellerInfo] = useState({
+    nurseryName: "",
+    address: "",
+    phoneNumber: "",
+    businessLicense: "",
+    description: ""
+  });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -18,7 +26,6 @@ export default function Register() {
   const [register, { isLoading }] = useRegisterMutation();
   const { t, i18n } = useTranslation();
 
-  // Auto-detect language from browser
   const detectedLanguage = i18n.language || navigator.language.split('-')[0] || 'en';
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,23 +33,43 @@ export default function Register() {
     setError("");
     setSuccess("");
 
-    try {
-  const result = await register({
-    fullName,
-    email,
-    password,
-    language: detectedLanguage,
-  }).unwrap();
+    // Валідація для продавців
+    if (role === 'seller') {
+      if (!sellerInfo.nurseryName.trim()) {
+        setError(t("auth.register.sellerInfo.nurseryNameRequired", { 
+          defaultValue: "Назва розсадника обов'язкова для продавців" 
+        }));
+        return;
+      }
+      if (!sellerInfo.phoneNumber.trim()) {
+        setError(t("auth.register.sellerInfo.phoneRequired", { 
+          defaultValue: "Номер телефону обов'язковий для продавців" 
+        }));
+        return;
+      }
+    }
 
-  setSuccess(result.message);
-  setTimeout(() => {
-    navigate(`/verify-email?email=${encodeURIComponent(email)}`);
-  }, 2000);
-} catch (err: ErrorResponse | unknown) {
-  setError(
-    (err as ErrorResponse)?.data?.message || t("auth.register.error")
-  );
-}
+    try {
+      const registerData = {
+        fullName,
+        email,
+        password,
+        language: detectedLanguage,
+        role,
+        ...(role === 'seller' && { sellerInfo })
+      };
+
+      const result = await register(registerData).unwrap();
+
+      setSuccess(result.message);
+      setTimeout(() => {
+        navigate(`/verify-email?email=${encodeURIComponent(email)}`);
+      }, 2000);
+    } catch (err: ErrorResponse | unknown) {
+      setError(
+        (err as ErrorResponse)?.data?.message || t("auth.register.error")
+      );
+    }
   };
 
   return (
@@ -68,7 +95,7 @@ export default function Register() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="max-w-md w-full space-y-8"
+          className="max-w-2xl w-full space-y-8"
         >
           <div className="text-center">
             <UserPlus className="mx-auto h-12 w-12 text-emerald-600" />
@@ -113,9 +140,86 @@ export default function Register() {
               </motion.div>
             )}
 
-            <div className="rounded-md shadow-sm space-y-3">
+            {/* Вибір ролі */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-gray-700">
+                {t("auth.register.roleSelection", { defaultValue: "Виберіть тип акаунту" })}
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Покупець */}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`relative cursor-pointer rounded-lg border-2 p-4 transition-all ${
+                    role === 'buyer'
+                      ? 'border-emerald-500 bg-emerald-50'
+                      : 'border-gray-200 bg-white hover:border-gray-300'
+                  }`}
+                  onClick={() => setRole('buyer')}
+                >
+                  <div className="flex items-center space-x-3">
+                    <ShoppingCart className={`h-6 w-6 ${role === 'buyer' ? 'text-emerald-600' : 'text-gray-400'}`} />
+                    <div>
+                      <h3 className={`text-sm font-medium ${role === 'buyer' ? 'text-emerald-900' : 'text-gray-900'}`}>
+                        {t("auth.register.buyer.title", { defaultValue: "Покупець" })}
+                      </h3>
+                      <p className={`text-xs ${role === 'buyer' ? 'text-emerald-700' : 'text-gray-500'}`}>
+                        {t("auth.register.buyer.description", { 
+                          defaultValue: "Купую рослини для себе" 
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="buyer"
+                    checked={role === 'buyer'}
+                    onChange={() => setRole('buyer')}
+                    className="absolute top-3 right-3"
+                  />
+                </motion.div>
+
+                {/* Продавець */}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`relative cursor-pointer rounded-lg border-2 p-4 transition-all ${
+                    role === 'seller'
+                      ? 'border-emerald-500 bg-emerald-50'
+                      : 'border-gray-200 bg-white hover:border-gray-300'
+                  }`}
+                  onClick={() => setRole('seller')}
+                >
+                  <div className="flex items-center space-x-3">
+                    <Users className={`h-6 w-6 ${role === 'seller' ? 'text-emerald-600' : 'text-gray-400'}`} />
+                    <div>
+                      <h3 className={`text-sm font-medium ${role === 'seller' ? 'text-emerald-900' : 'text-gray-900'}`}>
+                        {t("auth.register.seller.title", { defaultValue: "Продавець" })}
+                      </h3>
+                      <p className={`text-xs ${role === 'seller' ? 'text-emerald-700' : 'text-gray-500'}`}>
+                        {t("auth.register.seller.description", { 
+                          defaultValue: "Продаю рослини на платформі" 
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="seller"
+                    checked={role === 'seller'}
+                    onChange={() => setRole('seller')}
+                    className="absolute top-3 right-3"
+                  />
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Основні поля */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="name" className="sr-only">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                   {t("auth.register.name")}
                 </label>
                 <input
@@ -125,12 +229,13 @@ export default function Register() {
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder={t("auth.register.name")}
                 />
               </div>
+
               <div>
-                <label htmlFor="email" className="sr-only">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   {t("auth.register.email")}
                 </label>
                 <input
@@ -140,32 +245,132 @@ export default function Register() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder={t("auth.register.email")}
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  {t("auth.register.password")}
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
-                  placeholder={t("auth.register.password")}
                 />
               </div>
             </div>
 
             <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                {t("auth.register.password")}
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                placeholder={t("auth.register.password")}
+              />
+            </div>
+
+            {/* Додаткові поля для продавців */}
+            {role === 'seller' && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="space-y-4 border-t pt-6"
+              >
+                <h3 className="text-lg font-medium text-gray-900">
+                  {t("auth.register.sellerInfo.title", { defaultValue: "Інформація про продавця" })}
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      {t("auth.register.sellerInfo.nurseryName", { defaultValue: "Назва розсадника" })} *
+                    </label>
+                    <input
+                      type="text"
+                      required={role === 'seller'}
+                      value={sellerInfo.nurseryName}
+                      onChange={(e) => setSellerInfo({...sellerInfo, nurseryName: e.target.value})}
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      placeholder={t("auth.register.sellerInfo.nurseryNamePlaceholder", { 
+                        defaultValue: "Наприклад: Зелений Світ" 
+                      })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      {t("auth.register.sellerInfo.phone", { defaultValue: "Телефон" })} *
+                    </label>
+                    <input
+                      type="tel"
+                      required={role === 'seller'}
+                      value={sellerInfo.phoneNumber}
+                      onChange={(e) => setSellerInfo({...sellerInfo, phoneNumber: e.target.value})}
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      placeholder="+380XXXXXXXXX"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    {t("auth.register.sellerInfo.address", { defaultValue: "Адреса" })}
+                  </label>
+                  <input
+                    type="text"
+                    value={sellerInfo.address}
+                    onChange={(e) => setSellerInfo({...sellerInfo, address: e.target.value})}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                    placeholder={t("auth.register.sellerInfo.addressPlaceholder", { 
+                      defaultValue: "Місто, вулиця, будинок" 
+                    })}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    {t("auth.register.sellerInfo.license", { defaultValue: "Номер ліцензії" })}
+                  </label>
+                  <input
+                    type="text"
+                    value={sellerInfo.businessLicense}
+                    onChange={(e) => setSellerInfo({...sellerInfo, businessLicense: e.target.value})}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                    placeholder={t("auth.register.sellerInfo.licensePlaceholder", { 
+                      defaultValue: "Необов'язково" 
+                    })}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    {t("auth.register.sellerInfo.description", { defaultValue: "Опис діяльності" })}
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={sellerInfo.description}
+                    onChange={(e) => setSellerInfo({...sellerInfo, description: e.target.value})}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                    placeholder={t("auth.register.sellerInfo.descriptionPlaceholder", { 
+                      defaultValue: "Розкажіть про свій бізнес..." 
+                    })}
+                  />
+                </div>
+
+                <div className="bg-blue-50 p-4 rounded-md">
+                  <p className="text-sm text-blue-700">
+                    {t("auth.register.sellerInfo.notice", { 
+                      defaultValue: "Ваш акаунт продавця буде перевірений адміністратором протягом 24 годин." 
+                    })}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+
+            <div>
               <button
                 type="submit"
                 disabled={isLoading}
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
               >
                 {isLoading ? (
                   <motion.div
