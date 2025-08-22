@@ -16,6 +16,7 @@ import TermsAndConditions from './TermsAndConditions';
 import SellerGuard from './SellerGuard';
 import SellerDashboard from './SellerDasboard';
 
+
 function AnimatedRoutes() {
   const location = useLocation();
 

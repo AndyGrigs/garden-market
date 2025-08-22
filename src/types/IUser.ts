@@ -3,7 +3,7 @@
     _id?: string;
     email: string;
     fullName: string;
-    role: 'user' | 'seller' |'admin';
+    role: 'buyer' | 'seller' |'admin';
     language?: string;
     isVerified?: boolean;
     sellerInfo?: {

@@ -36,15 +36,11 @@ export default function Register() {
     // Валідація для продавців
     if (role === 'seller') {
       if (!sellerInfo.nurseryName.trim()) {
-        setError(t("auth.register.sellerInfo.nurseryNameRequired", { 
-          defaultValue: "Назва розсадника обов'язкова для продавців" 
-        }));
+        setError("Назва розсадника обов'язкова для продавців");
         return;
       }
       if (!sellerInfo.phoneNumber.trim()) {
-        setError(t("auth.register.sellerInfo.phoneRequired", { 
-          defaultValue: "Номер телефону обов'язковий для продавців" 
-        }));
+        setError("Номер телефону обов'язковий для продавців");
         return;
       }
     }
@@ -143,7 +139,7 @@ export default function Register() {
             {/* Вибір ролі */}
             <div className="space-y-3">
               <label className="text-sm font-medium text-gray-700">
-                {t("auth.register.roleSelection", { defaultValue: "Виберіть тип акаунту" })}
+                Виберіть тип акаунту
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Покупець */}
@@ -161,12 +157,10 @@ export default function Register() {
                     <ShoppingCart className={`h-6 w-6 ${role === 'buyer' ? 'text-emerald-600' : 'text-gray-400'}`} />
                     <div>
                       <h3 className={`text-sm font-medium ${role === 'buyer' ? 'text-emerald-900' : 'text-gray-900'}`}>
-                        {t("auth.register.buyer.title", { defaultValue: "Покупець" })}
+                        Покупець
                       </h3>
                       <p className={`text-xs ${role === 'buyer' ? 'text-emerald-700' : 'text-gray-500'}`}>
-                        {t("auth.register.buyer.description", { 
-                          defaultValue: "Купую рослини для себе" 
-                        })}
+                        Купую рослини для себе
                       </p>
                     </div>
                   </div>
@@ -195,12 +189,10 @@ export default function Register() {
                     <Users className={`h-6 w-6 ${role === 'seller' ? 'text-emerald-600' : 'text-gray-400'}`} />
                     <div>
                       <h3 className={`text-sm font-medium ${role === 'seller' ? 'text-emerald-900' : 'text-gray-900'}`}>
-                        {t("auth.register.seller.title", { defaultValue: "Продавець" })}
+                        Продавець
                       </h3>
                       <p className={`text-xs ${role === 'seller' ? 'text-emerald-700' : 'text-gray-500'}`}>
-                        {t("auth.register.seller.description", { 
-                          defaultValue: "Продаю рослини на платформі" 
-                        })}
+                        Продаю рослини на платформі
                       </p>
                     </div>
                   </div>
@@ -276,13 +268,13 @@ export default function Register() {
                 className="space-y-4 border-t pt-6"
               >
                 <h3 className="text-lg font-medium text-gray-900">
-                  {t("auth.register.sellerInfo.title", { defaultValue: "Інформація про продавця" })}
+                  Інформація про продавця
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      {t("auth.register.sellerInfo.nurseryName", { defaultValue: "Назва розсадника" })} *
+                      Назва розсадника *
                     </label>
                     <input
                       type="text"
@@ -290,15 +282,13 @@ export default function Register() {
                       value={sellerInfo.nurseryName}
                       onChange={(e) => setSellerInfo({...sellerInfo, nurseryName: e.target.value})}
                       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                      placeholder={t("auth.register.sellerInfo.nurseryNamePlaceholder", { 
-                        defaultValue: "Наприклад: Зелений Світ" 
-                      })}
+                      placeholder="Наприклад: Зелений Світ"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      {t("auth.register.sellerInfo.phone", { defaultValue: "Телефон" })} *
+                      Телефон *
                     </label>
                     <input
                       type="tel"
@@ -313,54 +303,46 @@ export default function Register() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    {t("auth.register.sellerInfo.address", { defaultValue: "Адреса" })}
+                    Адреса
                   </label>
                   <input
                     type="text"
                     value={sellerInfo.address}
                     onChange={(e) => setSellerInfo({...sellerInfo, address: e.target.value})}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder={t("auth.register.sellerInfo.addressPlaceholder", { 
-                      defaultValue: "Місто, вулиця, будинок" 
-                    })}
+                    placeholder="Місто, вулиця, будинок"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    {t("auth.register.sellerInfo.license", { defaultValue: "Номер ліцензії" })}
+                    Номер ліцензії
                   </label>
                   <input
                     type="text"
                     value={sellerInfo.businessLicense}
                     onChange={(e) => setSellerInfo({...sellerInfo, businessLicense: e.target.value})}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder={t("auth.register.sellerInfo.licensePlaceholder", { 
-                      defaultValue: "Необов'язково" 
-                    })}
+                    placeholder="Необов'язково"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    {t("auth.register.sellerInfo.description", { defaultValue: "Опис діяльності" })}
+                    Опис діяльності
                   </label>
                   <textarea
                     rows={3}
                     value={sellerInfo.description}
                     onChange={(e) => setSellerInfo({...sellerInfo, description: e.target.value})}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder={t("auth.register.sellerInfo.descriptionPlaceholder", { 
-                      defaultValue: "Розкажіть про свій бізнес..." 
-                    })}
+                    placeholder="Розкажіть про свій бізнес..."
                   />
                 </div>
 
                 <div className="bg-blue-50 p-4 rounded-md">
                   <p className="text-sm text-blue-700">
-                    {t("auth.register.sellerInfo.notice", { 
-                      defaultValue: "Ваш акаунт продавця буде перевірений адміністратором протягом 24 годин." 
-                    })}
+                    Ваш акаунт продавця буде перевірений адміністратором протягом 24 годин.
                   </p>
                 </div>
               </motion.div>

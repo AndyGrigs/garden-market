@@ -30,7 +30,7 @@ interface ApiResponse {
   _id: string;
   email: string;
   fullName: string;
-  role: "user" | 'seller' | "admin";
+  role: "buyer" | 'seller' | "admin";
   language?: string;
   isVerified?: boolean;
   token: string;
@@ -70,9 +70,10 @@ export const authApi = createApi({
         method: "POST",
         body: {
           email: data.email,
-          fullName: data.fullName,
+          fullName: data.fullName,          
           password: data.password,
           language: data.language || 'en',
+          body: data
         },
       }),
     }),
