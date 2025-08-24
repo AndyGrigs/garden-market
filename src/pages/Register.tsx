@@ -54,13 +54,13 @@ export default function Register() {
         role,
         ...(role === 'seller' && { sellerInfo })
       };
-
+      console.log("📤 Відправляємо дані:", registerData);
       const result = await register(registerData).unwrap();
 
       setSuccess(result.message);
       setTimeout(() => {
         navigate(`/verify-email?email=${encodeURIComponent(email)}`);
-      }, 2000);
+      }, 4000);
     } catch (err: ErrorResponse | unknown) {
       setError(
         (err as ErrorResponse)?.data?.message || t("auth.register.error")
