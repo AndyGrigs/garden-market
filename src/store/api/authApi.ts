@@ -68,13 +68,7 @@ export const authApi = createApi({
       query: (data) => ({
         url: "/auth/register",
         method: "POST",
-        body: {
-          email: data.email,
-          fullName: data.fullName,          
-          password: data.password,
-          language: data.language || 'en',
-          body: data
-        },
+        body: data
       }),
     }),
 
