@@ -7,6 +7,7 @@ import Cart from './Cart';
 import { CartItem } from '../types';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { AnimatePresence } from 'framer-motion';
 
 export default function Layout() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -51,15 +52,17 @@ export default function Layout() {
         <Outlet context={{ cartItems, setCartItems }} />
       </main>
 
-      {isCartOpen && (
-        <Cart
-          items={cartItems}
-          onClose={() => setIsCartOpen(false)}
-          onUpdateQuantity={updateQuantity}
-          onRemoveItem={removeItem}
-          onCheckout={handleCheckout}
-        />
-      )}
+      <AnimatePresence>
+        {isCartOpen && (
+          <Cart
+            items={cartItems}
+            onClose={() => setIsCartOpen(false)}
+            onUpdateQuantity={updateQuantity}
+            onRemoveItem={removeItem}
+            onCheckout={handleCheckout}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
