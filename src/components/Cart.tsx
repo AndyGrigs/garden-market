@@ -36,68 +36,33 @@ export default function Cart({
 
   const handleClose = () => {
     setIsExiting(true);
+    setTimeout(() => onClose(), 300); // Fallback in case animation doesn't complete
   };
 
-  if (items.length === 0) {
-    return (
-      <AnimatePresence>
-        <motion.div
-          key="cart-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
-        >
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="bg-white w-full max-w-md h-full flex flex-col"
-            onAnimationComplete={(definition) => {
-              if (isExiting && definition === "exit") {
-                onClose();
-              }
-            }}
-          >
-            <div className="flex justify-between items-center p-4 border-b">
-              <h2 className="text-xl font-bold">{t("cart.title")}</h2>
-              <button
-                onClick={handleClose}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-            
-            <div className="flex-1 flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-gray-500 text-lg">{t("cart.empty")}</p>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      </AnimatePresence>
-    );
-  }
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
+  };
+
+  const isEmpty = items.length === 0;
 
   return (
-    <AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
+      onClick={handleOverlayClick}
+    >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-        className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
+        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+        className="bg-white w-full max-w-md h-full flex flex-col"
       >
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "100%" }}
-          transition={{ type: "spring", damping: 25, stiffness: 200 }}
-          className="bg-white w-full max-w-md h-full flex flex-col"
-        >
           <div className="flex justify-between items-center p-4 border-b">
             <h2 className="text-xl font-bold">{t("cart.title")}</h2>
             <button
@@ -108,7 +73,15 @@ export default function Cart({
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {isEmpty ? (
+            <div className="flex-1 flex items-center justify-center">
+              <div className="text-center">
+                <p className="text-gray-500 text-lg">{t("cart.empty")}</p>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
             <AnimatePresence>
               {items.map((item) => (
                 <motion.div
@@ -163,21 +136,22 @@ export default function Cart({
             </AnimatePresence>
           </div>
 
-          <div className="border-t p-4 space-y-4">
-            <div className="flex justify-between text-xl font-bold">
-              <span>{t("cart.total")}:</span>
-              <span>₴{total.toFixed(2)}</span>
-            </div>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={onCheckout}
-              className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-500 transition-colors"
-            >
-              {t("cart.checkout")}
-            </motion.button>
-          </div>
+              <div className="border-t p-4 space-y-4">
+                <div className="flex justify-between text-xl font-bold">
+                  <span>{t("cart.total")}:</span>
+                  <span>₴{total.toFixed(2)}</span>
+                </div>
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onCheckout}
+                  className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-500 transition-colors"
+                >
+                  {t("cart.checkout")}
+                </motion.button>
+              </div>
+            </>
+          )}
         </motion.div>
       </motion.div>
-    </AnimatePresence>
   );
 }
