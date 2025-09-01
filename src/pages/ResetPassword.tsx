@@ -15,22 +15,24 @@ const ResetPassword = () => {
   const [error, setError] = useState("");
   const { t } = useTranslation();
 
-  const token = searchParams.get("token");
+  // const token = searchParams.get("token");
+  const email = searchParams.get("email")
+  const code = searchParams.get("code")
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   useEffect(() => {
-    if (!token) {
-      setError("Invalid or missing reset token");
+    if (!email || !code) {
+      setError("Invalid or missing code or email");
     }
-  }, [token]);
+  }, [code, email]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setMessage("");
 
-    if (!token) {
-      setError("Invalid reset token");
+    if (!email  || !code) {
+      setError("Invalid email or code");
       return;
     }
 
@@ -45,7 +47,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await resetPassword({ token, password }).unwrap();
+      const response = await resetPassword({ email, code, newPassword: password }).unwrap();
       setMessage(response.message);
       setTimeout(() => {
         navigate("/login");
@@ -156,7 +158,7 @@ const ResetPassword = () => {
             <div>
               <button
                 type="submit"
-                disabled={isLoading || !token}
+                disabled={isLoading || !email || !code}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
