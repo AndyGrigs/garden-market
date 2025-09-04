@@ -23,7 +23,7 @@ export default function Cart({
 }: CartProps) {
   const { t } = useTranslation();
   const lang = useLanguage();
-  const [isExiting, setIsExiting] = useState(false);
+  const [, setIsExiting] = useState(false);
   
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,

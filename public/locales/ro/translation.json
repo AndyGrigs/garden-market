@@ -146,6 +146,9 @@
   "verification": {
     "title": "Verifică Email-ul",
     "subtitle": "Introdu codul de verificare trimis pe email",
+    "mainPage": "Pagina Principală",
+    "emailAddress": "Adresă Email",
+    "emailPlaceholder": "Introdu email-ul tău",
     "code": "Cod de Verificare",
     "codePlaceholder": "Introdu codul de 3 cifre",
     "verify": "Verifică Email",
@@ -157,7 +160,11 @@
     "resendSuccess": "Codul de verificare a fost trimis cu succes!",
     "resendError": "Nu s-a putut retrimite codul de verificare",
     "alreadyVerified": "Deja verificat?",
-    "signInHere": "Conectează-te aici"
+    "signInHere": "Conectează-te aici",
+    "enterBothFields": "Te rog să completezi atât email-ul, cât și codul de verificare",
+    "verificationFailed": "Verificarea a eșuat. Te rog să verifici codul.",
+    "enterEmailAddress": "Te rog să introduci adresa de email",
+    "failedToResend": "Nu s-a putut retrimite codul de verificare"
   },
   "checkout": {
     "guestConfirm": "Doriți să continuați ca vizitator? Apăsați Anulare pentru a vă conecta.",

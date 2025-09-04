@@ -7,8 +7,10 @@ import {
 import { Home, Mail, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
 import { ErrorResponse } from "../types/IUser";
+import { useTranslation } from "react-i18next";
 
 const VerifyEmail = () => {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [email, setEmail] = useState(searchParams.get("email") || "");
@@ -35,7 +37,7 @@ const VerifyEmail = () => {
     setMessage("");
 
     if (!email || !code) {
-      setError("Please enter both email and verification code");
+      setError(t("verification.enterBothFields"));
       return;
     }
 
@@ -48,7 +50,7 @@ const VerifyEmail = () => {
     } catch (err: ErrorResponse | unknown) {
       setError(
         (err as ErrorResponse)?.data?.message ||
-          "Verification failed. Please check your code."
+          t("verification.verificationFailed")
       );
     }
   };
@@ -58,7 +60,7 @@ const VerifyEmail = () => {
     setMessage("");
 
     if (!email) {
-      setError("Please enter your email address");
+      setError(t("verification.enterEmailAddress"));
       return;
     }
 
@@ -68,7 +70,7 @@ const VerifyEmail = () => {
     } catch (err: ErrorResponse | unknown) {
       setError(
         (err as ErrorResponse)?.data?.message ||
-          "Failed to resend verification code"
+          t("verification.failedToResend")
       );
     }
   };
@@ -84,10 +86,10 @@ const VerifyEmail = () => {
         <div className="text-center">
           <Mail className="mx-auto h-12 w-12 text-emerald-600" />
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            Verify Your Email
+            {t("verification.title")}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Enter the verification code sent to your email
+            {t("verification.subtitle")}
           </p>
         </div>
 
@@ -97,7 +99,7 @@ const VerifyEmail = () => {
             className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
           >
             <Home className="h-5 w-5" />
-            <span>Main Page</span>
+            <span>{t("verification.mainPage")}</span>
           </Link>
         </div>
 
@@ -133,7 +135,7 @@ const VerifyEmail = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email Address
+                {t("verification.emailAddress")}
               </label>
               <input
                 id="email"
@@ -143,7 +145,7 @@ const VerifyEmail = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Enter your email"
+                placeholder={t("verification.emailPlaceholder")}
               />
             </div>
 
@@ -152,7 +154,7 @@ const VerifyEmail = () => {
                 htmlFor="code"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Verification Code
+                {t("verification.code")}
               </label>
               <input
                 id="code"
@@ -162,7 +164,7 @@ const VerifyEmail = () => {
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-center text-lg font-mono tracking-widest"
-                placeholder="Enter 3-digit code"
+                placeholder={t("verification.codePlaceholder")}
                 maxLength={3}
                 pattern="[0-9]{3}"
               />
@@ -181,11 +183,11 @@ const VerifyEmail = () => {
                       duration: 1,
                       repeat: Infinity,
                       ease: "linear",
-                    }}
+                   }}
                     className="rounded-full h-5 w-5 border-b-2 border-white"
                   />
                 ) : (
-                  "Verify Email"
+                  t("verification.verify")
                 )}
               </button>
 
@@ -208,7 +210,7 @@ const VerifyEmail = () => {
                 ) : (
                   <>
                     <RefreshCw className="h-4 w-4" />
-                    <span>Resend Code</span>
+                    <span>{t("verification.resend")}</span>
                   </>
                 )}
               </button>
@@ -217,12 +219,12 @@ const VerifyEmail = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Already verified?{" "}
+              {t("verification.alreadyVerified")}{" "}
               <Link
                 to="/login"
                 className="font-medium text-emerald-600 hover:text-emerald-500"
               >
-                Sign in here
+                {t("verification.signInHere")}
               </Link>
             </p>
           </div>

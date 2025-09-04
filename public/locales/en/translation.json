@@ -152,6 +152,9 @@
   "verification": {
     "title": "Verify Your Email",
     "subtitle": "Enter the verification code sent to your email",
+    "mainPage": "Main Page",
+    "emailAddress": "Email Address",
+    "emailPlaceholder": "Enter your email",
     "code": "Verification Code",
     "codePlaceholder": "Enter 3-digit code",
     "verify": "Verify Email",
@@ -163,7 +166,11 @@
     "resendSuccess": "Verification code sent successfully!",
     "resendError": "Failed to resend verification code",
     "alreadyVerified": "Already verified?",
-    "signInHere": "Sign in here"
+    "signInHere": "Sign in here",
+    "enterBothFields": "Please enter both email and verification code",
+    "verificationFailed": "Verification failed. Please check your code.",
+    "enterEmailAddress": "Please enter your email address",
+    "failedToResend": "Failed to resend verification code"
   },
   "reviews": {
     "all": " View all reviews",

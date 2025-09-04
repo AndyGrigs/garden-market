@@ -132,12 +132,21 @@
     "deleteImage": "Удалить",
     "deleteTreeConfirm": "Ты уверен, что хочешь удалить этот товар и фото?",
     "invalidTreeData": "Некорректные данные для создания/изменения товара",
-    "selectedCategoryProducts": "Товарьі в избранной категории",
-     "addProduct": "Добавить товар"
+    "deleteTreeError": "Ошибка удаления товара...",
+    "createEditTreeError": "Ошибка создания/редактирования товара",
+    "selectCategoryPrompt": "Выберите категорию для просмотра товаров",
+    "selectedCategoryProducts": "Товары в избранной категории",
+    "addProduct": "Добавить товар",
+    "edit": "Редактировать",
+    "delete": "Удалить"
   },
   "verification": {
     "title": "Подтвердите Email",
     "subtitle": "Введите код подтверждения, отправленный на ваш email",
+
+    "mainPage": "Главная Страница",
+    "emailAddress": "Email Адрес",
+    "emailPlaceholder": "Введите ваш email",
     "code": "Код Подтверждения",
     "codePlaceholder": "Введите 3-значный код",
     "verify": "Подтвердить Email",
@@ -150,13 +159,10 @@
     "resendError": "Не удалось повторно отправить код подтверждения",
     "alreadyVerified": "Уже подтверждено?",
     "signInHere": "Войдите здесь",
-    "deleteTreeError": "Ошибка удаления товара...",
-    "createEditTreeError": "Ошибка создания/редактирования товара",
-    "selectCategoryPrompt": "Выберите категорию для просмотра товаров",
-    "selectedCategoryProducts": "Товары в избранной категории",
-    "addProduct": "➕ Добавить товар",
-    "edit": "Редактировать",
-    "delete": "Удалить"
+    "enterBothFields": "Пожалуйста, введите как email, так и код подтверждения",
+    "verificationFailed": "Ошибка подтверждения. Пожалуйста, проверьте код.",
+    "enterEmailAddress": "Пожалуйста, введите ваш email адрес",
+    "failedToResend": "Не удалось повторно отправить код подтверждения"
   },
   "checkout": {
     "guestConfirm": "Хотите продолжить как гость? Нажмите Отмена, чтобы войти в систему.",
