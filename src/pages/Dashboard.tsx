@@ -38,7 +38,7 @@ export default function Dashboard() {
               className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
             >
               <Home className="h-5 w-5" />
-              <span>Main Page</span>
+              <span>{t("dashboard.mainPage")}</span>
             </Link>
           </div>
 
@@ -67,13 +67,13 @@ export default function Dashboard() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-600">
-                  Language
+                  {t("dashboard.language")}
                 </label>
                 <p className="mt-1 text-gray-900 capitalize">{user.language || 'en'}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-600">
-                  Role
+                  {t("dashboard.role")}
                 </label>
                 <p className="mt-1 text-gray-900 capitalize">{user.role}</p>
               </div>
@@ -102,7 +102,7 @@ export default function Dashboard() {
               </div>
             ) : ordersError ? (
               <div className="text-center text-red-600 py-8">
-                <p>Failed to load orders</p>
+                <p>{t("dashboard.failedToLoadOrders")}</p>
               </div>
             ) : !orders || orders.length === 0 ? (
               <div className="text-gray-600 text-center py-8">
@@ -114,7 +114,7 @@ export default function Dashboard() {
                   <div key={order._id} className="border rounded-lg p-4">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <p className="font-semibold">Order #{order._id.slice(-8)}</p>
+                        <p className="font-semibold">{t("dashboard.orderNumber")}{order._id.slice(-8)}</p>
                         <p className="text-sm text-gray-600">
                           {new Date(order.createdAt).toLocaleDateString()}
                         </p>
@@ -130,7 +130,7 @@ export default function Dashboard() {
                           order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
                           'bg-gray-100 text-gray-800'
                         }`}>
-                          {order.status}
+                          {t(`dashboard.orderStatus.${order.status}`, order.status)}
                         </span>
                       </div>
                     </div>
@@ -158,7 +158,7 @@ export default function Dashboard() {
           >
             <h2 className="text-xl font-semibold mb-4 flex items-center">
               <Star className="h-5 w-5 mr-2" />
-              Your Reviews
+              {t("dashboard.yourReviews")}
             </h2>
             
             {reviewsLoading ? (
@@ -171,11 +171,11 @@ export default function Dashboard() {
               </div>
             ) : reviewsError ? (
               <div className="text-center text-red-600 py-8">
-                <p>Failed to load reviews</p>
+                <p>{t("dashboard.failedToLoadReviews")}</p>
               </div>
             ) : !userReviews || userReviews.length === 0 ? (
               <div className="text-gray-600 text-center py-8">
-                You haven't written any reviews yet.
+                {t("dashboard.noReviews")}
               </div>
             ) : (
               <div className="space-y-4">
@@ -208,14 +208,14 @@ export default function Dashboard() {
                     
                     {review.productName && (
                       <p className="text-sm text-gray-600">
-                        Product: {review.productName}
+                        {t("dashboard.product")}: {review.productName}
                       </p>
                     )}
                     
                     <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                       review.type === 'product' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
                     }`}>
-                      {review.type} review
+                      {t(`dashboard.${review.type}Review`)}
                     </span>
                   </div>
                 ))}
