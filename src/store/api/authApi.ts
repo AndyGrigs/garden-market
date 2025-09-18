@@ -112,7 +112,7 @@ export const authApi = createApi({
 
     forgotPassword: builder.mutation<{message: string}, {email: string}>({
       query: (body) => ({
-        url: "/auth/forgot-password",
+        url: "/auth/send-reset-code",
         method: "POST",
         body,
       })
