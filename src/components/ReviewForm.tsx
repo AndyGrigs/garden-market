@@ -26,8 +26,8 @@ const ReviewForm = ({ onClose, productId, productName }: ReviewFormProps) => {
   // Якщо користувач не авторизований - показуємо повідомлення
   if (!isAuthenticated) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 animate-fadeIn">
+        <div className="bg-white rounded-lg shadow-xl w-full max-w-md animate-scaleIn">
           <div className="p-6 text-center">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">
               Потрібна авторизація
@@ -77,8 +77,8 @@ const ReviewForm = ({ onClose, productId, productName }: ReviewFormProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 animate-fadeIn">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-md animate-scaleIn">
         <div className="p-6">
           <h2 className="text-2xl font-bold mb-4">
             {productId
