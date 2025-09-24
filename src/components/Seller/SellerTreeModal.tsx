@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { X, Upload, Loader2, Info } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import { Category } from '../types/ICategories';
-import { Tree, TreeApiData } from '../types/ITree';
-import { useLanguage } from '../hooks/useLanguage';
-import { useGetCategoriesQuery } from '../store/api/categoryApi';
-import { useUploadImageMutation } from '../store/api/uploadApi';
-import { useCreateSellerTreeMutation, useUpdateSellerTreeMutation } from '../store/api/sellerApi';
+import { Category } from '../../types/ICategories';
+import { Tree, TreeApiData } from '../../types/ITree';
+import { useLanguage } from '../../hooks/useLanguage';
+import { useGetCategoriesQuery } from '../../store/api/categoryApi';
+import { useUploadImageMutation } from '../../store/api/uploadApi';
+import { useCreateSellerTreeMutation, useUpdateSellerTreeMutation } from '../../store/api/sellerApi';
 import toast from 'react-hot-toast';
 
 interface SellerTreeModalProps {

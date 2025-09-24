@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 
 import toast from "react-hot-toast";
 import SellerTreeModal from "./SellerTreeModal";
-import { Tree } from '../types/ITree';
-import { useLanguage } from '../hooks/useLanguage';
-import { useDeleteSellerTreeMutation } from '../store/api/sellerApi';
+import { Tree } from '../../types/ITree';
+import { useLanguage } from '../../hooks/useLanguage';
+import { useDeleteSellerTreeMutation } from '../../store/api/sellerApi';
 
 interface SellerTreesProps {
   trees: Tree[];

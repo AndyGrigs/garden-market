@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 import { Navigate } from "react-router-dom";
 
 export default function SellerGuard({ children }: { children: JSX.Element }) {

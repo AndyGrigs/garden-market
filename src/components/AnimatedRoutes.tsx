@@ -12,9 +12,9 @@ import ReviewPage from "../pages/ReviewPage";
 import ResetPassword from "../pages/ResetPassword";
 import Layout from "./Layout";
 import About from '../pages/About';
-import TermsAndConditions from './TermsAndConditions';
-import SellerGuard from './SellerGuard';
-import SellerDashboard from './SellerDasboard';
+import TermsAndConditions from '../pages/TermsAndConditions';
+import SellerGuard from './Seller/SellerGuard';
+import SellerDashboard from './Seller/SellerDasboard';
 
 
 function AnimatedRoutes() {
