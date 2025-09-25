@@ -61,10 +61,10 @@ export default function Header({
                     className="flex items-center space-x-1 text-white hover:text-emerald-200"
                   >
                     <Package className="h-4 w-4" />
-                    <span>{t('seller.dashboard.title', { defaultValue: 'Панель продавця' })}</span>
+                    <span>{t('seller.dashboard.title', { defaultValue: 'Панель продавца' })}</span>
                   </Link>
-                ) : null}
-                <UserLinks cartItemsCount={cartItemsCount} onCartClick={onCartClick} />
+                ) : <UserLinks cartItemsCount={cartItemsCount} onCartClick={onCartClick} />}
+                
                 <button
                   onClick={handleLogout}
                   className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
