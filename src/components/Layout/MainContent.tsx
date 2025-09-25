@@ -89,9 +89,9 @@ const getSelectedCategoryName = () => {
   
  
   return category.name[i18n.language as keyof typeof category.name] || 
-         category.name.ru || 
-         category.name.en || 
-         'Категорія';
+         category.name.ru ||
+         category.name.ro ||
+         'Категория';
 };
 
   return (
