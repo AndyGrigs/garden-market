@@ -75,7 +75,9 @@
       "edit":"Editează categorie",
       "failCreate": "Erorare la crearea categoriei",
       "noGoods": "Nu există produse în această categorie",
-      "photo": "Foto categorie"
+      "photo": "Foto categorie",
+      "editPlaceholder": "Traducere rusească"
+
 },
   "contact": {
     "title": "Contactează-ne",

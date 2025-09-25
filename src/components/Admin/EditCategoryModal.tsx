@@ -114,7 +114,7 @@ export const EditCategoryModal = ({
       <div className="bg-white p-6 rounded-lg w-96 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-bold">
-            Редагувати: {categoryName}
+            {t('dashboard.edit')} {categoryName}
           </h3>
           <button
             onClick={handleClose}
@@ -128,26 +128,26 @@ export const EditCategoryModal = ({
           {/* Поля назв */}
           <div>
             <label className="block text-sm font-medium mb-1">
-              Назва (RU) <span className="text-red-500">*</span>
+              {t('categories.title')} (RU) <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.ru}
               onChange={(e) => handleChange('ru', e.target.value)}
               className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
-              placeholder="Російська назва"
+              placeholder={t('categories.editPlaceholder')}
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Назва (RO)</label>
+            <label className="block text-sm font-medium mb-1">{t('categories.title')} (RO)</label>
             <input
               type="text"
               value={formData.ro}
               onChange={(e) => handleChange('ro', e.target.value)}
               className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
-              placeholder="Румунська назва"
+              placeholder={t('categories.editPlaceholder')}
             />
           </div>
 
@@ -164,7 +164,7 @@ export const EditCategoryModal = ({
 
           {/* ✅ Спрощена секція зображення */}
           <div>
-            <label className="block text-sm font-medium mb-2">Зображення категорії</label>
+            <label className="block text-sm font-medium mb-2">{t('categories.photo')}</label>
             
             {/* Поточне зображення з кнопкою видалення */}
             {imageUrl && (
