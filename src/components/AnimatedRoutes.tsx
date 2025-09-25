@@ -4,7 +4,7 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import { MainContent } from "../App";
-import AdminGuard from "./AdminGuard";
+
 import AdminPanel from "../pages/AdminPanel";
 import VerifyEmail from "../pages/VerifyEmail";
 import ContactPage from '../pages/ContactPage';
@@ -15,6 +15,7 @@ import About from '../pages/About';
 import TermsAndConditions from '../pages/TermsAndConditions';
 import SellerGuard from './Seller/SellerGuard';
 import SellerDashboard from './Seller/SellerDasboard';
+import AdminGuard from './Admin/AdminGuard';
 
 
 function AnimatedRoutes() {
