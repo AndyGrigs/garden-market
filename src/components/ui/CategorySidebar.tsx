@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useGetCategoriesQuery } from '../store/api/categoryApi';
-import { useLanguage } from '../hooks/useLanguage';
-import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Filter, X } from 'lucide-react';
-import { BASE_URL } from '../config';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { useGetCategoriesQuery } from '@/store/api/categoryApi';
+import { useLanguage } from '@/hooks/useLanguage';
+import { BASE_URL } from '@/config';
 
 interface CategorySidebarProps {
   selectedCategoryId: string | null;

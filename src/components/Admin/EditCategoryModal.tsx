@@ -20,8 +20,8 @@ export const EditCategoryModal = ({
   isOpen, 
   onClose, 
   onSubmit, 
-  initialData = { ru: "", ro: "", en: "" },
-  categoryName = "Категорія",
+  initialData = { ru: "", ro: "" },
+  categoryName = "Категория",
   initialImageUrl = ""
 }: Props) => {
   
@@ -38,7 +38,7 @@ export const EditCategoryModal = ({
       setFormData({
         ru: initialData?.ru || "",
         ro: initialData?.ro || "",
-        en: initialData?.en || ""
+        // en: initialData?.en || ""
       });
       
       setImageUrl(initialImageUrl || "");
@@ -151,7 +151,7 @@ export const EditCategoryModal = ({
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium mb-1">Назва (EN)</label>
             <input
               type="text"
@@ -160,7 +160,7 @@ export const EditCategoryModal = ({
               className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
               placeholder="Англійська назва"
             />
-          </div>
+          </div> */}
 
           {/* ✅ Спрощена секція зображення */}
           <div>

@@ -1,7 +1,8 @@
-import { useGetReviewsQuery } from '../store/api/reviewApi';
+
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import ReviewCarousel from './ReviewCarousel';
+import { useGetReviewsQuery } from '@/store/api/reviewApi';
 
 export default function ReviewsSection() {
   const { data: reviews, isLoading } = useGetReviewsQuery();

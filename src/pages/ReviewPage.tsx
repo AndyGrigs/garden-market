@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Home, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ReviewForm from '../components/Features/Reviwes/ReviewForm';
-import ReviewsSection from '../components/ReviewsSection';
+import ReviewsSection from '@/components/Features/Reviwes/ReviewsSection';
 
 export default function ReviewsPage() {
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);

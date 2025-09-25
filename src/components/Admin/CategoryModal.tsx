@@ -15,7 +15,7 @@ interface Props {
 
 const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
   const [formData, setFormData] = useState<TranslatedString>(
-    initialData || { ru: "", ro: "", en: "" }
+    initialData || { ru: "", ro: "" }
   );
   const [imageUrl, setImageUrl] = useState<string>("");
   const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
@@ -60,13 +60,13 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
       return;
     }
     onSubmit({ ...formData, imageUrl });
-    setFormData({ ru: "", ro: "", en: "" });
+    setFormData({ ru: "", ro: ""});
     setImageUrl("");
     onClose();
   };
 
   const handleClose = () => {
-    setFormData({ ru: "", ro: "", en: "" });
+    setFormData({ ru: "", ro: ""});
     setImageUrl("");
     onClose();
   };
@@ -111,7 +111,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
               placeholder={t('common.enterNameRom')}
             />
           </div>
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium mb-1">{t('common.name')} (EN)</label>
             <input
               type="text"
@@ -120,7 +120,7 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
               className="w-full border rounded px-3 py-2"
               placeholder={t('common.enterNameEng')}
             />
-          </div>
+          </div> */}
           <div>
             <label className="block text-sm font-medium mb-1">{t('categories.photo')}</label>
             <input

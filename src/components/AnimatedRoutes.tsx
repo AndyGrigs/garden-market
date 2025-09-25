@@ -16,20 +16,16 @@ import TermsAndConditions from '../pages/TermsAndConditions';
 import SellerGuard from './Seller/SellerGuard';
 import SellerDashboard from './Seller/SellerDasboard';
 import { MainContent } from "./Layout/MainContent";
+import { Loader2 } from "lucide-react";
 
 
-const Loading = () => (
-  <div className="flex items-center justify-center min-h-screen">
-    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
-  </div>
-);
 
 function AnimatedRoutes() {
   const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loader2 />}>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Layout />}>
             <Route index element={<MainContent />} />

@@ -4,7 +4,7 @@ import { Home, Package, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useGetSellerTreesQuery } from "../../store/api/sellerApi";
 import SellerTrees from './SellerTrees';
-import SellerStats from '../SellerStats';
+import SellerStats from './SellerStats';
 
 
 const SellerDashboard = () => {
