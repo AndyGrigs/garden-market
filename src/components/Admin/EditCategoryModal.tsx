@@ -20,8 +20,8 @@ export const EditCategoryModal = ({
   isOpen, 
   onClose, 
   onSubmit, 
-  initialData = { ru: "", ro: "", en: "" },
-  categoryName = "Категорія",
+  initialData = { ru: "", ro: "" },
+  categoryName = "Категория",
   initialImageUrl = ""
 }: Props) => {
   
@@ -38,7 +38,7 @@ export const EditCategoryModal = ({
       setFormData({
         ru: initialData?.ru || "",
         ro: initialData?.ro || "",
-        en: initialData?.en || ""
+        // en: initialData?.en || ""
       });
       
       setImageUrl(initialImageUrl || "");
@@ -151,7 +151,7 @@ export const EditCategoryModal = ({
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium mb-1">Назва (EN)</label>
             <input
               type="text"
@@ -160,7 +160,7 @@ export const EditCategoryModal = ({
               className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
               placeholder="Англійська назва"
             />
-          </div>
+          </div> */}
 
           {/* ✅ Спрощена секція зображення */}
           <div>
@@ -171,7 +171,7 @@ export const EditCategoryModal = ({
               <div className="mb-4">
                 <img
                   src={imageUrl.startsWith('blob:') ? imageUrl : `${BASE_URL}${imageUrl}`}
-                  alt="Зображення категорії"
+                  alt={t('categories.photo')}
                   className="w-full h-40 object-cover rounded-lg border"
                 />
                 <button
@@ -180,7 +180,7 @@ export const EditCategoryModal = ({
                   className="mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
                   disabled={uploading}
                 >
-                  🗑️ Видалити зображення
+                  🗑️t('photo.delete')
                 </button>
               </div>
             )}
@@ -204,7 +204,7 @@ export const EditCategoryModal = ({
                 >
                   <Upload size={32} />
                   <span className="text-sm font-medium">
-                    Завантажити зображення
+                    {t('photo.upload')}
                   </span>
                   <span className="text-xs text-gray-500">
                     JPG, PNG до 5MB
@@ -217,7 +217,7 @@ export const EditCategoryModal = ({
             {uploading && (
               <div className="flex items-center gap-2 mt-2 text-blue-600">
                 <Loader2 className="animate-spin" size={16} />
-                <span className="text-sm">Завантаження...</span>
+                <span className="text-sm"><Loader2 /></span>
               </div>
             )}
           </div>
@@ -237,7 +237,7 @@ export const EditCategoryModal = ({
               className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50"
               disabled={uploading}
             >
-              {uploading ? 'Збереження...' : 'Зберегти'}
+              {uploading ? <Loader2/> : t('common.save')}
             </button>
           </div>
         </form>

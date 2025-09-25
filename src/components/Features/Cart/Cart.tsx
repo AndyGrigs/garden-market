@@ -1,10 +1,11 @@
 import { X, Minus, Plus } from "lucide-react";
-import { CartItem } from "../types";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { useLanguage } from "../hooks/useLanguage";
-import { BASE_URL } from "../config";
 import { useState } from 'react';
+import { CartItem } from "@/types";
+import { useLanguage } from "@/hooks/useLanguage";
+import { BASE_URL } from "@/config";
+
 
 interface CartProps {
   items: CartItem[];

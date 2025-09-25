@@ -1,9 +1,10 @@
 
 // import { Ruler, Droplets } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Tree } from '../types/ITree';
-import { BASE_URL } from '../config';
-import { useTreeDescription, useTreeTitle } from '../hooks/useTreeTranslations';
+import { BASE_URL } from '@/config';
+import { useTreeDescription, useTreeTitle } from '@/hooks/useTreeTranslations';
+import { Tree } from '@/types/ITree';
+
 
 interface TreeCardProps {
   tree: Tree;

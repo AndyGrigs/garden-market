@@ -7,7 +7,6 @@ import SellerTrees from './SellerTrees';
 import SellerStats from './SellerStats';
 
 
-
 const SellerDashboard = () => {
   const { t } = useTranslation();
   const { data: sellerData, isLoading } = useGetSellerTreesQuery();

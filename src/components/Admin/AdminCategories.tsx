@@ -66,7 +66,7 @@ const AdminCategories = ({
       name: {
         ru: updatedData.ru,
         ro: updatedData.ro,
-        en: updatedData.en
+        // en: updatedData.en
       },
       imageUrl: updatedData.imageUrl 
     }).unwrap();
@@ -163,7 +163,7 @@ const AdminCategories = ({
                 name: {
                   ru: data.ru,
                   ro: data.ro, 
-                  en: data.en
+                  // en: data.en
                 },
                 imageUrl: data.imageUrl,
               }).unwrap();

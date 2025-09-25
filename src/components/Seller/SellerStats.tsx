@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 
 import { TrendingUp, Package, DollarSign, AlertCircle } from "lucide-react";
-import { Tree } from '../../types/ITree';
-import { useLanguage } from '../../hooks/useLanguage';
+import { useLanguage } from '@/hooks/useLanguage';
+import { Tree } from '@/types/ITree';
 
 
 // Define TranslatedString type for category names and titles

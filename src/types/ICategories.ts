@@ -1,5 +1,6 @@
 
-export type Lang = 'ru' | 'ro' | 'en';
+export type Lang = 'ru' | 'ro';
+// export type Lang = 'ru' | 'ro' | 'en';
 
 export type TranslatedString = {
   [key in Lang]?: string;

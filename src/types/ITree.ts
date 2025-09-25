@@ -1,13 +1,15 @@
 export type TranslatedString = {
   ru: string;
   ro: string;
-  en: string;
+  // en: string;
 };
 
 export interface TreeFormData {
   _id?: string;
-  title: { ru: string; ro: string; en: string };
-  description: { ru: string; ro: string; en: string };
+  // title: { ru: string; ro: string; en: string };
+  title: { ru: string; ro: string; };
+  // description: { ru: string; ro: string; en: string };
+  description: { ru: string; ro: string;};
   price: number;
   stock: number;
   category: string; // id категорії
@@ -42,12 +44,12 @@ export interface TreeApiData {
   title: {
     ru: string;
     ro: string;
-    en: string;
+    // en: string;
   };
   description: {
     ru: string;
     ro: string;
-    en: string;
+    // en: string;
   };
   price: number;
   stock: number;
