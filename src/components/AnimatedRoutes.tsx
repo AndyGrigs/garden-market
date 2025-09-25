@@ -10,7 +10,7 @@ import VerifyEmail from "../pages/VerifyEmail";
 import ContactPage from '../pages/ContactPage';
 import ReviewPage from "../pages/ReviewPage";
 import ResetPassword from "../pages/ResetPassword";
-import Layout from "./Layout";
+import Layout from "./Layout/Layout";
 import About from '../pages/About';
 import TermsAndConditions from '../pages/TermsAndConditions';
 import SellerGuard from './Seller/SellerGuard';

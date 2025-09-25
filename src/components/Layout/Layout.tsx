@@ -1,13 +1,13 @@
 import { Outlet } from 'react-router-dom';
-import Header from './Header';
+import Header from '../Header';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { RootState } from '../../store/store';
 import { useState } from 'react';
-import Cart from './Cart';
-import { CartItem } from '../types';
+import { CartItem } from '../../types';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
+import Cart from '../Features/Cart/Cart';
 
 export default function Layout() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
