@@ -47,7 +47,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
     : trees.filter((tree) => tree.category?._id === selectedCategoryId);
 
   const isTreeDataValid = (treeData: TreeFormData) => {
-    return treeData.title?.ru && treeData.title?.en && treeData.title?.ro && treeData.category;
+    return treeData.title?.ru && treeData.title?.ro && treeData.category;
   };
 
   const handleDeleteTree = async (id: string, imageUrl?: string) => {
@@ -96,7 +96,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
             ...treeData,
             category: {
               _id: treeData.category,
-              name: { ru: "", ro: "", en: "" },
+              name: { ru: "", ro: ""},
             },
           },
         }).unwrap();
@@ -111,7 +111,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           imageUrl: treeData.imageUrl,
           category: {
             _id: treeData.category,
-            name: { ru: "", ro: "", en: "" },
+            name: { ru: "", ro: ""},
           },
         }).unwrap();
         
@@ -164,7 +164,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
                 </p>
                 {/* ✅ FIX: Zeige Kategorie-Info */}
                 <p className="text-sm text-gray-500 mb-2">
-                 {t('categories.categories')} {tree.category?.name?.ru || tree.category?.name?.en || "Ohne Kategorie"}
+                 {t('categories.categories')}
                 </p>
                 <button
                   onClick={() => handleEditTree(tree)}
@@ -211,8 +211,8 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           category: editingTree.category?._id || (selectedCategoryId === 'all' ? '' : selectedCategoryId),
           _id: editingTree._id,
         } : {
-          title: { ru: "", ro: "", en: "" },
-          description: { ru: "", ro: "", en: "" },
+          title: { ru: "", ro: "" },
+          description: { ru: "", ro: ""},
           price: 0,
           stock: 0,
           imageUrl: "",

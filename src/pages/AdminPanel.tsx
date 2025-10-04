@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Home } from "lucide-react";
 import AdminCategories from "../components/Admin/AdminCategories";
 import AdminTrees from "../components/Admin/AdminTrees";
 import { t } from 'i18next';
+import MainPageLink from '../shared/MainPageLink';
 
 const AdminPanel = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
@@ -13,13 +12,7 @@ const AdminPanel = () => {
       <div className="container mx-auto p-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">{t('header.adminPanel')}</h1>
-          <Link
-            to="/"
-            className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
-          >
-            <Home className="h-5 w-5" />
-            <span>Main Page</span>
-          </Link>
+          <MainPageLink/>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

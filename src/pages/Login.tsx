@@ -3,11 +3,12 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLoginMutation, useForgotPasswordMutation } from "../store/api/authApi";
 
-import { LogIn, Home } from "lucide-react";
+import { LogIn} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { motion, AnimatePresence } from "framer-motion";
 import { setUser } from '../store/slices/authSlice';
+import MainPageLink from '../shared/MainPageLink';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -69,13 +70,7 @@ export default function Login() {
 
       <div className="relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="absolute top-4 right-4">
-          <Link
-            to="/"
-            className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
-          >
-            <Home className="h-5 w-5" />
-            <span>Main Page</span>
-          </Link>
+          <MainPageLink />
         </div>
 
         <div className="max-w-md w-full space-y-8">

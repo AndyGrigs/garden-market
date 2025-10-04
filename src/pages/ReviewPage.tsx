@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Home, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ReviewForm from '../components/Features/Reviwes/ReviewForm';
 import ReviewsSection from '@/components/Features/Reviwes/ReviewsSection';
+import MainPageLink from '../shared/MainPageLink';
 
 export default function ReviewsPage() {
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
@@ -24,13 +24,7 @@ export default function ReviewsPage() {
               <Plus className="h-5 w-5" />
               <span>{t('reviews.writeReview')}</span>
             </button>
-            <Link
-              to="/"
-              className="flex items-center space-x-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
-            >
-              <Home className="h-5 w-5" />
-              <span>Main Page</span>
-            </Link>
+            <MainPageLink/>
           </div>
         </div>
 

@@ -19,8 +19,8 @@ interface Props {
 const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
   const [form, setForm] = useState<TreeFormData>(
     initialData || {
-      title: { ru: "", ro: "", en: "" },
-      description: { ru: "", ro: "", en: "" },
+      title: { ru: "", ro: ""},
+      description: { ru: "", ro: ""},
       price: 0,
       stock: 0,
       category: "",
@@ -42,12 +42,10 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
           title: {
             ru: initialData.title?.ru ?? "",
             ro: initialData.title?.ro ?? "",
-            en: initialData.title?.en ?? "",
           },
           description: {
             ru: initialData.description?.ru ?? "",
             ro: initialData.description?.ro ?? "",
-            en: initialData.description?.en ?? "",
           },
           price: initialData.price ?? 0,
           stock: initialData.stock ?? 0,
@@ -57,8 +55,8 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         });
       } else {
         setForm({
-          title: { ru: "", ro: "", en: "" },
-          description: { ru: "", ro: "", en: "" },
+          title: { ru: "", ro: "" },
+          description: { ru: "", ro: ""},
           price: 0,
           stock: 0,
           category: "",
@@ -133,8 +131,8 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
       onSubmit(form);
       
       setForm({
-        title: { ru: "", ro: "", en: "" },
-        description: { ru: "", ro: "", en: "" },
+        title: { ru: "", ro: ""},
+        description: { ru: "", ro: ""},
         price: 0,
         stock: 0,
         category: "",
@@ -158,7 +156,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
       >
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold">
-            {initialData?._id ? 'Редагувати товар' : 'Додати товар'}
+            {initialData?._id ? t('dashboard.edit') : t('dashboard.addProduct')}
           </h3>
           <button
             type="button"
@@ -170,12 +168,12 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         </div>
 
         {/* Назви */}
-        <h4 className="font-semibold mb-2">Назва</h4>
-        {["ru", "ro", "en"].map((lang) => (
+        <h4 className="font-semibold mb-2">{t('common.name')}</h4>
+        {["ru", "ro"].map((lang) => (
           <input
             key={lang}
             className="border border-green-600 px-3 py-2 mb-2 rounded w-full"
-            placeholder={`Назва (${lang.toUpperCase()})`}
+            placeholder={`(${t('common.name')}) (${lang.toUpperCase()})`}
             value={form.title[lang as keyof TranslatedString]}
             onChange={(e) =>
               handleLangChange(
@@ -189,12 +187,12 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         ))}
 
         {/* Описи */}
-        <h4 className="font-semibold mb-2 mt-4">Опис</h4>
-        {["ru", "ro", "en"].map((lang) => (
+        <h4 className="font-semibold mb-2 mt-4">{t('common.describing')}</h4>
+        {["ru", "ro"].map((lang) => (
           <textarea
             key={lang}
             className="border border-green-600 px-3 py-2 mb-2 rounded w-full h-20"
-            placeholder={`Опис (${lang.toUpperCase()})`}
+            placeholder={`(${t('common.describing')}) (${lang.toUpperCase()})`}
             value={form.description[lang as keyof TranslatedString]}
             onChange={(e) =>
               handleLangChange(
@@ -209,7 +207,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         {/* Ціна і кількість */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Ціна</label>
+            <label className="block text-sm font-medium mb-1">{t('common.price')}</label>
             <input
               type="number"
               min="0"
@@ -222,7 +220,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Кількість</label>
+            <label className="block text-sm font-medium mb-1">{t('common.quantity')}</label>
             <input
               type="number"
               min="0"
@@ -236,17 +234,17 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
 
         {/* Категорія */}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Категорія</label>
+          <label className="block text-sm font-medium mb-1">{t('categories.category')}</label>
           <select
             className="border border-green-600 px-3 py-2 rounded w-full"
             value={form.category}
             onChange={(e) => handleChange("category", e.target.value)}
             required
           >
-            <option value="">Оберіть категорію</option>
+            <option value="">{t('categories.chooseCategory')}</option>
             {categories?.map((cat: Category) => (
               <option key={cat._id} value={cat._id}>
-                {cat.name?.ru || cat.name?.en || cat.name?.ro}
+                {cat.name?.ru || cat.name?.ro}
               </option>
             ))}
           </select>
@@ -254,14 +252,14 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
 
         {/* ✅ Спрощена секція фото товару */}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Фото товару</label>
+          <label className="block text-sm font-medium mb-2">{t('photo.product')}</label>
           
           {/* Поточне зображення з кнопкою видалення */}
           {form.imageUrl && (
             <div className="mb-4">
               <img
                 src={form.imageUrl.startsWith('blob:') ? form.imageUrl : `${BASE_URL}${form.imageUrl}`}
-                alt="Зображення товару"
+                alt={t('photo.product')}
                 className="w-full h-40 object-cover rounded border"
               />
               <button
@@ -294,7 +292,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
               >
                 <Upload size={32} />
                 <span className="text-sm font-medium">
-                  Завантажити зображення
+                  {t('photo.upload')}
                 </span>
                 <span className="text-xs text-gray-500">
                   JPG, PNG до 5MB
@@ -307,7 +305,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
           {uploading && (
             <div className="flex items-center gap-2 mt-2 text-blue-600">
               <Loader2 className="animate-spin" size={16} />
-              <span className="text-sm">Завантаження...</span>
+              <span className="text-sm"><Loader2/></span>
             </div>
           )}
         </div>
@@ -320,14 +318,14 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
             className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
             disabled={uploading}
           >
-            Скасувати
+           {t('common.cancel')}
           </button>
           <button
             type="submit"
             className="flex-1 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
             disabled={uploading}
           >
-            {uploading ? 'Збереження...' : 'Зберегти'}
+            {uploading ? <Loader2/> : t('common.quantity')}
           </button>
         </div>
       </form>

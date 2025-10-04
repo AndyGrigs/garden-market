@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useResetPasswordMutation } from "../store/api/authApi";
-import { Home, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import { motion } from "framer-motion";
 import { ErrorResponse } from "../types/IUser";
 import { useTranslation } from "react-i18next";
+import MainPageLink from '../shared/MainPageLink';
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
@@ -63,13 +64,7 @@ const ResetPassword = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="absolute top-4 right-4">
-        <Link
-          to="/"
-          className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
-        >
-          <Home className="h-5 w-5" />
-          <span>Main Page</span>
-        </Link>
+        <MainPageLink/>
       </div>
 
       <motion.div

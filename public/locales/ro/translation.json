@@ -6,6 +6,7 @@
     "save": "Salva",
     "allGoods": "Toate bunurile",
     "goodsInCategory": "Produse ale categoriei selectate",
+    "addFirstProduct": "Adaugă primul tău produs",
     "selectCategory": " Alege o categorie diferită sau adaugă produse",
     "name": "Nume",
     "nameRus": "Numele în rusă este obligatoriu!!!",
@@ -13,13 +14,19 @@
     "enterNameEng": "Introduce numele în engleză",
     "enterNameRom": "Introduce numele în Pomanian",
     "allProducts": "Toate produsele",
-    "submitting": "Se conectează..."
+    "submitting": "Se conectează...",
+    "describing": "Descriind",
+    "price": "Preț",
+    "quantity": "Cantitate"
+
 },
 
 "photo":{
+  "product": "Fotografie produsului",
   "fail": " Nu s-a putut încărca fotografia",
   "failDelete": "Nu s-a putut șterge imaginea",
-  "delete": "Șterge foto"
+  "delete": "Șterge foto",
+  "upload": "Încărcați fotografie"
 },
 
   "header": {
@@ -28,7 +35,7 @@
     "logout": "Deconectare",
     "login": "Conectare",
     "dashboard": "Panou de Control",
-    "admin-panel": "Admin Panel"
+    "adminPanel": "Admin Panel"
   },
   "collection": {
      "categoryTitle": "{{categoryName}}",
@@ -63,7 +70,8 @@
   },
 
    "categories": {
-    "categories": "categorii",
+      "category": "Categorie",
+      "categories": "categorii",
       "noCategories": "Nu există categorii...",
       "all": "Toate categorii",
       "title": "Titlu categorie",
@@ -76,7 +84,9 @@
       "failCreate": "Erorare la crearea categoriei",
       "noGoods": "Nu există produse în această categorie",
       "photo": "Foto categorie",
-      "editPlaceholder": "Traducere rusească"
+      "filter": "Filtre",
+      "editPlaceholder": "Traducere rusească",
+      "chooseCategory": "Alegeți o categorie"
 
 },
   "contact": {
@@ -127,6 +137,7 @@
       }
   },
   "dashboard": {
+    "admin": "Admin panel",
     "welcome": "Bine ai venit, {{name}}!",
     "profile": "Informații Profil",
     "name": "Nume",
