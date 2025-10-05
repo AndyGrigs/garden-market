@@ -17,14 +17,14 @@ const SellerDashboard = () => {
       <div className="container mx-auto p-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
-            {t('seller.dashboard.title', { defaultValue: 'Панель продавця' })}
+            {t('seller.dashboard.title', { defaultValue: 'Панель продавца' })}
           </h1>
           <Link
             to="/"
             className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
           >
             <Home className="h-5 w-5" />
-            <span>{t('common.mainPage', { defaultValue: 'Головна' })}</span>
+            <span>{t('common.mainPage', { defaultValue: 'На главную' })}</span>
           </Link>
         </div>
 

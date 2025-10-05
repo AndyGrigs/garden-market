@@ -18,16 +18,15 @@
     "describing": "Descriind",
     "price": "Preț",
     "quantity": "Cantitate"
-
 },
 
-"photo":{
-  "product": "Fotografie produsului",
-  "fail": " Nu s-a putut încărca fotografia",
-  "failDelete": "Nu s-a putut șterge imaginea",
-  "delete": "Șterge foto",
-  "upload": "Încărcați fotografie"
-},
+  "photo":{
+    "product": "Fotografie produsului",
+    "fail": " Nu s-a putut încărca fotografia",
+    "failDelete": "Nu s-a putut șterge imaginea",
+    "delete": "Șterge foto",
+    "upload": "Încărcați fotografie"
+  },
 
   "header": {
     "title": "Covaci market",
@@ -88,7 +87,7 @@
       "editPlaceholder": "Traducere rusească",
       "chooseCategory": "Alegeți o categorie"
 
-},
+  },
   "contact": {
     "title": "Contactează-ne",
     "name": "Nume",
@@ -178,6 +177,11 @@
     "edit": "Editează",
     "delete": "Șterge"
   },
+  "seller": {
+    "dashboard": {
+      "title": "Panoul vânzătorilor"
+  }
+},
   "verification": {
     "title": "Verifică Email-ul",
     "subtitle": "Introdu codul de verificare trimis pe email",
