@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Plus, Edit2, Trash2, Package} from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { AnimatePresence } from "framer-motion";
 
 import toast from "react-hot-toast";
 import SellerTreeModal from "./SellerTreeModal";
 import { Tree } from '../../types/ITree';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useDeleteSellerTreeMutation } from '../../store/api/sellerApi';
+import AnimatedWrapper from '../../shared/AnimatedWrapper';
 
 interface SellerTreesProps {
   trees: Tree[];
@@ -174,11 +176,17 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
         </div>
       )}
 
-      <SellerTreeModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        editingTree={editingTree}
-      />
+      <AnimatePresence>
+        {isModalOpen && (
+          <AnimatedWrapper animation='fadeScale' duration={0.3}>
+            <SellerTreeModal
+              isOpen={isModalOpen}
+              onClose={handleCloseModal}
+              editingTree={editingTree}
+            />
+          </AnimatedWrapper>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

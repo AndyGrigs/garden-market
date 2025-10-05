@@ -242,8 +242,6 @@ const SellerTreeModal = ({
     }
   };
 
-  if (!isOpen) return null;
-
   const getCategoryName = (category: Category | undefined) => {
     return (
       category?.name?.[lang as keyof typeof category.name] ||
@@ -252,6 +250,8 @@ const SellerTreeModal = ({
       'Unknown'
     );
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -263,6 +263,7 @@ const SellerTreeModal = ({
               : t('seller.addProduct', { defaultValue: 'Додати товар' })}
           </h2>
           <button
+          
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
             disabled={isSubmitting}
