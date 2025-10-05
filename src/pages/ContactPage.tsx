@@ -1,4 +1,5 @@
 
+import { t } from 'i18next'
 import MainPageLink from '../shared/MainPageLink'
 
 const ContactPage = () => {
@@ -7,7 +8,7 @@ const ContactPage = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Contact Us</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{t('contact.title')}</h1>
             <MainPageLink/>
           </div>
           
@@ -21,24 +22,24 @@ const ContactPage = () => {
               <div>
                 <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
                 <div className="space-y-3">
-                  <p className="text-gray-600">
+                  {/* <p className="text-gray-600">
                     <strong>Address:</strong> 123 Tree Street, Garden City, GC 12345
+                  </p> */}
+                  <p className="text-gray-600">
+                    <strong>{t('contact.phone')}:</strong> {import.meta.env.VITE_PHONE}
                   </p>
                   <p className="text-gray-600">
-                    <strong>Phone:</strong> +373 79 748 131
-                  </p>
-                  <p className="text-gray-600">
-                    <strong>Email:</strong> info@gardentrees.com
+                    <strong>Email:</strong> {import.meta.env.VITE_EMAIL}
                   </p>
                 </div>
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold mb-4">Business Hours</h3>
+                <h3 className="text-lg font-semibold mb-4">{t('contact.business-hours')}</h3>
                 <div className="space-y-2">
-                  <p className="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                  <p className="text-gray-600">Saturday: 9:00 AM - 4:00 PM</p>
-                  <p className="text-gray-600">Sunday: Closed</p>
+                  <p className="text-gray-600">{t('contact.mon-fri')}</p>
+                  <p className="text-gray-600">{t('contact.sat')}</p>
+                  <p className="text-gray-600">{t('contact.sun')}</p>
                 </div>
               </div>
             </div>

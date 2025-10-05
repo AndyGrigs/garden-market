@@ -10,7 +10,7 @@ const MainPageLink = () => {
             className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-200 transition-colors"
               >
             <Home className="h-5 w-5" />
-          <span>{t('dashboard.mainPage')}</span>
+          <span>{t('common.toMain')}</span>
         </Link>
   )
 }

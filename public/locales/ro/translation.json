@@ -1,6 +1,6 @@
 {
   "common": {
-
+    "toMain": "Pe pagina principală",
     "error": " Ceva s-a învârtit rău (. Încercați din nou mai târziu.",
     "cancel": "Anulează",
     "save": "Salva",
@@ -30,7 +30,7 @@
 },
 
   "header": {
-    "title": "Covaci de Grădină",
+    "title": "Covaci market",
     "cart": "Coș",
     "logout": "Deconectare",
     "login": "Conectare",
@@ -93,9 +93,14 @@
     "title": "Contactează-ne",
     "name": "Nume",
     "email": "Email",
+    "phone": "Telefon",
     "message": "Mesaj",
     "send": "Trimite mesaj",
-    "success": "Vă mulțumim pentru mesaj! Vă vom contacta în curând."
+    "success": "Vă mulțumim pentru mesaj! Vă vom contacta în curând.",
+    "business-hours": "Ora de lucru",
+    "mon-fri": "Luni - Vineri: 9:00 - 18:00",
+    "sat": "Sâmbăta: 9:00 - 16:00",
+    "sun": "Duminică: Închis"
   },
   "auth": {
     "forgotPassword": "Ai uitat parola?",
