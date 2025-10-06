@@ -9,13 +9,13 @@ import {
 } from "../../store/api/categoryApi";
 
 import { Category, TranslatedString } from "../../types/ICategories";
-import { useLanguage } from "../../hooks/useLanguage";
 import CategoryModal from "./CategoryModal";
 import { BASE_URL } from "../../config";
 import { t } from 'i18next';
 import { Loader } from 'lucide-react';
 import { EditCategoryModal } from './EditCategoryModal';
 import toast from 'react-hot-toast';
+import { getCategoryName } from '../../shared/helpers/getCategoryName';
 
 interface AdminCategoriesProps {
   selectedCategoryId: string;
@@ -34,7 +34,6 @@ const AdminCategories = ({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
-  const lang = useLanguage();
 
   const handleDelete = async (id: string) => {
     if (window.confirm(t('categories.confirm'))) {
@@ -46,10 +45,6 @@ const AdminCategories = ({
     }
   };
 
-
-  const getCategoryName = (name: TranslatedString): string => {
-    return name[lang as keyof typeof name] || name.ru || "Unnamed";
-  };
 
   const handleEditClick = (category: Category) => {
     setEditingCategory(category);
@@ -118,7 +113,7 @@ const AdminCategories = ({
                   {cat.imageUrl && (
                     <img
                       src={`${BASE_URL}${cat.imageUrl}`}
-                      alt={getCategoryName(cat.name)}
+                      alt={getCategoryName(cat)}
                       className="w-12 h-12 object-cover rounded-md"
                     />
                   )}
@@ -130,7 +125,7 @@ const AdminCategories = ({
                         : "text-gray-800"
                     }`}
                   >
-                    {getCategoryName(cat.name)}
+                    {getCategoryName(cat)}
                   </span>
                 </div>
 
@@ -187,7 +182,7 @@ const AdminCategories = ({
           }}
           initialData={editingCategory.name}
           initialImageUrl={editingCategory.imageUrl}
-          categoryName={getCategoryName(editingCategory.name)}
+          categoryName={getCategoryName(editingCategory)}
           onSubmit={handleUpdateCategory}
         />
       )}

@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { X, Upload, Loader2, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 
-import { Category } from '../../types/ICategories';
-import { Tree, TreeApiData } from '../../types/ITree';
-import { useLanguage } from '../../hooks/useLanguage';
-import { useGetCategoriesQuery } from '../../store/api/categoryApi';
-import { useUploadImageMutation } from '../../store/api/uploadApi';
+import NumberInput from '@/shared/NumberInput';
+import { Category } from '@/types/ICategories';
+import { Tree, TreeApiData, TreeFormData } from '@/types/ITree';
+import { useGetCategoriesQuery } from '@/store/api/categoryApi';
+import { useUploadImageMutation } from '@/store/api/uploadApi';
 import {
   useCreateSellerTreeMutation,
   useUpdateSellerTreeMutation,
-} from '../../store/api/sellerApi';
-import toast from 'react-hot-toast';
-import NumberInput from '../../shared/NumberInput';
+} from '@/store/api/sellerApi';
+import { getCategoryName } from '../../shared/helpers/getCategoryName';
 
 interface SellerTreeModalProps {
   isOpen: boolean;
@@ -20,22 +20,7 @@ interface SellerTreeModalProps {
   editingTree: Tree | null;
 }
 
-interface TreeFormData {
-  title: {
-    ru: string;
-    ro: string;
-    // en: string;
-  };
-  description: {
-    ru: string;
-    ro: string;
-    // en: string;
-  };
-  price: number;
-  stock: number;
-  category: string;
-  imageUrl: string;
-}
+
 
 const SellerTreeModal = ({
   isOpen,
@@ -43,7 +28,6 @@ const SellerTreeModal = ({
   editingTree,
 }: SellerTreeModalProps) => {
   const { t } = useTranslation();
-  const lang = useLanguage();
   const [createTree] = useCreateSellerTreeMutation();
   const [updateTree] = useUpdateSellerTreeMutation();
   const [uploadImage] = useUploadImageMutation();
@@ -108,7 +92,7 @@ const SellerTreeModal = ({
 
   // Завантаження зображення на сервер
   const uploadImageToServer = async (): Promise<string> => {
-    if (!imageFile) return formData.imageUrl;
+    if (!imageFile) return formData.imageUrl || '';
 
     setIsUploading(true);
     try {
@@ -243,14 +227,7 @@ const SellerTreeModal = ({
     }
   };
 
-  const getCategoryName = (category: Category | undefined) => {
-    return (
-      category?.name?.[lang as keyof typeof category.name] ||
-      category?.name?.ru ||
-      category?.name?.ro ||
-      'Unknown'
-    );
-  };
+  
 
   if (!isOpen) return null;
 

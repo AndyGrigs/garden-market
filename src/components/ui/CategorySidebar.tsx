@@ -3,8 +3,8 @@ import { ChevronDown, Filter, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useGetCategoriesQuery } from '@/store/api/categoryApi';
-import { useLanguage } from '@/hooks/useLanguage';
 import { BASE_URL } from '@/config';
+import { getCategoryName } from '../../shared/helpers/getCategoryName';
 
 interface CategorySidebarProps {
   selectedCategoryId: string | null;
@@ -23,12 +23,9 @@ export default function CategorySidebar({
 }: CategorySidebarProps) {
   const { data: categories, isLoading } = useGetCategoriesQuery();
   const [isExpanded, setIsExpanded] = useState(true);
-  const lang = useLanguage();
   const { t } = useTranslation();
 
-  const getCategoryName = (name: { [key: string]: string }) => {
-    return name?.[lang] || name?.en || name?.ru || name?.ro || "Unknown";
-  };
+ ;
 
   if (isLoading) {
     return (
@@ -119,12 +116,12 @@ export default function CategorySidebar({
                   {category.imageUrl && (
                     <img
                       src={`${BASE_URL}${category.imageUrl}`}
-                      alt={getCategoryName(category.name)}
+                      alt={getCategoryName(category)}
                       className="w-8 h-8 object-cover rounded-md"
                     />
                   )}
                   <span className="font-medium">
-                    {getCategoryName(category.name)}
+                    {getCategoryName(category)}
                   </span>
                 </motion.button>
               ))
