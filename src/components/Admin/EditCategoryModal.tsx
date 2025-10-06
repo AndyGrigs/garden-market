@@ -151,16 +151,7 @@ export const EditCategoryModal = ({
             />
           </div>
 
-          {/* <div>
-            <label className="block text-sm font-medium mb-1">Назва (EN)</label>
-            <input
-              type="text"
-              value={formData.en}
-              onChange={(e) => handleChange('en', e.target.value)}
-              className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
-              placeholder="Англійська назва"
-            />
-          </div> */}
+          
 
           {/* ✅ Спрощена секція зображення */}
           <div>

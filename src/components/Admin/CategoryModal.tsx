@@ -111,16 +111,6 @@ const CategoryModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
               placeholder={t('common.enterNameRom')}
             />
           </div>
-          {/* <div>
-            <label className="block text-sm font-medium mb-1">{t('common.name')} (EN)</label>
-            <input
-              type="text"
-              value={formData.en}
-              onChange={(e) => handleChange("en", e.target.value)}
-              className="w-full border rounded px-3 py-2"
-              placeholder={t('common.enterNameEng')}
-            />
-          </div> */}
           <div>
             <label className="block text-sm font-medium mb-1">{t('categories.photo')}</label>
             <input

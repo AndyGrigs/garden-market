@@ -8,6 +8,7 @@ import { useDeleteImageMutation, useUploadImageMutation } from '../../store/api/
 import { t } from 'i18next';
 import { BASE_URL } from '../../config';
 import toast from 'react-hot-toast';
+import NumberInput from '../../shared/NumberInput';
 
 interface Props {
   isOpen: boolean;
@@ -208,7 +209,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-sm font-medium mb-1">{t('common.price')}</label>
-            <input
+            {/* <input
               type="number"
               min="0"
               step="0.01"
@@ -217,17 +218,32 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
               value={form.price || ""}
               onChange={(e) => handleChange("price", parseFloat(e.target.value) || 0)}
               required
+            /> */}
+            <NumberInput
+              label={t('common.price')}
+              value={form.price}
+              onChange={(value) => handleChange("price", value)}
+              type="decimal"
+              step={0.01}
+              required
             />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">{t('common.quantity')}</label>
-            <input
+            {/* <input
               type="number"
               min="0"
               className="border border-green-600 px-3 py-2 rounded w-full"
               placeholder="0"
               value={form.stock || ""}
               onChange={(e) => handleChange("stock", parseInt(e.target.value) || 0)}
+            /> */}
+
+            <NumberInput
+              label="Кількість"
+              value={form.stock}
+              onChange={(value) => handleChange("stock", value)}
+              type="integer"
             />
           </div>
         </div>

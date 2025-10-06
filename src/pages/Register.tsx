@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useRegisterMutation } from "../store/api/authApi";
-import { UserPlus, Users, ShoppingCart } from "lucide-react";
+import { UserPlus, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { motion } from "framer-motion";
 import { ErrorResponse } from "../types/IUser";
 import MainPageLink from '../shared/MainPageLink';
+import TermsModal from '../components/ui/TermsModal';
+import RoleSelector from '../shared/register/RoleSelector';
+import BasicInfoFields from '../shared/register/BasicInfoFields';
+import SellerInfoFields from '../shared/register/SellerInfoFields';
+import TermsCheckbox from '../shared/register/TermsCheckbox';
 
 export default function Register() {
   const [fullName, setFullName] = useState("");
@@ -22,6 +27,8 @@ export default function Register() {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterMutation();
@@ -46,6 +53,11 @@ export default function Register() {
       }
     }
 
+    if (!termsAccepted) {
+        setError("Ви повинні прийняти умови використання");
+      return;
+      }
+
     try {
       const registerData = {
         fullName,
@@ -53,6 +65,7 @@ export default function Register() {
         password,
         language: detectedLanguage,
         role,
+        termsAccepted,
         ...(role === 'seller' && { sellerInfo })
       };
       console.log("📤 Відправляємо дані:", registerData);
@@ -132,216 +145,31 @@ export default function Register() {
             )}
 
             {/* Вибір ролі */}
-            <div className="space-y-3">
-              <label className="text-sm font-medium text-gray-700">
-                Виберіть тип акаунту
-              </label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Покупець */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`relative cursor-pointer rounded-lg border-2 p-4 transition-all ${
-                    role === 'buyer'
-                      ? 'border-emerald-500 bg-emerald-50'
-                      : 'border-gray-200 bg-white hover:border-gray-300'
-                  }`}
-                  onClick={() => setRole('buyer')}
-                >
-                  <div className="flex items-center space-x-3">
-                    <ShoppingCart className={`h-6 w-6 ${role === 'buyer' ? 'text-emerald-600' : 'text-gray-400'}`} />
-                    <div>
-                      <h3 className={`text-sm font-medium ${role === 'buyer' ? 'text-emerald-900' : 'text-gray-900'}`}>
-                        Покупець
-                      </h3>
-                      <p className={`text-xs ${role === 'buyer' ? 'text-emerald-700' : 'text-gray-500'}`}>
-                        Купую рослини для себе
-                      </p>
-                    </div>
-                  </div>
-                  <input
-                    type="radio"
-                    name="role"
-                    value="buyer"
-                    checked={role === 'buyer'}
-                    onChange={() => setRole('buyer')}
-                    className="absolute top-3 right-3"
-                  />
-                </motion.div>
-
-                {/* Продавець */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`relative cursor-pointer rounded-lg border-2 p-4 transition-all ${
-                    role === 'seller'
-                      ? 'border-emerald-500 bg-emerald-50'
-                      : 'border-gray-200 bg-white hover:border-gray-300'
-                  }`}
-                  onClick={() => setRole('seller')}
-                >
-                  <div className="flex items-center space-x-3">
-                    <Users className={`h-6 w-6 ${role === 'seller' ? 'text-emerald-600' : 'text-gray-400'}`} />
-                    <div>
-                      <h3 className={`text-sm font-medium ${role === 'seller' ? 'text-emerald-900' : 'text-gray-900'}`}>
-                        Продавець
-                      </h3>
-                      <p className={`text-xs ${role === 'seller' ? 'text-emerald-700' : 'text-gray-500'}`}>
-                        Продаю рослини на платформі
-                      </p>
-                    </div>
-                  </div>
-                  <input
-                    type="radio"
-                    name="role"
-                    value="seller"
-                    checked={role === 'seller'}
-                    onChange={() => setRole('seller')}
-                    className="absolute top-3 right-3"
-                  />
-                </motion.div>
-              </div>
-            </div>
+              <RoleSelector role={role} onRoleChange={setRole} />
 
             {/* Основні поля */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                  {t("auth.register.name")}
-                </label>
-                <input
-                  id="name"
-                  name="fullName"
-                  type="text"
-                  required
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                  placeholder={t("auth.register.name")}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  {t("auth.register.email")}
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                  placeholder={t("auth.register.email")}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                {t("auth.register.password")}
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder={t("auth.register.password")}
-              />
-            </div>
-
+            <BasicInfoFields
+                fullName={fullName}
+                email={email}
+                password={password}
+                onFullNameChange={setFullName}
+                onEmailChange={setEmail}
+                onPasswordChange={setPassword}
+            />
             {/* Додаткові поля для продавців */}
-            {role === 'seller' && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="space-y-4 border-t pt-6"
-              >
-                <h3 className="text-lg font-medium text-gray-900">
-                  Інформація про продавця
-                </h3>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Назва розсадника *
-                    </label>
-                    <input
-                      type="text"
-                      required={role === 'seller'}
-                      value={sellerInfo.nurseryName}
-                      onChange={(e) => setSellerInfo({...sellerInfo, nurseryName: e.target.value})}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                      placeholder="Наприклад: Зелений Світ"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Телефон *
-                    </label>
-                    <input
-                      type="tel"
-                      required={role === 'seller'}
-                      value={sellerInfo.phoneNumber}
-                      onChange={(e) => setSellerInfo({...sellerInfo, phoneNumber: e.target.value})}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                      placeholder="+380XXXXXXXXX"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Адреса
-                  </label>
-                  <input
-                    type="text"
-                    value={sellerInfo.address}
-                    onChange={(e) => setSellerInfo({...sellerInfo, address: e.target.value})}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder="Місто, вулиця, будинок"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Номер ліцензії
-                  </label>
-                  <input
-                    type="text"
-                    value={sellerInfo.businessLicense}
-                    onChange={(e) => setSellerInfo({...sellerInfo, businessLicense: e.target.value})}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder="Необов'язково"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Опис діяльності
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={sellerInfo.description}
-                    onChange={(e) => setSellerInfo({...sellerInfo, description: e.target.value})}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder="Розкажіть про свій бізнес..."
-                  />
-                </div>
-
-                <div className="bg-blue-50 p-4 rounded-md">
-                  <p className="text-sm text-blue-700">
-                    Ваш акаунт продавця буде перевірений адміністратором протягом 24 годин.
-                  </p>
-                </div>
-              </motion.div>
+           {role === 'seller' && (
+              <SellerInfoFields
+                sellerInfo={sellerInfo}
+                onSellerInfoChange={setSellerInfo}
+              />
             )}
+
+            {/* Чекбокс прийняття умов */}
+              <TermsCheckbox
+                  checked={termsAccepted}
+                  onCheckChange={setTermsAccepted}
+                  onOpenModal={() => setShowTermsModal(true)}
+                />
 
             <div>
               <button
@@ -350,15 +178,7 @@ export default function Register() {
                 className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
               >
                 {isLoading ? (
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    className="rounded-full h-5 w-5 border-b-2 border-white"
-                  />
+                  <Loader2 />
                 ) : (
                   t("auth.register.submit")
                 )}
@@ -367,6 +187,15 @@ export default function Register() {
           </motion.form>
         </motion.div>
       </div>
+      {/* Модальне вікно з умовами */}
+      <TermsModal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+        onAccept={() => {
+          setTermsAccepted(true);
+          setShowTermsModal(false);
+      }}
+/>
     </div>
   );
 }

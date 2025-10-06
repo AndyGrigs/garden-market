@@ -49,7 +49,7 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">{t('footer.contact')}</h3>
           <ul className="space-y-2 text-emerald-200">
-            <li>{t('footer.address')}</li>
+            {/* <li>{t('footer.address')}</li> */}
             <li>
               <a href="tel:+1234567890" className="hover:text-white transition-colors">
               +373 79 748 131
@@ -57,7 +57,7 @@ const Footer = () => {
             </li>
             <li>
               <a href="mailto:info@gardentrees.com" className="hover:text-white transition-colors">
-                info@gardentrees.com
+                {import.meta.env.VITE_EMAIL}
               </a>
             </li>
           </ul>
@@ -96,7 +96,7 @@ const Footer = () => {
 
       <div className="border-t border-emerald-800 mt-8 pt-8 text-center text-emerald-200">
         <p>
-          © {currentYear} Covaci Trees. {t('footer.rights')}
+          © {currentYear} Covaci Market. {t('footer.rights')}
         </p>
       </div>
     </div>
