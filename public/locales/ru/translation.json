@@ -1,5 +1,7 @@
 {
   "common": {
+    "active": "Активный",
+    "inactive": "Неактивный",
     "toMain": "На главную",
     "error": "Что-то пошло не так (. Попробуйте еще раз!",
     "cancel": "Отменить",
@@ -164,7 +166,8 @@
       "pending": "ожидает"
     },
     "deleteImage": "Удалить",
-    "deleteTreeConfirm": "Ты уверен, что хочешь удалить этот товар и фото?",
+    "deleteTreeConfirm": "Вы уверены, что хотите удалить этот товар и фото?",
+    "deleteTreeSuccess": "Товар успешно удален!",
     "invalidTreeData": "Некорректные данные для создания/изменения товара",
     "deleteTreeError": "Ошибка удаления товара...",
     "createEditTreeError": "Ошибка создания/редактирования товара",
@@ -175,8 +178,22 @@
     "delete": "Удалить"
   },
    "seller": {
-    "dashboard": {
+    "stock": "Остаток",
+    "myProducts": "Мои товары",
+    "addProduct":"Добавить товар",
+    "addFirstProduct":"Добавьте свой первый товар, чтобы начать продажи",
+    "noProducts":"У вас пока нет товаров",
+   "dashboard": {
       "title": "Панель продавца"
+    },
+    "stats": {
+      "totalProducts": "Всего товаров",
+      "activeProducts": "Активных товаров",
+      "totalStock": "Общий запас" 
+    },
+    "tabs": {
+      "statistics": "Статистика",
+      "products": "Мои товары"
     }
   },
   "verification": {

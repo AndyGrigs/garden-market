@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Edit2, Trash2, Package} from "lucide-react";
+import { Plus, Edit2, Trash2, Package, Loader2} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { AnimatePresence } from "framer-motion";
 
@@ -31,21 +31,21 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
   };
 
   const handleDeleteTree = async (treeId: string, treeName: string) => {
-    if (!window.confirm(t('seller.confirmDelete', { 
+    if (!window.confirm(t('dashboard.deleteTreeConfirm', { 
       name: treeName,
-      defaultValue: `Ви впевнені, що хочете видалити "${treeName}"?` 
+      defaultValue: "Вы уверены, что хотите удалить этот товар и фото?"
     }))) {
       return;
     }
 
     try {
       await deleteTree(treeId).unwrap();
-      toast.success(t('seller.deleteSuccess', { 
-        defaultValue: 'Товар успішно видалено' 
+      toast.success(t('dashboard.deleteTreeSuccess', { 
+        defaultValue: 'Товар успешно удален!' 
       }));
     } catch (error) {
-      toast.error(t('seller.deleteError', { 
-        defaultValue: 'Помилка видалення товару' 
+      toast.error(t('dashboard.deleteTreeError', { 
+        defaultValue: 'Ошибка удаления товара :(' 
       }));
       console.error('Delete error:', error);
     }
@@ -71,7 +71,7 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
       <div className="text-center py-8">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto"></div>
         <p className="mt-2 text-gray-600">
-          {t('common.loading', { defaultValue: 'Завантаження...' })}
+          <Loader2/>
         </p>
       </div>
     );
@@ -81,14 +81,14 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-900">
-          {t('seller.myProducts', { defaultValue: 'Мої товари' })}
+          {t('seller.myProducts', { defaultValue: 'Мои товары' })}
         </h2>
         <button
           onClick={handleAddTree}
           className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
         >
           <Plus className="h-4 w-4" />
-          <span>{t('seller.addProduct', { defaultValue: 'Додати товар' })}</span>
+          <span>{t('seller.addProduct', { defaultValue: 'Добавить товар' })}</span>
         </button>
       </div>
 
@@ -96,18 +96,18 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
         <div className="text-center py-12">
           <Package className="h-16 w-16 text-gray-300 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">
-            {t('seller.noProducts', { defaultValue: 'У вас поки немає товарів' })}
+            {t('seller.noProducts', { defaultValue: 'У вас пока нет товаров' })}
           </h3>
           <p className="text-gray-600 mb-6">
             {t('seller.addFirstProduct', { 
-              defaultValue: 'Додайте свій перший товар, щоб почати продажі' 
+              defaultValue: 'Добавьте свой первый товар, чтобы начать продажи' 
             })}
           </p>
           <button
             onClick={handleAddTree}
             className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
           >
-            {t('seller.addProduct', { defaultValue: 'Додати товар' })}
+            {t('seller.addProduct', { defaultValue: 'Добавить товар' })}
           </button>
         </div>
       ) : (
@@ -147,10 +147,10 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
                 
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-lg font-bold text-emerald-600">
-                    {tree.price} грн
+                    {tree.price} MD
                   </span>
                   <span className="text-sm text-gray-500">
-                    {t('seller.stock', { defaultValue: 'Залишок' })}: {tree.stock}
+                    {t('seller.stock', { defaultValue: 'Остаток' })}: {tree.stock}
                   </span>
                 </div>
 
@@ -160,14 +160,14 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
                     className="flex-1 flex items-center justify-center space-x-2 bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700 transition-colors"
                   >
                     <Edit2 className="h-4 w-4" />
-                    <span>{t('common.edit', { defaultValue: 'Редагувати' })}</span>
+                    <span>{t('dashboard.edit', { defaultValue: 'Редактировать' })}</span>
                   </button>
                   <button
                     onClick={() => handleDeleteTree(tree._id, getTreeTitle(tree.title))}
                     className="flex-1 flex items-center justify-center space-x-2 bg-red-600 text-white px-3 py-2 rounded text-sm hover:bg-red-700 transition-colors"
                   >
                     <Trash2 className="h-4 w-4" />
-                    <span>{t('common.delete', { defaultValue: 'Видалити' })}</span>
+                    <span>{t('dashboard.delete', { defaultValue: 'Удалить' })}</span>
                   </button>
                 </div>
               </div>

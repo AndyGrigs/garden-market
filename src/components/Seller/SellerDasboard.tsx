@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Home, Package, TrendingUp } from "lucide-react";
+import { Package, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useGetSellerTreesQuery } from "../../store/api/sellerApi";
+import { useGetSellerTreesQuery } from "@/store/api/sellerApi";
 import SellerTrees from './SellerTrees';
 import SellerStats from './SellerStats';
+import MainPageLink from '@/shared/MainPageLink';
 
 
 const SellerDashboard = () => {
@@ -19,13 +19,7 @@ const SellerDashboard = () => {
           <h1 className="text-3xl font-bold text-gray-900">
             {t('seller.dashboard.title', { defaultValue: 'Панель продавца' })}
           </h1>
-          <Link
-            to="/"
-            className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
-          >
-            <Home className="h-5 w-5" />
-            <span>{t('common.mainPage', { defaultValue: 'На главную' })}</span>
-          </Link>
+         <MainPageLink/>
         </div>
 
         {/* Статистика */}
@@ -34,7 +28,7 @@ const SellerDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">
-                  {t('seller.stats.totalProducts', { defaultValue: 'Всього товарів' })}
+                  {t('seller.stats.totalProducts', { defaultValue: 'Всего товаров' })}
                 </p>
                 <p className="text-2xl font-bold text-gray-900">
                   {sellerData?.trees?.length || 0}
@@ -48,7 +42,7 @@ const SellerDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">
-                  {t('seller.stats.activeProducts', { defaultValue: 'Активних товарів' })}
+                  {t('seller.stats.activeProducts', { defaultValue: 'Активных товаров' })}
                 </p>
                 <p className="text-2xl font-bold text-gray-900">
                   {sellerData?.trees?.filter(tree => tree.isActive)?.length || 0}
@@ -62,7 +56,7 @@ const SellerDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">
-                  {t('seller.stats.totalStock', { defaultValue: 'Загальний запас' })}
+                  {t('seller.stats.totalStock', { defaultValue: 'Общий запас' })}
                 </p>
                 <p className="text-2xl font-bold text-gray-900">
                   {sellerData?.trees?.reduce((sum, tree) => sum + (tree.stock || 0), 0) || 0}
@@ -85,7 +79,7 @@ const SellerDashboard = () => {
                     : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
-                {t('seller.tabs.products', { defaultValue: 'Мої товари' })}
+                {t('seller.myProducts', { defaultValue: 'Мои товары' })}
               </button>
               <button
                 onClick={() => setActiveTab('stats')}

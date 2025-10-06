@@ -12,6 +12,7 @@ import {
   useUpdateSellerTreeMutation,
 } from '../../store/api/sellerApi';
 import toast from 'react-hot-toast';
+import NumberInput from '../../shared/NumberInput';
 
 interface SellerTreeModalProps {
   isOpen: boolean;
@@ -401,7 +402,7 @@ const SellerTreeModal = ({
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     {t('seller.form.price', { defaultValue: 'Цена' })} ('MD') *
                   </label>
-                  <input
+                  {/* <input
                     type="number"
                     min="0"
                     step="0.01"
@@ -414,33 +415,36 @@ const SellerTreeModal = ({
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     required
+                  /> */}
+                  <NumberInput 
+                    label="Ціна"
+                    value={formData.price}
+                    onChange={(value) => setFormData({ ...formData, price: value })}
+                    type="decimal"
+                    step={0.01}
+                    required
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('seller.form.stock', { defaultValue: 'Кількість' })} *
+                    {t('seller.form.stock', { defaultValue: 'Количество' })} *
                   </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={formData.stock}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        stock: parseInt(e.target.value) || 0,
-                      })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                    required
-                  />
+                 <NumberInput
+                      label={t('seller.form.stock', { defaultValue: 'Количество' }) + " *"}
+                      value={formData.stock}
+                      onChange={(value) => setFormData({ ...formData, stock: value })}
+                      type="integer"
+                      required
+                      className="focus:ring-emerald-500"
+                 />
                 </div>
               </div>
 
               {/* Категорія */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('seller.form.category', { defaultValue: 'Категорія' })} *
+                  {t('seller.form.category', { defaultValue: 'Категория' })} *
                 </label>
                 <select
                   value={formData.category}

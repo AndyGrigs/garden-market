@@ -1,5 +1,7 @@
 {
   "common": {
+    "active": "activ",
+    "inactive": "inactive",
     "toMain": "Pe pagina principală",
     "error": " Ceva s-a învârtit rău (. Încercați din nou mai târziu.",
     "cancel": "Anulează",
@@ -168,6 +170,7 @@
     },
     "deleteImage": "Șterge",
     "deleteTreeConfirm": "Doriți să ștergeți această imagine?",
+    "deleteTreeSuccess": "Produsul a fost șters cu succes!",
     "invalidTreeData": "Datele pentru creare/modificare a produsului sunt incorrecte",
     "deleteTreeError": "Eroare la ștergerea produsului...",
     "createEditTreeError": "Eroare la crearea/editarea produsului",
@@ -178,8 +181,23 @@
     "delete": "Șterge"
   },
   "seller": {
+    "stock": "Stoc",
+    "myProducts": "Mai multe produse",
+    "addProduct": "Adaugă produs",
+    "addFirstProduct": "Adaugă primul tău produs, pentru a începe vânzarea",
+    "noProducts": "Până acum nu aveți niciun produs",
+
     "dashboard": {
       "title": "Panoul vânzătorilor"
+  },
+  "stats": {
+    "totalProducts": "Toate bunuri",
+    "activeProducts":"Produse active",
+    "totalStock":  "Depozit total"
+  },
+  "tabs": {
+    "statistics": "Statistici",
+    "products": "Mai multe produse"
   }
 },
   "verification": {
