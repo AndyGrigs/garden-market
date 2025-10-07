@@ -14,48 +14,51 @@ interface NumberInputProps {
   label?: string;
 }
 
-
 const NumberInput = ({
-            value,
-            onChange,
-            type = 'decimal',
-            placeholder = '0',
-            className = '',
-            min = 0,
-            max,
-            step,
-            required = false,
-            disabled = false,
-            label
+  value,
+  onChange,
+  type = 'decimal',
+  placeholder = '0',
+  className = '',
+  min = 0,
+  max,
+  step,
+  required = false,
+  disabled = false,
+  label,
 }: NumberInputProps) => {
-    const [displayValue, setDisplayValue] = useState('');
+  const [displayValue, setDisplayValue] = useState('');
 
-    useEffect(()=>{
-        setDisplayValue(value === 0 ? '': value.toString())
-    }, [value]);
- 
-    const pattern = type === 'integer' ? '[0-9]*' : '[0-9]*\\.?[0-9]*';
-    const inputMode = type === 'integer' ? 'numeric' : 'decimal';
-    const regex = type === 'integer' ? /^\d*$/ : /^\d*\.?\d*$/;
+  useEffect(() => {
+    setDisplayValue(value === 0 ? '' : value.toString());
+  }, [value]);
 
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+  const pattern = type === 'integer' ? '[0-9]*' : '[0-9]*\\.?[0-9]*';
+  const inputMode = type === 'integer' ? 'numeric' : 'decimal';
+  const regex = type === 'integer' ? /^\d*$/ : /^\d*\.?\d*$/;
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     if (e.target.value === '0' || value === 0) {
       setDisplayValue('');
     }
   };
 
-   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (e.target.value === '') {
       setDisplayValue('');
       onChange(0);
     } else {
       // Форматуємо значення при втраті фокусу
-      const numValue = type === 'integer' 
-        ? parseInt(e.target.value) || 0
-        : parseFloat(e.target.value) || 0;
-      
+      const numValue =
+        type === 'integer'
+          ? parseInt(e.target.value) || 0
+          : parseFloat(e.target.value) || 0;
+
       // Перевіряємо межі
-      const clampedValue = Math.max(min, max ? Math.min(max, numValue) : numValue);
+      const clampedValue = Math.max(
+        min,
+        max ? Math.min(max, numValue) : numValue
+      );
       setDisplayValue(clampedValue === 0 ? '' : clampedValue.toString());
       onChange(clampedValue);
     }
@@ -63,24 +66,25 @@ const NumberInput = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
-    
+
     // Дозволяємо пусте значення або валідне число
     if (newValue === '' || regex.test(newValue)) {
       setDisplayValue(newValue);
-      
+
       if (newValue === '') {
         onChange(0);
       } else {
-        const numValue = type === 'integer' 
-          ? parseInt(newValue) || 0
-          : parseFloat(newValue) || 0;
+        const numValue =
+          type === 'integer'
+            ? parseInt(newValue) || 0
+            : parseFloat(newValue) || 0;
         onChange(numValue);
       }
     }
   };
 
   return (
-      <div>
+    <div>
       {label && (
         <label className="block text-sm font-medium mb-1">
           {label} {required && <span className="text-red-500">*</span>}
@@ -103,7 +107,7 @@ const NumberInput = ({
         step={step}
       />
     </div>
-  )
-}
+  );
+};
 
-export default NumberInput
+export default NumberInput;

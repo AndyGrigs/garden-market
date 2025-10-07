@@ -36,7 +36,10 @@ interface RoleSelectorProps {
 }
  */
 
-export default function RoleSelector({ role, onRoleChange }: RoleSelectorProps) {
+export default function RoleSelector({
+  role,
+  onRoleChange,
+}: RoleSelectorProps) {
   return (
     <div className="space-y-3">
       <label className="text-sm font-medium text-gray-700">
@@ -55,12 +58,18 @@ export default function RoleSelector({ role, onRoleChange }: RoleSelectorProps) 
           onClick={() => onRoleChange('buyer')}
         >
           <div className="flex items-center space-x-3">
-            <ShoppingCart className={`h-6 w-6 ${role === 'buyer' ? 'text-emerald-600' : 'text-gray-400'}`} />
+            <ShoppingCart
+              className={`h-6 w-6 ${role === 'buyer' ? 'text-emerald-600' : 'text-gray-400'}`}
+            />
             <div>
-              <h3 className={`text-sm font-medium ${role === 'buyer' ? 'text-emerald-900' : 'text-gray-900'}`}>
+              <h3
+                className={`text-sm font-medium ${role === 'buyer' ? 'text-emerald-900' : 'text-gray-900'}`}
+              >
                 {t('seller.buyerTitle')}
               </h3>
-              <p className={`text-xs ${role === 'buyer' ? 'text-emerald-700' : 'text-gray-500'}`}>
+              <p
+                className={`text-xs ${role === 'buyer' ? 'text-emerald-700' : 'text-gray-500'}`}
+              >
                 {t('seller.buyerDescription')}
               </p>
             </div>
@@ -87,12 +96,18 @@ export default function RoleSelector({ role, onRoleChange }: RoleSelectorProps) 
           onClick={() => onRoleChange('seller')}
         >
           <div className="flex items-center space-x-3">
-            <Users className={`h-6 w-6 ${role === 'seller' ? 'text-emerald-600' : 'text-gray-400'}`} />
+            <Users
+              className={`h-6 w-6 ${role === 'seller' ? 'text-emerald-600' : 'text-gray-400'}`}
+            />
             <div>
-              <h3 className={`text-sm font-medium ${role === 'seller' ? 'text-emerald-900' : 'text-gray-900'}`}>
+              <h3
+                className={`text-sm font-medium ${role === 'seller' ? 'text-emerald-900' : 'text-gray-900'}`}
+              >
                 {t('seller.sellerTitle')}
               </h3>
-              <p className={`text-xs ${role === 'seller' ? 'text-emerald-700' : 'text-gray-500'}`}>
+              <p
+                className={`text-xs ${role === 'seller' ? 'text-emerald-700' : 'text-gray-500'}`}
+              >
                 {t('seller.sellerDescription')}
               </p>
             </div>

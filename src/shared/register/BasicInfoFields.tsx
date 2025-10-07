@@ -15,7 +15,7 @@ export default function BasicInfoFields({
   password,
   onFullNameChange,
   onEmailChange,
-  onPasswordChange
+  onPasswordChange,
 }: BasicInfoFieldsProps) {
   const { t } = useTranslation();
 
@@ -24,8 +24,11 @@ export default function BasicInfoFields({
       {/* Основні поля */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-            {t("auth.register.name")}
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
+          >
+            {t('auth.register.name')}
           </label>
           <input
             id="name"
@@ -35,13 +38,16 @@ export default function BasicInfoFields({
             value={fullName}
             onChange={(e) => onFullNameChange(e.target.value)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-            placeholder={t("auth.register.name")}
+            placeholder={t('auth.register.name')}
           />
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            {t("auth.register.email")}
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            {t('auth.register.email')}
           </label>
           <input
             id="email"
@@ -51,14 +57,17 @@ export default function BasicInfoFields({
             value={email}
             onChange={(e) => onEmailChange(e.target.value)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-            placeholder={t("auth.register.email")}
+            placeholder={t('auth.register.email')}
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-          {t("auth.register.password")}
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium text-gray-700"
+        >
+          {t('auth.register.password')}
         </label>
         <input
           id="password"
@@ -68,7 +77,7 @@ export default function BasicInfoFields({
           value={password}
           onChange={(e) => onPasswordChange(e.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-          placeholder={t("auth.register.password")}
+          placeholder={t('auth.register.password')}
         />
       </div>
     </>

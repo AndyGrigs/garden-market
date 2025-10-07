@@ -1,8 +1,14 @@
 import { Variants, motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
-
-type AnimationType = 'fade' | 'slideUp' | 'slideDown' | 'slideLeft' | 'slideRight' | 'scale' | 'fadeScale';
+type AnimationType =
+  | 'fade'
+  | 'slideUp'
+  | 'slideDown'
+  | 'slideLeft'
+  | 'slideRight'
+  | 'scale'
+  | 'fadeScale';
 
 interface AnimatedWrapperProps {
   children: ReactNode;
@@ -16,63 +22,63 @@ const animations: Record<AnimationType, Variants> = {
   fade: {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
-    exit: { opacity: 0 }
+    exit: { opacity: 0 },
   },
   slideUp: {
     initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -40 }
+    exit: { opacity: 0, y: -40 },
   },
   slideDown: {
     initial: { opacity: 0, y: -40 },
     animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 40 }
+    exit: { opacity: 0, y: 40 },
   },
   slideLeft: {
     initial: { opacity: 0, x: 60 },
     animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -60 }
+    exit: { opacity: 0, x: -60 },
   },
   slideRight: {
     initial: { opacity: 0, x: -60 },
     animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 60 }
+    exit: { opacity: 0, x: 60 },
   },
   scale: {
     initial: { opacity: 0, scale: 0.8 },
     animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.8 }
+    exit: { opacity: 0, scale: 0.8 },
   },
   fadeScale: {
     initial: { opacity: 0, scale: 0.95 },
     animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 1.05 }
-  }
+    exit: { opacity: 0, scale: 1.05 },
+  },
 };
 
 const AnimatedWrapper = ({
-    children, 
-    className='',
-    animation = 'slideUp',
-    duration = 0.3,
-    delay = 0 
+  children,
+  className = '',
+  animation = 'slideUp',
+  duration = 0.3,
+  delay = 0,
 }: AnimatedWrapperProps) => {
   return (
-   <motion.div
-        variants={animations[animation]}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        transition={{
-            duration,
-            delay,
-            ease: 'easeOut'
-        }}
-        className={className}
-   >
-    {children}
-   </motion.div>
-  )
-}
+    <motion.div
+      variants={animations[animation]}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{
+        duration,
+        delay,
+        ease: 'easeOut',
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
-export default AnimatedWrapper
+export default AnimatedWrapper;

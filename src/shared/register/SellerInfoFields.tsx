@@ -14,7 +14,10 @@ interface SellerInfoFieldsProps {
   onSellerInfoChange: (info: SellerInfo) => void;
 }
 
-export default function SellerInfoFields({ sellerInfo, onSellerInfoChange }: SellerInfoFieldsProps) {
+export default function SellerInfoFields({
+  sellerInfo,
+  onSellerInfoChange,
+}: SellerInfoFieldsProps) {
   const updateField = (field: keyof SellerInfo, value: string) => {
     onSellerInfoChange({ ...sellerInfo, [field]: value });
   };
@@ -29,7 +32,7 @@ export default function SellerInfoFields({ sellerInfo, onSellerInfoChange }: Sel
       <h3 className="text-lg font-medium text-gray-900">
         {t('seller.sellerInfoTitle')}
       </h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
