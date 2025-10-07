@@ -112,6 +112,8 @@
       "register": "Или создайте новый аккаунт"
     },
     "register": {
+      "accept": "Я принимаю",
+      "siteTerms" : "условия использования сайта",
       "languageDetected": "Язык обнаружен",
       "title": "Создать аккаунт",
       "name": "Полное имя",
@@ -178,11 +180,29 @@
     "delete": "Удалить"
   },
    "seller": {
+    "sellerTitle": "Продавец",
     "stock": "Остаток",
     "myProducts": "Мои товары",
     "addProduct":"Добавить товар",
     "addFirstProduct":"Добавьте свой первый товар, чтобы начать продажи",
     "noProducts":"У вас пока нет товаров",
+    "selectAccountType": "Выберите тип аккаунта",
+    "buyerTitle": "Покупатель",
+    "buyerDescription":  "Покупаю растения для себя",
+    "sellerDescription": "Продаю растения на платформе",
+    "sellerInfoTitle": "Информация о продавце",
+
+      "nurseryNameLabel": "Название питомника *",
+      "nurseryNamePlaceholder": "Например: Зелёный Мир",
+      "phoneLabel": "Телефон *",
+      "phonePlaceholder": "+370XXXXXXXXX",
+      "addressLabel": "Адрес",
+      "addressPlaceholder": "Город, улица, дом",
+      "licenseLabel": "Номер лицензии",
+      "licensePlaceholder": "Необязательно",
+      "descriptionLabel": "Описание деятельности",
+      "descriptionPlaceholder": "Расскажите о своём бизнесе...",
+      "verificationNotice": "Ваш аккаунт продавца будет проверен администратором в течение 24 часов.",
    "dashboard": {
       "title": "Панель продавца"
     },

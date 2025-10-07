@@ -115,6 +115,8 @@
       "register": "Sau creează un cont nou"
     },
     "register": {
+      "accept" : "Accept",
+      "siteTerms": "termenii de utilizare ai site-ului",
       "title": "Creează un cont",
       "name": "Nume complet",
       "email": "Adresă de email",
@@ -186,10 +188,27 @@
     "addProduct": "Adaugă produs",
     "addFirstProduct": "Adaugă primul tău produs, pentru a începe vânzarea",
     "noProducts": "Până acum nu aveți niciun produs",
+    "selectAccountType":  "Alegeți tipul de cont",
+    "buyerTitle": "Cumpărător",
+    "buyerDescription": "Cumpăr plante pentru mine",
+    "sellerDescription": "Vând plante pe platformă",
+    "sellerTitle": "Vânzător",
+    "sellerInfoTitle": "Informații despre vânzător",
 
+    "nurseryNameLabel": "Numele pepinierei *",
+    "nurseryNamePlaceholder": "De exemplu: Lumea Verde",
+    "phoneLabel": "Telefon *",
+    "phonePlaceholder": "+370XXXXXXXXX",
+    "addressLabel": "Adresă",
+    "addressPlaceholder": "Oraș, stradă, număr",
+    "licenseLabel": "Număr licență",
+    "licensePlaceholder": "Opțional",
+    "descriptionLabel": "Descrierea activității",
+    "descriptionPlaceholder": "Povestiți despre afacerea dvs...",
+    "verificationNotice": "Contul dvs. de vânzător va fi verificat de administrator în termen de 24 de ore.",
     "dashboard": {
       "title": "Panoul vânzătorilor"
-  },
+    },
   "stats": {
     "totalProducts": "Toate bunuri",
     "activeProducts":"Produse active",

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { t } from 'i18next';
 import { Users, ShoppingCart } from 'lucide-react';
 
 interface RoleSelectorProps {
@@ -6,11 +7,40 @@ interface RoleSelectorProps {
   onRoleChange: (role: 'buyer' | 'seller') => void;
 }
 
+/*{
+  "selectAccountType": {
+    "uk": "Виберіть тип акаунту",
+    "ru": "Выберите тип аккаунта",
+    "ro": "Alegeți tipul de cont"
+  },
+  "buyerTitle": {
+    "uk": "Покупець",
+    "ru": "Покупатель",
+    "ro": "Cumpărător"
+  },
+  "buyerDescription": {
+    "uk": "Купую рослини для себе",
+    "ru": "Покупаю растения для себя",
+    "ro": "Cumpăr plante pentru mine"
+  },
+  "sellerTitle": {
+    "uk": "Продавець",
+    "ru": "Продавец",
+    "ro": "Vânzător"
+  },
+  "sellerDescription": {
+    "uk": "Продаю рослини на платформі",
+    "ru": "Продаю растения на платформе",
+    "ro": "Vând plante pe platformă"
+  }
+}
+ */
+
 export default function RoleSelector({ role, onRoleChange }: RoleSelectorProps) {
   return (
     <div className="space-y-3">
       <label className="text-sm font-medium text-gray-700">
-        Виберіть тип акаунту
+        {t('seller.selectAccountType')}
       </label>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Покупець */}
@@ -28,10 +58,10 @@ export default function RoleSelector({ role, onRoleChange }: RoleSelectorProps) 
             <ShoppingCart className={`h-6 w-6 ${role === 'buyer' ? 'text-emerald-600' : 'text-gray-400'}`} />
             <div>
               <h3 className={`text-sm font-medium ${role === 'buyer' ? 'text-emerald-900' : 'text-gray-900'}`}>
-                Покупець
+                {t('seller.buyerTitle')}
               </h3>
               <p className={`text-xs ${role === 'buyer' ? 'text-emerald-700' : 'text-gray-500'}`}>
-                Купую рослини для себе
+                {t('seller.buyerDescription')}
               </p>
             </div>
           </div>
@@ -60,10 +90,10 @@ export default function RoleSelector({ role, onRoleChange }: RoleSelectorProps) 
             <Users className={`h-6 w-6 ${role === 'seller' ? 'text-emerald-600' : 'text-gray-400'}`} />
             <div>
               <h3 className={`text-sm font-medium ${role === 'seller' ? 'text-emerald-900' : 'text-gray-900'}`}>
-                Продавець
+                {t('seller.sellerTitle')}
               </h3>
               <p className={`text-xs ${role === 'seller' ? 'text-emerald-700' : 'text-gray-500'}`}>
-                Продаю рослини на платформі
+                {t('seller.sellerDescription')}
               </p>
             </div>
           </div>

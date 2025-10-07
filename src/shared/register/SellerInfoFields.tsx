@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { t } from 'i18next';
 
 interface SellerInfo {
   nurseryName: string;
@@ -26,13 +27,13 @@ export default function SellerInfoFields({ sellerInfo, onSellerInfoChange }: Sel
       className="space-y-4 border-t pt-6"
     >
       <h3 className="text-lg font-medium text-gray-900">
-        Інформація про продавця
+        {t('seller.sellerInfoTitle')}
       </h3>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Назва розсадника *
+            {t('seller.nurseryNameLabel')}
           </label>
           <input
             type="text"
@@ -40,13 +41,13 @@ export default function SellerInfoFields({ sellerInfo, onSellerInfoChange }: Sel
             value={sellerInfo.nurseryName}
             onChange={(e) => updateField('nurseryName', e.target.value)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-            placeholder="Наприклад: Зелений Світ"
+            placeholder={t('seller.nurseryNamePlaceholder')}
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Телефон *
+            {t('seller.phoneLabel')}
           </label>
           <input
             type="tel"
@@ -54,53 +55,53 @@ export default function SellerInfoFields({ sellerInfo, onSellerInfoChange }: Sel
             value={sellerInfo.phoneNumber}
             onChange={(e) => updateField('phoneNumber', e.target.value)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-            placeholder="+380XXXXXXXXX"
+            placeholder={t('seller.phonePlaceholder')}
           />
         </div>
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Адреса
+          {t('seller.addressLabel')}
         </label>
         <input
           type="text"
           value={sellerInfo.address}
           onChange={(e) => updateField('address', e.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-          placeholder="Місто, вулиця, будинок"
+          placeholder={t('seller.addressPlaceholder')}
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Номер ліцензії
+          {t('seller.licenseLabel')}
         </label>
         <input
           type="text"
           value={sellerInfo.businessLicense}
           onChange={(e) => updateField('businessLicense', e.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-          placeholder="Необов'язково"
+          placeholder={t('seller.licensePlaceholder')}
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Опис діяльності
+          {t('seller.descriptionLabel')}
         </label>
         <textarea
           rows={3}
           value={sellerInfo.description}
           onChange={(e) => updateField('description', e.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-          placeholder="Розкажіть про свій бізнес..."
+          placeholder={t('seller.descriptionPlaceholder')}
         />
       </div>
 
       <div className="bg-blue-50 p-4 rounded-md">
         <p className="text-sm text-blue-700">
-          Ваш акаунт продавця буде перевірений адміністратором протягом 24 годин.
+          {t('seller.verificationNotice')}
         </p>
       </div>
     </motion.div>
