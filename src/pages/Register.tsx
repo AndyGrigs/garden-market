@@ -1,32 +1,33 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useRegisterMutation } from "../store/api/authApi";
-import { UserPlus, Loader2 } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import Header from "../components/Header";
-import { motion } from "framer-motion";
-import { ErrorResponse } from "../types/IUser";
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useRegisterMutation } from '../store/api/authApi';
+import { UserPlus } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import Header from '../components/Header';
+import { motion } from 'framer-motion';
+import { ErrorResponse } from '../types/IUser';
 import MainPageLink from '../shared/MainPageLink';
 import TermsModal from '../components/ui/TermsModal';
 import RoleSelector from '../shared/register/RoleSelector';
 import BasicInfoFields from '../shared/register/BasicInfoFields';
 import SellerInfoFields from '../shared/register/SellerInfoFields';
 import TermsCheckbox from '../shared/register/TermsCheckbox';
+import toast from 'react-hot-toast';
 
 export default function Register() {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [role, setRole] = useState<'buyer' | 'seller'>('buyer');
   const [sellerInfo, setSellerInfo] = useState({
-    nurseryName: "",
-    address: "",
-    phoneNumber: "",
-    businessLicense: "",
-    description: ""
+    nurseryName: '',
+    address: '',
+    phoneNumber: '',
+    businessLicense: '',
+    description: '',
   });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
 
@@ -34,29 +35,33 @@ export default function Register() {
   const [register, { isLoading }] = useRegisterMutation();
   const { t, i18n } = useTranslation();
 
-  const detectedLanguage = i18n.language || navigator.language.split('-')[0] || 'en';
+  const detectedLanguage =
+    i18n.language || navigator.language.split('-')[0] || 'en';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
+    setError('');
+    setSuccess('');
 
-    // Валідація для продавців
     if (role === 'seller') {
       if (!sellerInfo.nurseryName.trim()) {
-        setError("Назва розсадника обов'язкова для продавців");
+        setError(t('verification.nursery'));
+        toast.error(t('verification.nursery'))
         return;
       }
+      /**Romanian:   Russian:  */
       if (!sellerInfo.phoneNumber.trim()) {
-        setError("Номер телефону обов'язковий для продавців");
+        setError(t('verification.sellerPhone'));
+        toast.error(t('verification.sellerPhone'))
         return;
       }
     }
 
     if (!termsAccepted) {
-        setError("Ви повинні прийняти умови використання");
+      setError(t('verification.sellerAccept'));
+      toast.error(t('verification.sellerAccept'))
       return;
-      }
+    }
 
     try {
       const registerData = {
@@ -66,9 +71,9 @@ export default function Register() {
         language: detectedLanguage,
         role,
         termsAccepted,
-        ...(role === 'seller' && { sellerInfo })
+        ...(role === 'seller' && { sellerInfo }),
       };
-      console.log("📤 Відправляємо дані:", registerData);
+      console.log('📤 Відправляємо дані:', registerData);
       const result = await register(registerData).unwrap();
 
       setSuccess(result.message);
@@ -77,7 +82,7 @@ export default function Register() {
       }, 4000);
     } catch (err: ErrorResponse | unknown) {
       setError(
-        (err as ErrorResponse)?.data?.message || t("auth.register.error")
+        (err as ErrorResponse)?.data?.message || t('auth.register.error')
       );
     }
   };
@@ -92,7 +97,7 @@ export default function Register() {
 
       <div className="relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="absolute top-4 right-4">
-          <MainPageLink/>
+          <MainPageLink />
         </div>
 
         <motion.div
@@ -104,15 +109,15 @@ export default function Register() {
           <div className="text-center">
             <UserPlus className="mx-auto h-12 w-12 text-emerald-600" />
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              {t("auth.register.title")}
+              {t('auth.register.title')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              {t("auth.register.login")}{" "}
+              {t('auth.register.login')}{' '}
               <Link
                 to="/login"
                 className="font-medium text-emerald-600 hover:text-emerald-500"
               >
-                {t("auth.login.title")}
+                {t('auth.login.title')}
               </Link>
             </p>
           </div>
@@ -145,19 +150,19 @@ export default function Register() {
             )}
 
             {/* Вибір ролі */}
-              <RoleSelector role={role} onRoleChange={setRole} />
+            <RoleSelector role={role} onRoleChange={setRole} />
 
             {/* Основні поля */}
             <BasicInfoFields
-                fullName={fullName}
-                email={email}
-                password={password}
-                onFullNameChange={setFullName}
-                onEmailChange={setEmail}
-                onPasswordChange={setPassword}
+              fullName={fullName}
+              email={email}
+              password={password}
+              onFullNameChange={setFullName}
+              onEmailChange={setEmail}
+              onPasswordChange={setPassword}
             />
             {/* Додаткові поля для продавців */}
-           {role === 'seller' && (
+            {role === 'seller' && (
               <SellerInfoFields
                 sellerInfo={sellerInfo}
                 onSellerInfoChange={setSellerInfo}
@@ -165,11 +170,11 @@ export default function Register() {
             )}
 
             {/* Чекбокс прийняття умов */}
-              <TermsCheckbox
-                  checked={termsAccepted}
-                  onCheckChange={setTermsAccepted}
-                  onOpenModal={() => setShowTermsModal(true)}
-                />
+            <TermsCheckbox
+              checked={termsAccepted}
+              onCheckChange={setTermsAccepted}
+              onOpenModal={() => setShowTermsModal(true)}
+            />
 
             <div>
               <button
@@ -178,9 +183,17 @@ export default function Register() {
                 className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
               >
                 {isLoading ? (
-                  <Loader2 />
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    }}
+                    className="rounded-full h-5 w-5 border-b-2 border-white"
+                  />
                 ) : (
-                  t("auth.register.submit")
+                  t('auth.register.submit')
                 )}
               </button>
             </div>
@@ -194,8 +207,8 @@ export default function Register() {
         onAccept={() => {
           setTermsAccepted(true);
           setShowTermsModal(false);
-      }}
-/>
+        }}
+      />
     </div>
   );
 }

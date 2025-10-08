@@ -1,7 +1,6 @@
 import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import { Loader2 } from "lucide-react";
 
 import SellerGuard from './Seller/SellerGuard';
 import AdminGuard from './Admin/AdminGuard';
@@ -20,12 +19,18 @@ const TermsAndConditions = lazy(() => import("../pages/TermsAndConditions"));
 const SellerDashboard = lazy(() => import("./Seller/SellerDasboard"));
 const MainContent = lazy(() => import("./Layout/MainContent").then(module => ({ default: module.MainContent })));
 
+const Loading = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+  </div>
+);
+
 function AnimatedRoutes() {
   const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
-      <Suspense fallback={<Loader2 className="animate-spin mx-auto mt-10" />}>
+      <Suspense fallback={<Loading />}>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Layout />}>
             <Route index element={<MainContent />} />
