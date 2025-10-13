@@ -20,9 +20,9 @@
     "describing": "Descriind",
     "price": "Preț",
     "quantity": "Cantitate"
-},
+  },
 
-  "photo":{
+  "photo": {
     "product": "Fotografie produsului",
     "fail": " Nu s-a putut încărca fotografia",
     "failDelete": "Nu s-a putut șterge imaginea",
@@ -39,7 +39,7 @@
     "adminPanel": "Admin Panel"
   },
   "collection": {
-     "categoryTitle": "{{categoryName}}",
+    "categoryTitle": "{{categoryName}}",
     "title": "Colecția Noastră",
     "loading": "Se încarcă...",
     "error": "Nu s-au putut încărca arborii. Vă rugăm să încercați mai târziu."
@@ -70,25 +70,24 @@
     }
   },
 
-   "categories": {
-      "category": "Categorie",
-      "categories": "categorii",
-      "noCategories": "Nu există categorii...",
-      "all": "Toate categorii",
-      "title": "Titlu categorie",
-      "notDeleted": "Nu a fost șters",
-      "confirm":  "Sunteți sigur că doriți să ștereti această categorie?",
-      "failUpdate": "Nu s-a putut actualiza categoria",
-      "add": "Adăuga categorie",
-      "delete": "Șterge categorie",
-      "edit":"Editează categorie",
-      "failCreate": "Erorare la crearea categoriei",
-      "noGoods": "Nu există produse în această categorie",
-      "photo": "Foto categorie",
-      "filter": "Filtre",
-      "editPlaceholder": "Traducere rusească",
-      "chooseCategory": "Alegeți o categorie"
-
+  "categories": {
+    "category": "Categorie",
+    "categories": "categorii",
+    "noCategories": "Nu există categorii...",
+    "all": "Toate categorii",
+    "title": "Titlu categorie",
+    "notDeleted": "Nu a fost șters",
+    "confirm": "Sunteți sigur că doriți să ștereti această categorie?",
+    "failUpdate": "Nu s-a putut actualiza categoria",
+    "add": "Adăuga categorie",
+    "delete": "Șterge categorie",
+    "edit": "Editează categorie",
+    "failCreate": "Erorare la crearea categoriei",
+    "noGoods": "Nu există produse în această categorie",
+    "photo": "Foto categorie",
+    "filter": "Filtre",
+    "editPlaceholder": "Traducere rusească",
+    "chooseCategory": "Alegeți o categorie"
   },
   "contact": {
     "title": "Contactează-ne",
@@ -115,7 +114,7 @@
       "register": "Sau creează un cont nou"
     },
     "register": {
-      "accept" : "Accept",
+      "accept": "Accept",
       "siteTerms": "termenii de utilizare ai site-ului",
       "title": "Creează un cont",
       "name": "Nume complet",
@@ -127,22 +126,22 @@
       "login": "Sau conectează-te la contul tău"
     },
     "resetPassword": {
-        "languageDetected": "Limba detectată",
-        "title": "Resetează parola",
-        "subtitle": "Introduceți noua parolă mai jos.",
-        "newPassword": "Parolă nouă",
-        "newPasswordPlaceholder": "Introduceți noua parolă",
-        "confirmPassword": "Confirmă parola",
-        "confirmPasswordPlaceholder": "Reintroduceți noua parolă",
-        "submit": "Resetează parola",
-        "sending": "Trimite e-mail de resetare a parolei",
-        "backToLogin": "Înapoi la autentificare?",
-        "invalidOrMissingToken": "Token de resetare invalid sau lipsă",
-        "invalidToken": "Token de resetare invalid",
-        "passwordsDoNotMatch": "Parolele nu coincid",
-        "passwordTooShort": "Parola trebuie să aibă cel puțin 6 caractere",
-        "resetFailed": "Resetarea parolei a eșuat. Vă rugăm să încercați din nou."
-      }
+      "languageDetected": "Limba detectată",
+      "title": "Resetează parola",
+      "subtitle": "Introduceți noua parolă mai jos.",
+      "newPassword": "Parolă nouă",
+      "newPasswordPlaceholder": "Introduceți noua parolă",
+      "confirmPassword": "Confirmă parola",
+      "confirmPasswordPlaceholder": "Reintroduceți noua parolă",
+      "submit": "Resetează parola",
+      "sending": "Trimite e-mail de resetare a parolei",
+      "backToLogin": "Înapoi la autentificare?",
+      "invalidOrMissingToken": "Token de resetare invalid sau lipsă",
+      "invalidToken": "Token de resetare invalid",
+      "passwordsDoNotMatch": "Parolele nu coincid",
+      "passwordTooShort": "Parola trebuie să aibă cel puțin 6 caractere",
+      "resetFailed": "Resetarea parolei a eșuat. Vă rugăm să încercați din nou."
+    }
   },
   "dashboard": {
     "admin": "Admin panel",
@@ -188,7 +187,7 @@
     "addProduct": "Adaugă produs",
     "addFirstProduct": "Adaugă primul tău produs, pentru a începe vânzarea",
     "noProducts": "Până acum nu aveți niciun produs",
-    "selectAccountType":  "Alegeți tipul de cont",
+    "selectAccountType": "Alegeți tipul de cont",
     "buyerTitle": "Cumpărător",
     "buyerDescription": "Cumpăr plante pentru mine",
     "sellerDescription": "Vând plante pe platformă",
@@ -209,16 +208,16 @@
     "dashboard": {
       "title": "Panoul vânzătorilor"
     },
-  "stats": {
-    "totalProducts": "Toate bunuri",
-    "activeProducts":"Produse active",
-    "totalStock":  "Depozit total"
+    "stats": {
+      "totalProducts": "Toate bunuri",
+      "activeProducts": "Produse active",
+      "totalStock": "Depozit total"
+    },
+    "tabs": {
+      "statistics": "Statistici",
+      "products": "Mai multe produse"
+    }
   },
-  "tabs": {
-    "statistics": "Statistici",
-    "products": "Mai multe produse"
-  }
-},
   "verification": {
     "sellerAccept": "Trebuie să acceptați termenii de utilizare",
     "sellerPhone": "Numărul de telefon este obligatoriu pentru vânzători",
@@ -250,9 +249,9 @@
     "guestProcessing": "Se procesează comanda ca vizitator...",
     "processing": "Se procesează comanda..."
   },
- "reviews": {
-  "all": "Vezi toate recenzile",
-  "first": " Deveniți primul care va lăsa un comentariu!",
+  "reviews": {
+    "all": "Vezi toate recenzile",
+    "first": " Deveniți primul care va lăsa un comentariu!",
     "customerReviews": "Recenzii clienți",
     "noReviews": "Nu există recenzii încă",
     "allReviews": "Toate recenziile",
@@ -269,8 +268,8 @@
     "success": "Recenzia a fost trimisă cu succes!",
     "error": "Nu s-a putut trimite recenzia",
     "reviewFor": "Recenzie pentru",
-     "customerSays": "Ce spun clienții noștri despre noi"
-},
+    "customerSays": "Ce spun clienții noștri despre noi"
+  },
   "footer": {
     "description": "Sursa dumneavoastră de încredere pentru copaci frumoși de grădină și sfaturi de specialitate.",
     "quickLinks": "Link-uri rapide",
@@ -281,5 +280,119 @@
     "address": "123 Tree Street, Garden City, GC 12345",
     "followUs": "Urmăriți-ne",
     "rights": "Toate drepturile rezervate."
+  },
+  "terms": {
+      "pageTitle": "Condiții de prestare a serviciilor",
+  "pageSubtitle": "Familiarizați-vă cu condițiile de achiziție a puieților și serviciilor întreprinderii de familie „Covaci Copaci\"",
+  "lastUpdated": "Ultima actualizare",
+  "importantInfo": "Informații importante",
+  "introText1": "Întreprinderea de familie „Covaci Copaci\" de la 1998 se ocupă cu cultivarea și vânzarea puieților de copaci de calitate. Prețuim fiecare client și ne străduim să asigurăm condiții de cooperare cât mai transparente și echitabile.",
+  "introText2": "Aceste Condiții sunt o ofertă publică și intră în vigoare din momentul plasării comenzii sau semnării contractului de prestare a serviciilor.",
+  "contactInfo": "Informații de contact",
+  "address": "Adresă",
+  "phones": "Telefoane",
+  "email": "Email",
+  "contactText": "Pentru toate întrebările legate de aceste Condiții, contactați-ne în orice mod convenabil. Suntem întotdeauna gata să oferim clarificări și să ajutăm la rezolvarea situațiilor litigioase.",
+  "agreementTitle": "Consimțământul la condiții",
+  "agreementText": "Plasând o comandă pe site-ul nostru, prin telefon sau prin vizită personală, sunteți automat de acord cu aceste Condiții. Dacă aveți întrebări sau obiecții la orice punct, vă rugăm să ne contactați înainte de plasarea comenzii.",
+  "goHome": "Acasă",
+  "close": "Închide",
+  "accept": "Accept",
+  "modalTitle": "Condiții de utilizare a site-ului",
+    "sections": {
+      "general": {
+        "title": "1. Dispoziții generale",
+        "content": {
+          "0": "Aceste Condiții reglementează utilizarea platformei online pentru vânzarea plantelor (în continuare \"Platforma\").",
+          "1": "Platforma acționează ca intermediar între vânzători și cumpărători.",
+          "2": "Administrația platformei nu este responsabilă pentru calitatea produselor.",
+          "3": "Prin înregistrare pe platformă, utilizatorii acceptă aceste Condiții.",
+          "4": "Administrația își rezervă dreptul de a modifica Condițiile cu o notificare de 7 zile către utilizatori."
+        }
+      },
+      "sellers": {
+        "title": "2. Pentru vânzători",
+        "content": {
+          "0": "Orice utilizator poate deveni vânzător după verificare.",
+          "1": "Vânzătorul este obligat să furnizeze informații corecte despre produse și datele sale de contact.",
+          "2": "Vânzătorul poartă întreaga responsabilitate pentru calitatea și descrierea produsului său.",
+          "3": "Vânzătorul poartă întreaga responsabilitate pentru livrarea produsului său.",
+          "4": "Administrația procesează comanda produsului de la cumpărător și trimite informații despre livrare către vânzător.",
+          "5": "Administrația poate bloca vânzătorul pentru încălcarea regulilor sau plângeri din partea cumpărătorilor.",
+          "6": "Vânzătorul stabilește independent prețurile produselor sale.",
+          "7": "Administrația își rezervă dreptul de a cumpăra produse de la vânzător și de a le vinde în numele său cu un adaos stabilit."
+        }
+      },
+      "products": {
+        "title": "3. Produse și servicii",
+        "content": {
+          "0": "Oferim plante de calitate pentru grădină și livadă.",
+          "1": "Toate plantele trec printr-o selecție riguroasă și control de calitate înainte de vânzare.",
+          "2": "Vârsta și dimensiunea plantelor pot diferi ușor de cele indicate pe site.",
+          "3": "Oferim consultanță pentru plantare și îngrijirea plantelor.",
+          "4": "Sunt disponibile servicii de design peisagistic și plantare profesională."
+        }
+      },
+      "ordering": {
+        "title": "4. Plasarea comenzii",
+        "content": {
+          "0": "Comenzile se acceptă prin site, telefon sau vizită personală.",
+          "1": "Toate prețurile sunt indicate în lei moldovenești (MDL) și includ TVA.",
+          "2": "Suma minimă a comenzii este de 200 MDL.",
+          "3": "Comenzile mari (peste 5000 MDL) necesită o plată în avans de 50%.",
+          "4": "Acceptăm plata în numerar, card și transfer bancar."
+        }
+      },
+      "delivery": {
+        "title": "5. Livrare",
+        "content": {
+          "0": "Livrarea se efectuează pe tot teritoriul Moldovei.",
+          "1": "Costul livrării se calculează individual în funcție de distanță.",
+          "2": "Termene de livrare: de la 2 până la 5 zile lucrătoare pentru produsele gata de expediere.",
+          "3": "Puieții sunt livrați în ambalaj special pentru conservarea sistemului radicular.",
+          "4": "Clientul trebuie să fie prezent la adresă pentru recepția mărfii."
+        }
+      },
+      "warranty": {
+        "title": "6. Garanții de calitate",
+        "content": {
+          "0": "Garantăm calitatea tuturor puieților și plantelor furnizate.",
+          "1": "Garanția de prindere este de 1 lună cu respectarea condițiilor de plantare și îngrijire.",
+          "2": "Garanția nu se aplică plantelor deteriorate de dăunători sau boli după plantare.",
+          "3": "În cazul morții puietului în perioada de garanție, îl vom înlocui gratuit după stabilirea cauzelor morții cu unul similar.",
+          "4": "Pentru a primi service de garanție este necesar să păstrați bonul fiscal, fotografii și video al plantării."
+        }
+      },
+      "returns": {
+        "title": "7. Returnarea produsului",
+        "content": {
+          "0": "Returnarea plantelor vii este posibilă doar în caz de defecte de fabricație.",
+          "1": "Reclamațiile privind calitatea se acceptă în termen de 24 de ore de la primirea produsului.",
+          "2": "Returnarea banilor se efectuează în termen de 7 zile lucrătoare.",
+          "3": "Cheltuielile de transport pentru returnarea produsului defect sunt suportate de Vânzător.",
+          "4": "Puieții trebuie returnați în starea inițială cu păstrarea ambalajului."
+        }
+      },
+      "responsibilities": {
+        "title": "8. Responsabilitatea părților",
+        "content": {
+          "0": "Vânzătorul nu este responsabil pentru plantarea sau îngrijirea incorectă a plantelor.",
+          "1": "Clientul este obligat să asigure condițiile corespunzătoare pentru creșterea plantelor.",
+          "2": "Vânzătorul nu este responsabil pentru daunele cauzate de circumstanțe de forță majoră.",
+          "3": "Responsabilitatea Vânzătorului este limitată la costul produsului livrat.",
+          "4": "Toate disputele se rezolvă prin negocieri, dacă este necesar - în instanță."
+        }
+      },
+      "seasonal": {
+        "title": "9. Particularități sezoniere",
+        "content": {
+          "0": "Timpul optim pentru plantare: primăvara (martie-mai) și toamna (septembrie-noiembrie).",
+          "1": "În perioada de vară sunt disponibili doar puieți în containere.",
+          "2": "Plantarea de vară necesită îngrijire suplimentară și udare frecventă.",
+          "3": "Programul de lucru poate varia în funcție de sezon.",
+          "4": "Primăvara sunt posibile întârzieri în procesarea comenzilor din cauza cererii mari."
+        }
+      }
+    }
   }
 }

@@ -1,136 +1,11 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  Home, 
-  FileText, 
-  Shield, 
-  Truck, 
-  RefreshCw, 
-  AlertCircle,
-  CheckCircle,
-  Clock,
-  CreditCard,
-  Users
-} from 'lucide-react';
- import { useTranslation } from 'react-i18next';
+import { AlertCircle} from 'lucide-react';
+import TermsContent from '../shared/terms/TermsContent';
+import { t } from 'i18next';
+import MainPageLink from '../shared/MainPageLink';
 
 const TermsAndConditions = () => {
-  const { t } = useTranslation();
 
-  const sections = [
-   {
-  id: "general",
-  title: "1. Общие положения",
-  icon: <FileText className="h-6 w-6" />,
-  content: [
-    "Настоящие Условия регулируют использование онлайн-платформы для продажи растений (далее «Платформа»).",
-    "Платформа выступает в качестве посредника между продавцами и покупателями.",
-    "Администрация платформы не несет ответственности за качество товаров.",
-    "Регистрируясь на платформе, пользователи соглашаются с данными Условиями.",
-    "Администрация оставляет за собой право изменять Условия с уведомлением пользователей за 7 дней."
-  ]
-},  
-{
-    id: "sellers",
-    title: "2. Для продавцов",
-    icon: <Users className="h-6 w-6" />,
-    content: [
-      "Любой пользователь может стать продавцом после прохождения верификации.",
-      "Продавец обязан предоставлять достоверную информацию о товарах и своих контактных данных.",
-      "Продавец несет полную ответственность за качество, описание своего товара.",
-      "Продавец несет полную ответственность за доставку своего товара.",
-      "Администрация обрабатывает заявку на товар от покупателя и отправляет информацию о доставке продавцу.",
-      "Администрация может заблокировать продавца за нарушение правил или жалобы покупателей.",
-      "Продавец самостоятельно устанавливает цены своих товаров.",
-      "Администрация оставляет за собой право выкупать товар у продавца и реализовывать его от своего имени с установленной наценкой."
-    ]
-
-},
-    {
-      id: "products",
-      title: "3. Товары и услуги",
-      icon: <CheckCircle className="h-6 w-6" />,
-      content: [
-        "Мы предлагаем качественные растения для сада и огорода.",
-        "Все растения проходят тщательный отбор и контроль качества перед продажей.",
-        "Возраст и размер растений могут незначительно отличаться от указанных на сайте.",
-        "Мы предоставляем консультации по посадке и уходу за растениями.",
-        "Доступны услуги по ландшафтному дизайну и профессиональной посадке."
-      ]
-    },
-    {
-      id: "ordering",
-      title: "4. Оформление заказа",
-      icon: <CreditCard className="h-6 w-6" />,
-      content: [
-        "Заказы принимаются через сайт, по телефону или при личном визите.",
-        "Все цены указаны в молдавских леях (MDL) и включают НДС.",
-        "Минимальная сумма заказа составляет 200 MDL.",
-        "Крупные заказы (свыше 5000 MDL) требуют предварительной оплаты 50%.",
-        "Мы принимаем оплату наличными, картой и банковским переводом."
-      ]
-    },
-    {
-      id: "delivery",
-      title: "5. Доставка",
-      icon: <Truck className="h-6 w-6" />,
-      content: [
-        "Доставка осуществляется по всей территории Молдовы.",
-        "Стоимость доставки рассчитывается индивидуально в зависимости от расстояния.",
-        "Сроки доставки: от 2-х до 5-ти рабочих дней для готовых к отгрузке товаров.",
-        "Саженцы доставляются в специальной упаковке для сохранения корневой системы.",
-        "Клиент обязан присутствовать по адресу для приемки товара."
-      ]
-    },
-    {
-      id: "warranty",
-      title: "6. Гарантии качества",
-      icon: <Shield className="h-6 w-6" />,
-      content: [
-        "Мы гарантируем качество всех поставляемых сажанцев и растений.",
-        "Гарантия приживания составляет 1 месяц при соблюдении условий посадки и ухода.",
-        "Гарантия не распространяется на растения, поврежденные вредителями или болезнями после посадки.",
-        "При гибели саженца в гарантийный период мы бесплатно заменим его после установления причин гибели на аналогичный.",
-        "Для получения гарантийного обслуживания необходимо сохранить чек, фото и видео посадки."
-      ]
-    },
-    {
-      id: "returns",
-      title: "7. Возврат товара",
-      icon: <RefreshCw className="h-6 w-6" />,
-      content: [
-        "Возврат живых растений возможен только в случае производственного брака.",
-        "Претензии по качеству принимаются в течение 24 часов с момента получения товара.",
-        "Возврат денежных средств осуществляется в течение 7 рабочих дней.",
-        "Транспортные расходы по возврату бракованного товара берет на себя Продавец.",
-        "Саженцы должны быть возвращены в первоначальном состоянии с сохранением упаковки."
-      ]
-    },
-    {
-      id: "responsibilities",
-      title: "8. Ответственность сторон",
-      icon: <AlertCircle className="h-6 w-6" />,
-      content: [
-        "Продавец не несет ответственности за неправильную посадку или уход за растениями.",
-        "Клиент обязан обеспечить соответствующие условия для роста растений.",
-        "Продавец не несет ответственности за ущерб, вызванный форс-мажорными обстоятельствами.",
-        "Ответственность Продавца ограничивается стоимостью поставленного товара.",
-        "Все споры решаются путем переговоров, при необходимости - в судебном порядке."
-      ]
-    },
-    {
-      id: "seasonal",
-      title: "9. Сезонные особенности",
-      icon: <Clock className="h-6 w-6" />,
-      content: [
-        "Оптимальное время для посадки: весна (март-май) и осень (сентябрь-ноябрь).",
-        "В летний период доступны только саженцы в контейнерах.",
-        "Летняя посадка требует дополнительного ухода и частого полива.",
-        "График работы может изменяться в зависимости от сезона.",
-        "Весной возможны задержки в обработке заказов из-за высокого спроса."
-      ]
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -144,20 +19,14 @@ const TermsAndConditions = () => {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-3xl md:text-4xl font-bold mb-4">
-                Условия предоставления услуг
+                {t('terms.pageTitle')}
               </h1>
               <p className="text-emerald-100 max-w-2xl">
-                Ознакомьтесь с условиями покупки саженцев и услуг семейного предприятия «Коваци Деревья»
+                {t('terms.pageSubtitle')}
               </p>
             </motion.div>
-            
-            <Link
-              to="/"
-              className="hidden md:flex items-center space-x-2 bg-white text-emerald-600 px-6 py-3 rounded-lg hover:bg-emerald-50 transition-colors font-medium"
-            >
-              <Home className="h-5 w-5" />
-              <span>На главную</span>
-            </Link>
+
+            <MainPageLink/>
           </div>
         </div>
       </div>
@@ -165,13 +34,7 @@ const TermsAndConditions = () => {
       <div className="container mx-auto px-4 py-12">
         {/* Mobile Home Button */}
         <div className="md:hidden mb-8">
-          <Link
-            to="/"
-            className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors w-fit"
-          >
-            <Home className="h-5 w-5" />
-            <span>На главную</span>
-          </Link>
+          <MainPageLink/>
         </div>
 
         {/* Last Updated */}
@@ -182,7 +45,7 @@ const TermsAndConditions = () => {
           className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8"
         >
           <p className="text-blue-800 text-sm">
-            <strong>Последнее обновление:</strong> 10 августа 2025 года
+            <strong>{t('terms.lastUpdated')}</strong>{import.meta.env.VITE_UPDATE_DATE}
           </p>
         </motion.div>
 
@@ -193,49 +56,27 @@ const TermsAndConditions = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="bg-white rounded-lg shadow-md p-8 mb-8"
         >
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Важная информация</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            {t('terms.importantInfo')}
+          </h2>
           <p className="text-gray-600 leading-relaxed mb-4">
-            Семейное предприятие «Коваци Деревья» с 1998 года занимается выращиванием и продажей 
-            качественных саженцев деревьев. Мы ценим каждого клиента и стремимся обеспечить 
-            максимально прозрачные и справедливые условия сотрудничества.
+            {t('terms.introText1')}
           </p>
           <p className="text-gray-600 leading-relaxed">
-            Настоящие Условия являются публичной офертой и вступают в силу с момента размещения 
-            заказа или подписания договора на оказание услуг.
+            {t('terms.introText2')}
           </p>
         </motion.div>
 
         {/* Terms Sections */}
         <div className="space-y-6">
-          {sections.map((section, index) => (
-            <motion.div
-              key={section.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
-            >
-              <div className="bg-emerald-50 px-6 py-4 border-b border-emerald-100">
-                <h3 className="text-xl font-bold text-gray-800 flex items-center">
-                  <span className="text-emerald-600 mr-3">
-                    {section.icon}
-                  </span>
-                  {section.title}
-                </h3>
-              </div>
-              
-              <div className="p-6">
-                <ul className="space-y-3">
-                  {section.content.map((item, itemIndex) => (
-                    <li key={itemIndex} className="flex items-start space-x-3">
-                      <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700 leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          ))}
+          {/* Terms Sections */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <TermsContent compact={false} />
+          </motion.div>
         </div>
 
         {/* Contact Information */}
@@ -246,40 +87,43 @@ const TermsAndConditions = () => {
           className="bg-emerald-600 text-white rounded-lg shadow-md p-8 mt-12"
         >
           <h2 className="text-2xl font-bold text-center mb-6">
-            Контактная информация
+           {t('terms.contactInfo')}
           </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+
+          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div className="space-y-2">
               <h3 className="text-lg font-semibold">Адрес</h3>
               <p className="text-emerald-100">
-                с. Ришканы<br />
-                Каушанский район<br />
+                с. Ришканы
+                <br />
+                Каушанский район
+                <br />
                 Молдова
               </p>
             </div>
-            
+
             <div className="space-y-2">
               <h3 className="text-lg font-semibold">Телефоны</h3>
               <p className="text-emerald-100">
-                +373 79 748 131<br />
+                +373 79 748 131
+                <br />
                 +373 68 123 456
               </p>
             </div>
-            
+
             <div className="space-y-2">
               <h3 className="text-lg font-semibold">Email</h3>
               <p className="text-emerald-100">
-                info@covacitrees.md<br />
+                info@covacitrees.md
+                <br />
                 vasile@covacitrees.md
               </p>
             </div>
-          </div>
-          
+          </div> */}
+
           <div className="text-center mt-8 pt-6 border-t border-emerald-500">
             <p className="text-emerald-100 text-sm">
-              По всем вопросам, касающимся данных Условий, обращайтесь к нам любым удобным способом.
-              Мы всегда готовы предоставить разъяснения и помочь в решении спорных ситуаций.
+              {t('terms.contactText')}
             </p>
           </div>
         </motion.div>
@@ -295,13 +139,10 @@ const TermsAndConditions = () => {
             <AlertCircle className="h-6 w-6 text-yellow-600 flex-shrink-0 mt-0.5" />
             <div>
               <h3 className="text-lg font-semibold text-yellow-800 mb-2">
-                Согласие с условиями
+                {t('terms.agreementTitle')}
               </h3>
               <p className="text-yellow-700 leading-relaxed">
-                Размещая заказ на нашем сайте, по телефону или при личном визите, 
-                вы автоматически соглашаетесь с данными Условиями. Если у вас есть 
-                вопросы или возражения по любому пункту, пожалуйста, свяжитесь с нами 
-                перед оформлением заказа.
+                {t('terms.agreementText')}
               </p>
             </div>
           </div>
