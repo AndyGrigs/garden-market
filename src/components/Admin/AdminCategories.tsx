@@ -6,12 +6,12 @@ import {
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
   useUpdateCategoryMutation,
-} from "../../store/api/categoryApi";
+} from "@/store/api/categoryApi";
 
 import { Category, TranslatedString } from "../../types/ICategories";
 import CategoryModal from "./CategoryModal";
 import { BASE_URL } from "../../config";
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { Loader } from 'lucide-react';
 import { EditCategoryModal } from './EditCategoryModal';
 import toast from 'react-hot-toast';
@@ -33,6 +33,7 @@ const AdminCategories = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const {t} = useTranslation();
 
 
   const handleDelete = async (id: string) => {
@@ -84,7 +85,7 @@ const AdminCategories = ({
           onClick={() => setIsModalOpen(pr => !pr)}
           className="bg-emerald-600 mr-auto text-white px-4 py-2 rounded mb-4"
         >
-          ➕ {t('categories.add')}
+          {t('categories.add')}
         </button>
 
         <div className='mb-4'>

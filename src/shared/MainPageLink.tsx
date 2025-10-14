@@ -1,8 +1,9 @@
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const MainPageLink = () => {
+  const {t} = useTranslation();
   return (
     <Link
       to="/"
