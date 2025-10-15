@@ -41,10 +41,13 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
     }
   }, [apiTrees, dispatch]);
 
-  // ✅ FIX: Korrigierte Filterlogik
-  const filteredTrees = selectedCategoryId === 'all' 
-    ? trees 
-    : trees.filter((tree) => tree.category?._id === selectedCategoryId);
+ 
+  const filteredTrees = selectedCategoryId === 'all'
+    ? trees
+    : trees.filter((tree) => {
+        const categoryId = typeof tree.category === 'string' ? tree.category : tree.category?._id;
+        return categoryId === selectedCategoryId;
+      });
 
   const isTreeDataValid = (treeData: TreeFormData) => {
     return treeData.title?.ru && treeData.title?.ro && treeData.category;
@@ -94,10 +97,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           id: editingTree._id,
           body: {
             ...treeData,
-            category: {
-              _id: treeData.category,
-              name: { ru: "", ro: ""},
-            },
+            category: treeData.category,
           },
         }).unwrap();
         
@@ -109,10 +109,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           price: treeData.price,
           stock: treeData.stock,
           imageUrl: treeData.imageUrl,
-          category: {
-            _id: treeData.category,
-            name: { ru: "", ro: ""},
-          },
+          category: treeData.category
         }).unwrap();
         
         dispatch(addTree(newTree));
@@ -141,7 +138,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
         onClick={() => setIsModalOpen(true)}
         className="bg-emerald-600 text-white px-4 py-2 mb-3 ml-auto rounded hover:bg-emerald-700"
       >
-        ➕ {t('dashboard.addProduct')}
+        {t('dashboard.addProduct')}
       </button>
       
       {isLoading ? (
@@ -208,7 +205,7 @@ const AdminTrees = ({ selectedCategoryId }: AdminTreesProps) => {
           price: editingTree.price,
           stock: editingTree.stock,
           imageUrl: editingTree.imageUrl,
-          category: editingTree.category?._id || (selectedCategoryId === 'all' ? '' : selectedCategoryId),
+          category: typeof editingTree.category === 'string' ? editingTree.category : (editingTree.category?._id || (selectedCategoryId === 'all' ? '' : selectedCategoryId)),
           _id: editingTree._id,
         } : {
           title: { ru: "", ro: "" },

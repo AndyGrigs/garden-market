@@ -6,9 +6,7 @@ export type TranslatedString = {
 
 export interface TreeFormData {
   _id?: string;
-  // title: { ru: string; ro: string; en: string };
   title: { ru: string; ro: string; };
-  // description: { ru: string; ro: string; en: string };
   description: { ru: string; ro: string;};
   price: number;
   stock: number;
@@ -27,7 +25,7 @@ export interface Tree {
   category?: {
     _id?: string;
     name: TranslatedString;
-  } | null;
+  } | string | null;
   seller?: {
     _id: string;
     fullName: string;

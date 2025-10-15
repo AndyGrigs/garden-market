@@ -14,7 +14,7 @@ export const treesApi = createApi({
     }),
     createTree: builder.mutation<Tree, Partial<Tree>>({
       query: (treeData) => ({
-        url: "/trees",
+        url: "/admin/trees",
         method: "POST",
         body: treeData,
       }),
@@ -22,7 +22,7 @@ export const treesApi = createApi({
     }),
     updateTree: builder.mutation<Tree, { id: string; body: Partial<Tree> }>({
       query: ({ id, body }) => ({
-        url: `/trees/${id}`,
+        url: `/admin/trees/${id}`,
         method: "PATCH",
         body
       }),
@@ -30,7 +30,7 @@ export const treesApi = createApi({
     }),
     deleteTree: builder.mutation<void, string>({
       query: (id) => ({
-        url: `/trees/${id}`,
+        url: `admin/trees/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Trees"],
