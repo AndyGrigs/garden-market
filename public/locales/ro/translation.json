@@ -27,7 +27,8 @@
     "fail": " Nu s-a putut încărca fotografia",
     "failDelete": "Nu s-a putut șterge imaginea",
     "delete": "Șterge foto",
-    "upload": "Încărcați fotografie"
+    "upload": "Încărcați fotografie",
+    "uploading": "Se încarcă..."
   },
 
   "header": {

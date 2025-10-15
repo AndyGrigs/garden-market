@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useGetCategoriesQuery } from '@/store/api/categoryApi';
 import { BASE_URL } from '@/config';
-import { getCategoryName } from '../../shared/helpers/getCategoryName';
+import { getCategoryName } from '@/shared/helpers/getCategoryName';
 
 interface CategorySidebarProps {
   selectedCategoryId: string | null;
@@ -23,7 +23,7 @@ export default function CategorySidebar({
 }: CategorySidebarProps) {
   const { data: categories, isLoading } = useGetCategoriesQuery();
   const [isExpanded, setIsExpanded] = useState(true);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
  ;
 
@@ -116,12 +116,12 @@ export default function CategorySidebar({
                   {category.imageUrl && (
                     <img
                       src={`${BASE_URL}${category.imageUrl}`}
-                      alt={getCategoryName(category)}
+                      alt={getCategoryName(category, i18n.language)}
                       className="w-8 h-8 object-cover rounded-md"
                     />
                   )}
                   <span className="font-medium">
-                    {getCategoryName(category)}
+                    {getCategoryName(category, i18n.language)}
                   </span>
                 </motion.button>
               ))

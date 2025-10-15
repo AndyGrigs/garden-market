@@ -1,16 +1,14 @@
-
-
-import { useState } from "react";
+import { useState } from 'react';
 import {
   useCreateCategoryMutation,
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
   useUpdateCategoryMutation,
-} from "@/store/api/categoryApi";
+} from '@/store/api/categoryApi';
 
-import { Category, TranslatedString } from "../../types/ICategories";
-import CategoryModal from "./CategoryModal";
-import { BASE_URL } from "../../config";
+import { Category, TranslatedString } from '../../types/ICategories';
+import CategoryModal from './CategoryModal';
+import { BASE_URL } from '../../config';
 import { useTranslation } from 'react-i18next';
 import { Loader } from 'lucide-react';
 import { EditCategoryModal } from './EditCategoryModal';
@@ -33,12 +31,11 @@ const AdminCategories = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  const {t} = useTranslation();
-
+  const { t, i18n } = useTranslation();
 
   const handleDelete = async (id: string) => {
     if (window.confirm(t('categories.confirm'))) {
-      try { 
+      try {
         await deleteCategory(id).unwrap();
       } catch {
         toast.error(t('categories.notDeleted'));
@@ -46,55 +43,58 @@ const AdminCategories = ({
     }
   };
 
-
   const handleEditClick = (category: Category) => {
     setEditingCategory(category);
-    setIsEditModalOpen(true); 
+    setIsEditModalOpen(true);
   };
 
- 
- const handleUpdateCategory = async (updatedData: TranslatedString & { imageUrl?: string }) => {
-  if (!editingCategory) return;
+  const handleUpdateCategory = async (
+    updatedData: TranslatedString & { imageUrl?: string }
+  ) => {
+    if (!editingCategory) return;
 
-  try {
-    await updateCategory({
-      id: editingCategory._id,
-      name: {
-        ru: updatedData.ru,
-        ro: updatedData.ro,
-        // en: updatedData.en
-      },
-      imageUrl: updatedData.imageUrl 
-    }).unwrap();
-    
-    
-    setIsEditModalOpen(false);
-    setEditingCategory(null);
-    
-  } catch (error) {
-    console.error('❌ Error to update:', error);
-    toast.error(t('categories.failUpdate'));
-  }
-};    
+    try {
+      await updateCategory({
+        id: editingCategory._id,
+        name: {
+          ru: updatedData.ru,
+          ro: updatedData.ro,
+          // en: updatedData.en
+        },
+        imageUrl: updatedData.imageUrl,
+      }).unwrap();
+
+      setIsEditModalOpen(false);
+      setEditingCategory(null);
+    } catch (error) {
+      console.error('❌ Error to update:', error);
+      toast.error(t('categories.failUpdate'));
+    }
+  };
 
   return (
     <>
       <div className="p-6 bg-white shadow">
-        <h2 className="text-2xl font-bold mb-4">{t('categories.categories')}</h2>
+        <h2 className="text-2xl font-bold mb-4">
+          {t('categories.categories')}
+        </h2>
         <button
-          onClick={() => setIsModalOpen(pr => !pr)}
+          onClick={() => setIsModalOpen((pr) => !pr)}
           className="bg-emerald-600 mr-auto text-white px-4 py-2 rounded mb-4"
         >
           {t('categories.add')}
         </button>
 
-        <div className='mb-4'>
-          <button onClick={()=> onSelectCategory('all')}
+        <div className="mb-4">
+          <button
+            onClick={() => onSelectCategory('all')}
             className={`w-full text-left p-3 rounded border transition-colors ${
-              selectedCategoryId === 'all' ? 'bg-emerald-100 border-emerald-500' : ' border-gray-200 hover: bg-gray-100' 
-            }` }
-            >
-           {t('common.allProducts')}
+              selectedCategoryId === 'all'
+                ? 'bg-emerald-100 border-emerald-500'
+                : ' border-gray-200 hover: bg-gray-100'
+            }`}
+          >
+            {t('common.allProducts')}
           </button>
         </div>
 
@@ -109,12 +109,11 @@ const AdminCategories = ({
                 key={cat._id}
                 className="flex justify-between items-center border-b pb-2"
               >
-            
                 <div className="flex items-center gap-3">
                   {cat.imageUrl && (
                     <img
                       src={`${BASE_URL}${cat.imageUrl}`}
-                      alt={getCategoryName(cat)}
+                      alt={getCategoryName(cat, i18n.language)}
                       className="w-12 h-12 object-cover rounded-md"
                     />
                   )}
@@ -122,11 +121,11 @@ const AdminCategories = ({
                     onClick={() => onSelectCategory(cat._id)}
                     className={`cursor-pointer ${
                       selectedCategoryId === cat._id
-                        ? "text-emerald-600 font-bold"
-                        : "text-gray-800"
+                        ? 'text-emerald-600 font-bold'
+                        : 'text-gray-800'
                     }`}
                   >
-                    {getCategoryName(cat)}
+                    {getCategoryName(cat, i18n.language)}
                   </span>
                 </div>
 
@@ -148,8 +147,9 @@ const AdminCategories = ({
             ))}
           </ul>
         )}
-        
+
         {/* Модалка створення */}
+
         <CategoryModal
           onClose={() => setIsModalOpen(false)}
           isOpen={isModalOpen}
@@ -158,7 +158,7 @@ const AdminCategories = ({
               await createCategory({
                 name: {
                   ru: data.ru,
-                  ro: data.ro, 
+                  ro: data.ro,
                   // en: data.en
                 },
                 imageUrl: data.imageUrl,
@@ -171,22 +171,18 @@ const AdminCategories = ({
           }}
         />
 
-       
-
         {/* Модалка редагування */}
-        {editingCategory && (
         <EditCategoryModal
           isOpen={isEditModalOpen}
           onClose={() => {
             setIsEditModalOpen(false);
             setEditingCategory(null);
           }}
-          initialData={editingCategory.name}
-          initialImageUrl={editingCategory.imageUrl}
-          categoryName={getCategoryName(editingCategory)}
+          initialData={editingCategory?.name}
+          initialImageUrl={editingCategory?.imageUrl}
+          categoryName={editingCategory ? getCategoryName(editingCategory) : ''}
           onSubmit={handleUpdateCategory}
         />
-      )}
       </div>
     </>
   );

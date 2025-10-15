@@ -1,12 +1,12 @@
 import { useState } from "react";
 import AdminCategories from "../components/Admin/AdminCategories";
 import AdminTrees from "../components/Admin/AdminTrees";
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import MainPageLink from '../shared/MainPageLink';
 
 const AdminPanel = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
-  
+  const {t} = useTranslation();
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto p-8">
