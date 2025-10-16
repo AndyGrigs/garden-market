@@ -13,6 +13,7 @@ import {
   useUpdateSellerTreeMutation,
 } from '@/store/api/sellerApi';
 import { getCategoryName } from '../../shared/helpers/getCategoryName';
+import { getCurrency } from '../../shared/helpers/getCurrency';
 
 interface SellerTreeModalProps {
   isOpen: boolean;
@@ -55,7 +56,11 @@ const SellerTreeModal = ({
         description: editingTree.description,
         price: editingTree.price,
         stock: editingTree.stock,
-        category: editingTree.category?._id || '',
+        category: typeof editingTree.category === 'object' && editingTree.category?._id
+          ? editingTree.category._id
+          : typeof editingTree.category === 'string'
+            ? editingTree.category
+            : '',
         imageUrl: editingTree.imageUrl || '',
       });
       setImagePreview(
@@ -105,7 +110,7 @@ const SellerTreeModal = ({
       console.error('Image upload error:', error);
       throw new Error(
         t('seller.imageUploadError', {
-          defaultValue: 'Помилка завантаження зображення',
+          defaultValue: 'Ошибка загрузки изображения',
         })
       );
     } finally {
@@ -121,7 +126,7 @@ const SellerTreeModal = ({
     if (!formData.title.ru.trim()) {
       toast.error(
         t('seller.validation.titleRuRequired', {
-          defaultValue: 'Заповніть назву товару',
+          defaultValue: 'Заполните название товара',
         })
       );
       return;
@@ -130,7 +135,7 @@ const SellerTreeModal = ({
     if (!formData.description.ru.trim()) {
       toast.error(
         t('seller.validation.descriptionRuRequired', {
-          defaultValue: 'Заповніть опис товару',
+          defaultValue: 'Заполните описание товара',
         })
       );
       return;
@@ -139,7 +144,7 @@ const SellerTreeModal = ({
     if (formData.price <= 0) {
       toast.error(
         t('seller.validation.priceRequired', {
-          defaultValue: 'Ціна повинна бути більше 0',
+          defaultValue: 'Цена должна быть больше 0',
         })
       );
       return;
@@ -148,7 +153,7 @@ const SellerTreeModal = ({
     if (formData.stock < 0) {
       toast.error(
         t('seller.validation.stockInvalid', {
-          defaultValue: "Кількість не може бути від'ємною",
+          defaultValue: 'Количество не может быть отрицательным',
         })
       );
       return;
@@ -157,7 +162,7 @@ const SellerTreeModal = ({
     if (!formData.category) {
       toast.error(
         t('seller.validation.categoryRequired', {
-          defaultValue: 'Виберіть категорію',
+          defaultValue: 'Выберите категорию',
         })
       );
       return;
@@ -202,7 +207,7 @@ const SellerTreeModal = ({
         }).unwrap();
 
         toast.success(
-          t('seller.updateSuccess', { defaultValue: 'Товар успішно оновлено' })
+          t('seller.updateSuccess', { defaultValue: 'Товар успешно обновлен' })
         );
       } else {
         // Створення нового товару
@@ -211,7 +216,7 @@ const SellerTreeModal = ({
         toast.success(
           t('seller.createSuccess', {
             defaultValue:
-              'Товар створено! Адміністратор додасть переклади найближчим часом.',
+              'Товар создан! Администратор добавит переводы в ближайшее время.',
           })
         );
       }
@@ -220,7 +225,7 @@ const SellerTreeModal = ({
     } catch (error) {
       console.error('Submit error:', error);
       toast.error(
-        t('seller.submitError', { defaultValue: 'Помилка збереження товару' })
+        t('seller.submitError', { defaultValue: 'Ошибка сохранения товара' })
       );
     } finally {
       setIsSubmitting(false);
@@ -237,8 +242,8 @@ const SellerTreeModal = ({
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-xl font-semibold text-gray-900">
             {editingTree
-              ? t('seller.editProduct', { defaultValue: 'Редагувати товар' })
-              : t('seller.addProduct', { defaultValue: 'Додати товар' })}
+              ? t('seller.editProduct', { defaultValue: 'Редактировать товар' })
+              : t('seller.addProduct', { defaultValue: 'Добавить товар' })}
           </h2>
           <button
           
@@ -257,18 +262,18 @@ const SellerTreeModal = ({
             <div>
               <h4 className="text-sm font-medium text-blue-900 mb-1">
                 {t('seller.translationInfo.title', {
-                  defaultValue: 'Інформація про переклади',
+                  defaultValue: 'Информация о переводах',
                 })}
               </h4>
               <p className="text-sm text-blue-700">
                 {editingTree
                   ? t('seller.translationInfo.editMode', {
                       defaultValue:
-                        'Ви можете редагувати тільки російську версію. Переклади залишаться без змін.',
+                        'Вы можете редактировать только русскую версию. Переводы останутся без изменений.',
                     })
                   : t('seller.translationInfo.createMode', {
                       defaultValue:
-                        'Заповніть інформацію російською мовою. Адміністратор додасть переклади після перевірки.',
+                        'Заполните информацию на русском языке. Администратор добавит переводы после проверки.',
                     })}
               </p>
             </div>
@@ -283,14 +288,14 @@ const SellerTreeModal = ({
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('seller.form.titleRu', {
-                    defaultValue: 'Назва товару (російською)',
+                    defaultValue: 'Название товара (на русском)',
                   })}{' '}
                   *
                 </label>
                 <input
                   type="text"
                   placeholder={t('seller.form.titleRuPlaceholder', {
-                    defaultValue: 'Введіть назву товару...',
+                    defaultValue: 'Введите название товара...',
                   })}
                   value={formData.title.ru}
                   onChange={(e) =>
@@ -325,13 +330,13 @@ const SellerTreeModal = ({
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('seller.form.descriptionRu', {
-                    defaultValue: 'Опис товару (російською)',
+                    defaultValue: 'Описание товара (на русском)',
                   })}{' '}
                   *
                 </label>
                 <textarea
                   placeholder={t('seller.form.descriptionRuPlaceholder', {
-                    defaultValue: 'Введіть детальний опис товару...',
+                    defaultValue: 'Введите детальное описание товара...',
                   })}
                   value={formData.description.ru}
                   onChange={(e) =>
@@ -362,7 +367,7 @@ const SellerTreeModal = ({
                       {editingTree.description.ro && (
                         <div>
                           <p className="text-xs text-gray-500">
-                            🇷🇴 Румунський перевод:
+                            🇷🇴 Румынский перевод:
                           </p>
                           <p className="text-sm text-gray-700">
                             {editingTree.description.ro}
@@ -394,7 +399,7 @@ const SellerTreeModal = ({
                     required
                   /> */}
                   <NumberInput 
-                    label="Ціна"
+                    label={t('seller.form.price')}
                     value={formData.price}
                     onChange={(value) => setFormData({ ...formData, price: value })}
                     type="decimal"
@@ -436,7 +441,7 @@ const SellerTreeModal = ({
                 >
                   <option value="">
                     {t('seller.form.selectCategory', {
-                      defaultValue: 'Виберіть категорію',
+                      defaultValue: 'Выберите категорию',
                     })}
                   </option>
                   {categories?.map((category: Category) => (
@@ -494,7 +499,7 @@ const SellerTreeModal = ({
                       <Upload className="h-12 w-12 text-gray-400" />
                       <span className="text-sm text-gray-600">
                         {t('seller.form.uploadImage', {
-                          defaultValue: 'Натисніть щоб завантажити зображення',
+                          defaultValue: 'Нажмите чтобы загрузить изображение',
                         })}
                       </span>
                       <span className="text-xs text-gray-500">
@@ -509,30 +514,30 @@ const SellerTreeModal = ({
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h4 className="text-sm font-medium text-gray-700 mb-3">
                   {t('seller.form.preview', {
-                    defaultValue: 'Попередній перегляд',
+                    defaultValue: 'Предварительный просмотр',
                   })}
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div>
                     <span className="text-gray-500">
-                      {t('seller.form.title', { defaultValue: 'Назва' })}:
+                      {t('seller.form.title', { defaultValue: 'Название' })}:
                     </span>
                     <span className="ml-2 text-gray-900">
                       {formData.title.ru ||
-                        t('common.notFilled', { defaultValue: 'Не заповнено' })}
+                        t('common.notFilled', { defaultValue: 'Не заполнено' })}
                     </span>
                   </div>
                   <div>
                     <span className="text-gray-500">
-                      {t('seller.form.price', { defaultValue: 'Ціна' })}:
+                      {t('seller.form.price', { defaultValue: 'Цена' })}:
                     </span>
                     <span className="ml-2 text-gray-900">
-                      {formData.price} грн
+                      {formData.price} {getCurrency()}
                     </span>
                   </div>
                   <div>
                     <span className="text-gray-500">
-                      {t('seller.form.stock', { defaultValue: 'Кількість' })}:
+                      {t('seller.form.stock', { defaultValue: 'Количество' })}:
                     </span>
                     <span className="ml-2 text-gray-900">
                       {formData.stock} шт.
@@ -540,7 +545,7 @@ const SellerTreeModal = ({
                   </div>
                   <div>
                     <span className="text-gray-500">
-                      {t('seller.form.category', { defaultValue: 'Категорія' })}
+                      {t('seller.form.category', { defaultValue: 'Категория' })}
                       :
                     </span>
                     <span className="ml-2 text-gray-900">
@@ -551,7 +556,7 @@ const SellerTreeModal = ({
                             )
                           )
                         : t('common.notSelected', {
-                            defaultValue: 'Не вибрано',
+                            defaultValue: 'Не выбрано',
                           })}
                     </span>
                   </div>
@@ -565,14 +570,14 @@ const SellerTreeModal = ({
                     <Info className="h-4 w-4 text-yellow-600" />
                     <span className="text-sm font-medium text-yellow-800">
                       {t('seller.translationStatus.title', {
-                        defaultValue: 'Статус перекладів',
+                        defaultValue: 'Статус переводов',
                       })}
                     </span>
                   </div>
                   <p className="text-xs text-yellow-700">
                     {t('seller.translationStatus.newProduct', {
                       defaultValue:
-                        'Після створення товару адміністратор отримає сповіщення та додасть переклади українською та англійською мовами.',
+                        'После создания товара администратор получит уведомление и добавит переводы на румынский язык.',
                     })}
                   </p>
                 </div>
@@ -588,7 +593,7 @@ const SellerTreeModal = ({
               disabled={isSubmitting}
               className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
             >
-              {t('common.cancel', { defaultValue: 'Скасувати' })}
+              {t('common.cancel', { defaultValue: 'Отменить' })}
             </button>
             <button
               type="submit"
@@ -600,11 +605,11 @@ const SellerTreeModal = ({
               )}
               <span>
                 {isSubmitting || isUploading
-                  ? t('common.saving', { defaultValue: 'Збереження...' })
+                  ? t('common.saving', { defaultValue: 'Сохранение...' })
                   : editingTree
-                    ? t('common.update', { defaultValue: 'Оновити' })
+                    ? t('common.update', { defaultValue: 'Обновить' })
                     : t('seller.createAndNotify', {
-                        defaultValue: 'Створити і повідомити адміна',
+                        defaultValue: 'Создать и уведомить админа',
                       })}
               </span>
             </button>

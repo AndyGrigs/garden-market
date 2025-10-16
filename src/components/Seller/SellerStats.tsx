@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { TrendingUp, Package, DollarSign, AlertCircle } from "lucide-react";
 import { useLanguage } from '@/hooks/useLanguage';
 import { Tree } from '@/types/ITree';
+import { getCurrency } from '../../shared/helpers/getCurrency';
 
 
 // Define TranslatedString type for category names and titles
@@ -41,7 +42,7 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
     const nameObj = tree.category?.name as TranslatedString | undefined;
     const categoryName =
       (nameObj && nameObj[lang as keyof TranslatedString]) ||
-      t('common.noCategory', { defaultValue: 'Без категорії' });
+      t('common.noCategory', { defaultValue: 'Без категории' });
     acc[categoryName] = (acc[categoryName] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -60,7 +61,7 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
         <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-lg text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-100">{t('seller.stats.totalProducts', { defaultValue: 'Всього товарів' })}</p>
+              <p className="text-blue-100">{t('seller.stats.totalProducts', { defaultValue: 'Всего товаров' })}</p>
               <p className="text-2xl font-bold">{totalProducts}</p>
             </div>
             <Package className="h-8 w-8 text-blue-200" />
@@ -70,7 +71,7 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
         <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-lg text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-100">{t('seller.stats.activeProducts', { defaultValue: 'Активних' })}</p>
+              <p className="text-green-100">{t('seller.stats.activeProducts', { defaultValue: 'Активных' })}</p>
               <p className="text-2xl font-bold">{activeProducts}</p>
             </div>
             <TrendingUp className="h-8 w-8 text-green-200" />
@@ -80,7 +81,7 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
         <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-lg text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-purple-100">{t('seller.stats.totalStock', { defaultValue: 'Загальний запас' })}</p>
+              <p className="text-purple-100">{t('seller.stats.totalStock', { defaultValue: 'Общий запас' })}</p>
               <p className="text-2xl font-bold">{totalStock}</p>
             </div>
             <Package className="h-8 w-8 text-purple-200" />
@@ -90,8 +91,8 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
         <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 p-6 rounded-lg text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-emerald-100">{t('seller.stats.totalValue', { defaultValue: 'Загальна вартість' })}</p>
-              <p className="text-2xl font-bold">{totalValue.toLocaleString()} грн</p>
+              <p className="text-emerald-100">{t('seller.stats.totalValue', { defaultValue: 'Общая стоимость' })}</p>
+              <p className="text-2xl font-bold">{totalValue.toLocaleString()} {getCurrency()}</p>
             </div>
             <DollarSign className="h-8 w-8 text-emerald-200" />
           </div>
@@ -105,13 +106,13 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
           <div className="flex items-center space-x-2 mb-4">
             <AlertCircle className="h-5 w-5 text-orange-500" />
             <h3 className="text-lg font-semibold text-gray-900">
-              {t('seller.stats.lowStock', { defaultValue: 'Низький запас' })}
+              {t('seller.stats.lowStock', { defaultValue: 'Низкий запас' })}
             </h3>
           </div>
           
           {lowStockProducts.length === 0 ? (
             <p className="text-gray-500">
-              {t('seller.stats.noLowStock', { defaultValue: 'Всі товари мають достатній запас' })}
+              {t('seller.stats.noLowStock', { defaultValue: 'Все товары имеют достаточный запас' })}
             </p>
           ) : (
             <div className="space-y-3">
@@ -119,7 +120,7 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
                 <div key={tree._id} className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
                   <div>
                     <p className="font-medium text-gray-900">{getTreeTitle(tree.title)}</p>
-                    <p className="text-sm text-gray-600">{tree.price} грн</p>
+                    <p className="text-sm text-gray-600">{tree.price} {getCurrency()}</p>
                   </div>
                   <span className="px-2 py-1 bg-orange-200 text-orange-800 text-sm rounded-full">
                     {tree.stock} шт.
@@ -133,12 +134,12 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
         {/* Статистика по категоріях */}
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            {t('seller.stats.byCategories', { defaultValue: 'За категоріями' })}
+            {t('seller.stats.byCategories', { defaultValue: 'По категориям' })}
           </h3>
           
           {Object.keys(categoryStats).length === 0 ? (
             <p className="text-gray-500">
-              {t('seller.stats.noCategories', { defaultValue: 'Немає товарів з категоріями' })}
+              {t('seller.stats.noCategories', { defaultValue: 'Нет товаров с категориями' })}
             </p>
           ) : (
             <div className="space-y-3">
@@ -158,30 +159,30 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
       {/* Додаткова інформація */}
       <div className="bg-white p-6 rounded-lg shadow-sm border">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          {t('seller.stats.additionalInfo', { defaultValue: 'Додаткова інформація' })}
+          {t('seller.stats.additionalInfo', { defaultValue: 'Дополнительная информация' })}
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="text-center p-4 bg-gray-50 rounded-lg">
-            <p className="text-2xl font-bold text-gray-900">{averagePrice.toFixed(0)} грн</p>
+            <p className="text-2xl font-bold text-gray-900">{averagePrice.toFixed(0)} {getCurrency()}</p>
             <p className="text-sm text-gray-600">
-              {t('seller.stats.averagePrice', { defaultValue: 'Середня ціна' })}
+              {t('seller.stats.averagePrice', { defaultValue: 'Средняя цена' })}
             </p>
           </div>
           
           <div className="text-center p-4 bg-gray-50 rounded-lg">
             <p className="text-2xl font-bold text-red-600">{inactiveProducts}</p>
             <p className="text-sm text-gray-600">
-              {t('seller.stats.inactiveProducts', { defaultValue: 'Неактивних товарів' })}
+              {t('seller.stats.inactiveProducts', { defaultValue: 'Неактивных товаров' })}
             </p>
           </div>
           
           <div className="text-center p-4 bg-gray-50 rounded-lg">
             {/* <p className="text-2xl font-bold text-emerald-600">
-              {mostExpensiveProduct.price} грн
+              {mostExpensiveProduct.price} {getCurrency()}
             </p> */}
             <p className="text-sm text-gray-600">
-              {t('seller.stats.mostExpensive', { defaultValue: 'Найдорожчий товар' })}
+              {t('seller.stats.mostExpensive', { defaultValue: 'Самый дорогой товар' })}
             </p>
           </div>
         </div>
