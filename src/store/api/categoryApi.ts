@@ -12,7 +12,6 @@ export const categoryApi = createApi({
       query: () => '/categories',
       providesTags: ['Category'],
       transformResponse: (response: Category[] | { categories: Category[] }) => {
-        console.log('Categories API raw response:', response);
         
         if (Array.isArray(response)) {
           return response;

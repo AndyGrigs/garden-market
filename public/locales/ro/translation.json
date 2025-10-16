@@ -19,7 +19,10 @@
     "submitting": "Se conectează...",
     "describing": "Descriind",
     "price": "Preț",
-    "quantity": "Cantitate"
+    "quantity": "Cantitate",
+    "locale": "ro-RO",
+    "previous": "Anterior",
+    "next": "Următorul"
   },
 
   "photo": {
@@ -153,6 +156,15 @@
       "approved": "Vânzătorul a fost aprobat cu succes!",
       "approvalError": "Eroare la aprobarea vânzătorului",
       "approve": "Aprobă",
+      "reject": "Respinge",
+      "rejected": "Vânzătorul a fost respins",
+      "rejectionError": "Eroare la respingerea vânzătorului",
+      "rejectTitle": "Respinge vânzătorul",
+      "rejectDescription": "Sunteți sigur că doriți să respingeți acest vânzător? Puteți oferi un motiv (opțional).",
+      "rejectReason": "Motivul respingerii",
+      "rejectReasonPlaceholder": "De ex: Informații incomplete despre licența comercială",
+      "rejectOptional": "Opțional - furnizați un motiv pentru respingere",
+      "confirmReject": "Confirmă respingerea",
       "showMore": "Arată mai mult",
       "showLess": "Arată mai puțin",
       "phone": "Telefon",
@@ -160,6 +172,49 @@
       "license": "Licență comercială",
       "description": "Descriere",
       "registered": "Înregistrat"
+    },
+    "tabs": {
+      "sellers": "Vânzători",
+      "notifications": "Notificări",
+      "products": "Produse"
+    }
+  },
+  "notifications": {
+    "title": "Notificări",
+    "management": "Gestionare Notificări",
+    "empty": "Nu există notificări",
+    "total": "Total",
+    "unread": "Necitite",
+    "markAsRead": "Marchează ca citit",
+    "markAllRead": "Marchează toate ca citite",
+    "markedRead": "Marcat ca citit",
+    "allMarkedRead": "Toate notificările au fost marcate ca citite",
+    "markReadError": "Eroare la marcarea notificării",
+    "markAllReadError": "Eroare la marcarea tuturor notificărilor",
+    "deleted": "Notificare ștearsă",
+    "deleteError": "Eroare la ștergerea notificării",
+    "confirmDelete": "Sigur doriți să ștergeți această notificare?",
+    "created": "Notificare creată cu succes",
+    "createError": "Eroare la crearea notificării",
+    "create": "Creează notificare",
+    "createNew": "Creează notificare nouă",
+    "fillAllFields": "Completați toate câmpurile",
+    "type": "Tip",
+    "titleLabel": "Titlu",
+    "titlePlaceholder": "Introduceți titlul notificării",
+    "messageLabel": "Mesaj",
+    "messagePlaceholder": "Introduceți mesajul notificării",
+    "viewAll": "Vezi toate notificările",
+    "justNow": "Chiar acum",
+    "minutesAgo": "acum {{count}} minute",
+    "hoursAgo": "acum {{count}} ore",
+    "daysAgo": "acum {{count}} zile",
+    "types": {
+      "new_seller_registration": "Înregistrare vânzător nou",
+      "new_product_created": "Produs nou creat",
+      "order_placed": "Comandă plasată",
+      "order_cancelled": "Comandă anulată",
+      "other": "Altele"
     }
   },
   "dashboard": {
