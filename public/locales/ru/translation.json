@@ -48,7 +48,7 @@
   "tree": {
     "addToCart": "В корзину",
     "height": "Высота",
-    "priceLabel": "Цена: ₴{{price}}",
+    "priceLabel": "Цена: {{price}} MDL",
     "maintenance": {
       "low": "Низкий",
       "medium": "Средний",

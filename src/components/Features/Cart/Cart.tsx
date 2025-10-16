@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { CartItem } from "@/types";
 import { useLanguage } from "@/hooks/useLanguage";
 import { BASE_URL } from "@/config";
+import { getCurrency } from '../../../shared/helpers/getCurrency';
 
 
 interface CartProps {
@@ -100,7 +101,7 @@ export default function Cart({
                   <div className="flex-1">
                     <h3 className="font-semibold">{getTreeTitle(item.title)}</h3>
                     <p className="text-emerald-600 font-bold">
-                      ₴{item.price.toFixed(2)}
+                      {item.price.toFixed(2)} {getCurrency()}
                     </p>
                     <div className="flex items-center space-x-2 mt-2">
                       <motion.button
@@ -140,7 +141,7 @@ export default function Cart({
               <div className="border-t p-4 space-y-4">
                 <div className="flex justify-between text-xl font-bold">
                   <span>{t("cart.total")}:</span>
-                  <span>₴{total.toFixed(2)}</span>
+                  <span>{total.toFixed(2)}</span>
                 </div>
                 <motion.button
                   whileTap={{ scale: 0.95 }}

@@ -6,6 +6,7 @@ import { Home, Package, Star } from "lucide-react";
 import { useGetUserOrdersQuery } from "../store/api/orderApi";
 import { useGetUserReviewsQuery } from "../store/api/reviewApi";
 import { motion } from "framer-motion";
+import { getCurrency } from '../shared/helpers/getCurrency';
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -121,7 +122,7 @@ export default function Dashboard() {
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-emerald-600">
-                          ₴{order.totalAmount.toFixed(2)}
+                          {order.totalAmount.toFixed(2)} {getCurrency()}
                         </p>
                         <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
@@ -139,7 +140,7 @@ export default function Dashboard() {
                       {order.items.map((item, index) => (
                         <div key={index} className="flex justify-between text-sm">
                           <span>{item.productName} x{item.quantity}</span>
-                          <span>₴{(item.price * item.quantity).toFixed(2)}</span>
+                          <span>{(item.price * item.quantity).toFixed(2)} {getCurrency()}</span>
                         </div>
                       ))}
                     </div>

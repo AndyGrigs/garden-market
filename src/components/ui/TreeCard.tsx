@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '@/config';
 import { useTreeDescription, useTreeTitle } from '@/hooks/useTreeTranslations';
 import { Tree } from '@/types/ITree';
+import { getCurrency } from '@/shared/helpers/getCurrency';
 
 
 interface TreeCardProps {
@@ -39,7 +40,7 @@ export default function TreeCard({ tree, onAddToCart }: TreeCardProps) {
 
       <div className="flex items-center justify-between">
         <span className="text-xl font-bold text-emerald-600">
-          ₴{tree.price.toFixed(2)}
+          {tree.price.toFixed(2)} {getCurrency()}
         </span>
         <button
           onClick={() => onAddToCart(tree)}

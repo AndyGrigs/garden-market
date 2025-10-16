@@ -48,7 +48,7 @@
   "tree": {
     "addToCart": "Adaugă în coș",
     "height": "Înălțime",
-    "priceLabel": "Preț: ₴{{price}}",
+    "priceLabel": "Preț: {{price}} MDL",
     "maintenance": {
       "low": "Scăzut",
       "medium": "Mediu",
