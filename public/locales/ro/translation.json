@@ -144,6 +144,24 @@
       "resetFailed": "Resetarea parolei a eșuat. Vă rugăm să încercați din nou."
     }
   },
+  "admin": {
+    "sellers": {
+      "title": "Aprobare Vânzători",
+      "noPending": "Nu există vânzători în așteptare",
+      "error": "Eroare la încărcarea vânzătorilor",
+      "confirmApprove": "Sunteți sigur că doriți să aprobați acest vânzător?",
+      "approved": "Vânzătorul a fost aprobat cu succes!",
+      "approvalError": "Eroare la aprobarea vânzătorului",
+      "approve": "Aprobă",
+      "showMore": "Arată mai mult",
+      "showLess": "Arată mai puțin",
+      "phone": "Telefon",
+      "address": "Adresă",
+      "license": "Licență comercială",
+      "description": "Descriere",
+      "registered": "Înregistrat"
+    }
+  },
   "dashboard": {
     "admin": "Admin panel",
     "welcome": "Bine ai venit, {{name}}!",
