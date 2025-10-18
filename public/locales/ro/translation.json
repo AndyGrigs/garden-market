@@ -319,6 +319,21 @@
     "failedToResend": "Nu s-a putut retrimite codul de verificare"
   },
   "checkout": {
+    "title": "Finalizare comandă",
+    "shippingInfo": "Informații despre livrare",
+    "name": "Nume complet",
+    "phone": "Telefon",
+    "address": "Adresă",
+    "city": "Oraș",
+    "orderSummary": "Rezumatul comenzii",
+    "paymentMethod": "Metoda de plată",
+    "card": "Card",
+    "fillAllFields": "Completați toate câmpurile obligatorii",
+    "orderError": "Eroare la crearea comenzii",
+    "success": "Plată reușită!",
+    "paymentError": "Eroare la procesarea plății",
+    "paypalError": "Eroare PayPal",
+    "cardComingSoon": "Plata cu cardul va fi disponibilă în curând",
     "guestConfirm": "Doriți să continuați ca vizitator? Apăsați Anulare pentru a vă conecta.",
     "guestProcessing": "Se procesează comanda ca vizitator...",
     "processing": "Se procesează comanda..."
