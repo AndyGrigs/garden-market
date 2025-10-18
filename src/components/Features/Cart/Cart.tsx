@@ -6,6 +6,7 @@ import { CartItem } from "@/types";
 import { useLanguage } from "@/hooks/useLanguage";
 import { BASE_URL } from "@/config";
 import { getCurrency } from '../../../shared/helpers/getCurrency';
+import CheckoutModal from '../../ui/CheckoutModal';
 
 
 interface CartProps {
@@ -13,7 +14,6 @@ interface CartProps {
   onClose: () => void;
   onUpdateQuantity: (id: string, quantity: number) => void;
   onRemoveItem: (id: string) => void;
-  onCheckout: () => void;
 }
 
 export default function Cart({
@@ -21,11 +21,11 @@ export default function Cart({
   onClose,
   onUpdateQuantity,
   onRemoveItem,
-  onCheckout,
 }: CartProps) {
   const { t } = useTranslation();
   const lang = useLanguage();
   const [, setIsExiting] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -34,6 +34,11 @@ export default function Cart({
 
   const getTreeTitle = (title: { [key: string]: string }) => {
     return title?.[lang] || title?.en || title?.ru || "Unknown";
+  };
+
+  const handleCheckoutSuccess = () => {
+    items.forEach(item => onRemoveItem(item._id));
+    onClose();
   };
 
   const handleClose = () => {
@@ -50,7 +55,8 @@ export default function Cart({
   const isEmpty = items.length === 0;
 
   return (
-    <motion.div
+    <>
+      <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -141,11 +147,11 @@ export default function Cart({
               <div className="border-t p-4 space-y-4">
                 <div className="flex justify-between text-xl font-bold">
                   <span>{t("cart.total")}:</span>
-                  <span>{total.toFixed(2)}</span>
+                  <span>{total.toFixed(2)} {getCurrency()}</span>
                 </div>
                 <motion.button
                   whileTap={{ scale: 0.95 }}
-                  onClick={onCheckout}
+                  onClick={() => setIsCheckoutOpen(true)}
                   className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-500 transition-colors"
                 >
                   {t("cart.checkout")}
@@ -155,5 +161,17 @@ export default function Cart({
           )}
         </motion.div>
       </motion.div>
+
+      <AnimatePresence>
+        {isCheckoutOpen && (
+          <CheckoutModal
+            items={items}
+            total={total}
+            onClose={() => setIsCheckoutOpen(false)}
+            onSuccess={handleCheckoutSuccess}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }
