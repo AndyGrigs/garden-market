@@ -336,7 +336,15 @@
     "cardComingSoon": "Plata cu cardul va fi disponibilă în curând",
     "guestConfirm": "Doriți să continuați ca vizitator? Apăsați Anulare pentru a vă conecta.",
     "guestProcessing": "Se procesează comanda ca vizitator...",
-    "processing": "Se procesează comanda..."
+    "processing": "Se procesează...",
+    "payWithRunPay": "Plătește prin RunPay",
+    "runpayError": "Eroare RunPay",
+    "payWithPayNet": "Plătește prin PayNet",
+    "paynetError": "Eroare PayNet",
+    "payNow": "Plătește acum",
+    "securePayment": "🔒 Plată securizată prin Stripe",
+    "preparingPayment": "Pregătire plată...",
+    "stripeError": "Eroare Stripe"
   },
   "reviews": {
     "all": "Vezi toate recenzile",
