@@ -5,9 +5,8 @@ import { useState } from 'react';
 import { CartItem } from "@/types";
 import { useLanguage } from "@/hooks/useLanguage";
 import { BASE_URL } from "@/config";
-import { getCurrency } from '../../../shared/helpers/getCurrency';
+import { getCurrency } from '@/shared/helpers/getCurrency';
 import CheckoutModal from '../../ui/CheckoutModal';
-
 
 interface CartProps {
   items: CartItem[];
@@ -24,9 +23,8 @@ export default function Cart({
 }: CartProps) {
   const { t } = useTranslation();
   const lang = useLanguage();
-  const [, setIsExiting] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  
+
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -37,18 +35,16 @@ export default function Cart({
   };
 
   const handleCheckoutSuccess = () => {
+    // Очищаємо кошик після успішного замовлення
     items.forEach(item => onRemoveItem(item._id));
-    onClose();
-  };
-
-  const handleClose = () => {
-    setIsExiting(true);
-    setTimeout(() => onClose(), 300); // Fallback in case animation doesn't complete
+    setIsCheckoutOpen(false);
+    // Закриваємо кошик після успішного оформлення
+    setTimeout(() => onClose(), 500);
   };
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      handleClose();
+      onClose();
     }
   };
 

@@ -124,7 +124,18 @@ export const authApi = createApi({
         method: "POST",
         body,
       })
-    })
+    }),
+    getSavedAddress: builder.query<{savedAddress: {
+  street: string;
+  city: string;
+  postalCode: string;
+  country: string;
+} | null}, void>({
+  query: () => ({
+    url: "/user/saved-address",
+    method: "GET",
+  })
+})
   }),
 });
 
@@ -136,5 +147,6 @@ export const {
   useVerifyEmailMutation,
   useResendVerificationCodeMutation,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useGetSavedAddressQuery
 } = authApi;

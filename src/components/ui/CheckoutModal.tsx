@@ -57,12 +57,17 @@ export default function CheckoutModal({ items, total, onClose, onSuccess }: Chec
   const createOrderBeforePayment = async () => {
     if (!validateShipping()) return null;
 
+    if (!user) {
+      toast.error(t('checkout.loginRequired', { defaultValue: 'Необходимо войти в систему' }));
+      return null;
+    }
+
     try {
       const orderData = {
-        userId: user?._id,
+        userId: user._id,
         items: items.map(item => ({
           productId: item._id,
-          productName: item.title.ru || item.title.ro,
+          productName: item.title.ru || item.title.ro || item.title.en || 'Product',
           quantity: item.quantity,
           price: item.price,
           imageUrl: item.imageUrl
@@ -71,13 +76,19 @@ export default function CheckoutModal({ items, total, onClose, onSuccess }: Chec
         shippingAddress: {
           street: shippingInfo.address,
           city: shippingInfo.city,
-          postalCode: shippingInfo.postalCode,
+          postalCode: shippingInfo.postalCode || '',
           country: shippingInfo.country
+        },
+        customerInfo: {
+          name: shippingInfo.name,
+          phone: shippingInfo.phone,
+          email: user.email
         }
       };
 
       const order = await createOrder(orderData).unwrap();
       setOrderId(order._id);
+      toast.success(t('checkout.orderCreated', { defaultValue: 'Заказ создан, выберите способ оплаты' }));
       return order._id;
     } catch (error) {
       console.error('Error creating order:', error);
@@ -197,7 +208,7 @@ export default function CheckoutModal({ items, total, onClose, onSuccess }: Chec
                 placeholder={t('checkout.name', { defaultValue: 'Полное имя' }) + ' *'}
                 value={shippingInfo.name}
                 onChange={(e) => handleShippingChange('name', e.target.value)}
-                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500"
+                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 required
               />
               <input
@@ -205,7 +216,7 @@ export default function CheckoutModal({ items, total, onClose, onSuccess }: Chec
                 placeholder={t('checkout.phone', { defaultValue: 'Телефон' }) + ' *'}
                 value={shippingInfo.phone}
                 onChange={(e) => handleShippingChange('phone', e.target.value)}
-                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500"
+                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 required
               />
               <input
@@ -213,7 +224,7 @@ export default function CheckoutModal({ items, total, onClose, onSuccess }: Chec
                 placeholder={t('checkout.address', { defaultValue: 'Адрес' }) + ' *'}
                 value={shippingInfo.address}
                 onChange={(e) => handleShippingChange('address', e.target.value)}
-                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500"
+                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none md:col-span-2"
                 required
               />
               <input
@@ -221,8 +232,22 @@ export default function CheckoutModal({ items, total, onClose, onSuccess }: Chec
                 placeholder={t('checkout.city', { defaultValue: 'Город' }) + ' *'}
                 value={shippingInfo.city}
                 onChange={(e) => handleShippingChange('city', e.target.value)}
-                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500"
+                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 required
+              />
+              <input
+                type="text"
+                placeholder={t('checkout.postalCode', { defaultValue: 'Почтовый индекс' })}
+                value={shippingInfo.postalCode}
+                onChange={(e) => handleShippingChange('postalCode', e.target.value)}
+                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              />
+              <input
+                type="text"
+                placeholder={t('checkout.country', { defaultValue: 'Страна' })}
+                value={shippingInfo.country}
+                onChange={(e) => handleShippingChange('country', e.target.value)}
+                className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none md:col-span-2"
               />
             </div>
           </div>
