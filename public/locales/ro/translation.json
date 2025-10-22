@@ -25,6 +25,12 @@
     "next": "Următorul"
   },
 
+   "hero": {
+    "title": "Cultivați-vă grădina de vis",
+    "subtitle": "Copaci și plante de calitate premium pentru grădina dvs. Durabile, sănătoase și livrate la ușa dvs.",
+    "cta": "Cumpără acum"
+  },
+
   "photo": {
     "product": "Fotografie produsului",
     "fail": " Nu s-a putut încărca fotografia",

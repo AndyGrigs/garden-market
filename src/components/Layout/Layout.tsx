@@ -4,15 +4,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useState } from 'react';
 import { CartItem } from '../../types';
-import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
 import Cart from '../Features/Cart/Cart';
 
 export default function Layout() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { t } = useTranslation();
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
   const updateQuantity = (id: string, quantity: number) => {
@@ -26,18 +23,6 @@ export default function Layout() {
 
   const removeItem = (id: string) => {
     setCartItems((prev) => prev.filter((item) => item._id !== id));
-  };
-
-  const handleCheckout = () => {
-    if (!isAuthenticated) {
-      if (window.confirm(t('checkout.guestConfirm'))) {
-        toast.success(t('checkout.guestProcessing'));
-      } else {
-        window.location.href = '/login';
-      }
-    } else {
-      toast.success(t('checkout.processing'));
-    }
   };
 
   return (
@@ -59,7 +44,6 @@ export default function Layout() {
             onClose={() => setIsCartOpen(false)}
             onUpdateQuantity={updateQuantity}
             onRemoveItem={removeItem}
-            onCheckout={handleCheckout}
           />
         )}
       </AnimatePresence>

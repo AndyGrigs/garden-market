@@ -18,6 +18,7 @@ import { CheckCircle, Filter, MessageCircle, Star, X } from "lucide-react";
 import Footer from "../Footer";
 import ContactForm from "../Features/Contact/ContactForm";
 import ReviewForm from "../Features/Reviwes/ReviewForm";
+import Hero from '../Hero';
 
 
 interface OutletContext {
@@ -76,8 +77,13 @@ export function MainContent() {
   };
 
   // Filter trees by selected category
-  const filteredTrees = selectedCategoryId 
-    ? trees?.filter(tree => tree.category?._id === selectedCategoryId)
+  const filteredTrees = selectedCategoryId
+    ? trees?.filter(tree => {
+        if (typeof tree.category === 'object' && tree.category !== null) {
+          return tree.category._id === selectedCategoryId;
+        }
+        return tree.category === selectedCategoryId;
+      })
     : trees;
 
     
@@ -103,6 +109,8 @@ const getSelectedCategoryName = () => {
         transition={{ duration: 0.3 }}
         className="flex-1"
       >
+        {/* {Hero section} */}
+        <Hero/>
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Desktop Category Sidebar */}
@@ -126,7 +134,7 @@ const getSelectedCategoryName = () => {
                 </button>
               </div>
 
-              <section className="mb-12">
+              <section id="products" className="mb-12">
                 <h2 className="text-3xl font-bold text-gray-800 mb-8">
                   {selectedCategoryId 
                     ? getSelectedCategoryName()
