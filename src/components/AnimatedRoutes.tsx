@@ -1,6 +1,6 @@
 import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 
 import SellerGuard from './Seller/SellerGuard';
 import AdminGuard from './Admin/AdminGuard';
@@ -19,49 +19,41 @@ const TermsAndConditions = lazy(() => import("../pages/TermsAndConditions"));
 const SellerDashboard = lazy(() => import("./Seller/SellerDasboard"));
 const MainContent = lazy(() => import("./Layout/MainContent").then(module => ({ default: module.MainContent })));
 
-const Loading = () => (
-  <div className="flex items-center justify-center min-h-screen">
-    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
-  </div>
-);
-
 function AnimatedRoutes() {
   const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
-      <Suspense fallback={<Loading />}>
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<MainContent />} />
-            <Route path="contact" element={<ContactPage />} />
-            <Route path="reviews" element={<ReviewPage />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route
-              path="admin"
-              element={
-                <AdminGuard>
-                  <AdminPanel />
-                </AdminGuard>
-              }
-            />
-            <Route
-              path="seller"
-              element={
-                <SellerGuard>
-                  <SellerDashboard />
-                </SellerGuard>
-              }
-            />
-          </Route>
-          <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/terms" element={<TermsAndConditions />} />
-        </Routes>
-      </Suspense>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<MainContent />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="reviews" element={<ReviewPage />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route
+            path="admin"
+            element={
+              <AdminGuard>
+                <AdminPanel />
+              </AdminGuard>
+            }
+          />
+          <Route
+            path="seller"
+            element={
+              <SellerGuard>
+                <SellerDashboard />
+              </SellerGuard>
+            }
+          />
+        </Route>
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
+      </Routes>
     </AnimatePresence>
   );
 }
