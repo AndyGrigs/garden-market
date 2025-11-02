@@ -127,10 +127,10 @@ const getSelectedCategoryName = () => {
               <div className="lg:hidden mb-6">
                 <button
                   onClick={() => setIsCategoryMenuOpen(true)}
-                  className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+                  className="flex items-center space-x-2 px-4 py-2 rounded-lg text-white bg-emerald-600 transition-colors "
                 >
                   <Filter className="h-5 w-5" />
-                  <span>{t('categories.filter')}</span>
+                  <span>{t('categories.all')}</span>
                 </button>
               </div>
 
