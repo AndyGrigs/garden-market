@@ -242,6 +242,7 @@ const getSelectedCategoryName = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={() => setIsContactOpen(false)}
             className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
           >
             <motion.div
@@ -249,6 +250,7 @@ const getSelectedCategoryName = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               className="bg-white rounded-lg shadow-xl w-full max-w-md relative"
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setIsContactOpen(false)}

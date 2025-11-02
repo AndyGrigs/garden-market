@@ -31,6 +31,7 @@ export default function MobileMenu({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
+          onClick={onClose}
           className="md:hidden fixed inset-0 z-50 bg-black bg-opacity-50"
         >
           <motion.div
@@ -39,6 +40,7 @@ export default function MobileMenu({
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed inset-y-0 right-0 w-64 bg-emerald-600 shadow-lg"
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="p-4">
               <motion.button

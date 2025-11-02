@@ -145,6 +145,7 @@ export default function CategorySidebar({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={onClose}
             className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden"
           >
             <motion.div
@@ -153,6 +154,7 @@ export default function CategorySidebar({
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="fixed inset-y-0 left-0 w-80 max-w-[80vw]"
+              onClick={(e) => e.stopPropagation()}
             >
               {content}
             </motion.div>

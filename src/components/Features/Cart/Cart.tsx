@@ -58,7 +58,7 @@ export default function Cart({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
       className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
-      onClick={handleOverlayClick}
+      onClick={onClose}
     >
       <motion.div
         initial={{ x: "100%" }}
@@ -66,6 +66,7 @@ export default function Cart({
         exit={{ x: "100%" }}
         transition={{ type: "spring", damping: 25, stiffness: 200 }}
         className="bg-white w-full max-w-md h-full flex flex-col"
+        onClick={(e) => e.stopPropagation()}
       >
           <div className="flex justify-between items-center p-4 border-b">
             <h2 className="text-xl font-bold">{t("cart.title")}</h2>
