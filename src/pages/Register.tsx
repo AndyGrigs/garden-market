@@ -77,13 +77,14 @@ export default function Register() {
       const result = await register(registerData).unwrap();
 
       setSuccess(result.message);
+      toast.success(result.message);
       setTimeout(() => {
         navigate(`/verify-email?email=${encodeURIComponent(email)}`);
       }, 4000);
     } catch (err: ErrorResponse | unknown) {
-      setError(
-        (err as ErrorResponse)?.data?.message || t('auth.register.error')
-      );
+      const errorMsg = (err as ErrorResponse)?.data?.message || t('auth.register.error');
+      setError(errorMsg);
+      toast.error(errorMsg);
     }
   };
 

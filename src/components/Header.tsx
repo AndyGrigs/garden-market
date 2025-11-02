@@ -10,6 +10,7 @@ import { useLogoutMutation } from "../store/api/authApi";
 import { RootState } from "../store/store";
 import AdminLink from '../shared/headerFolder/AdminLinks';
 import { UserLinks } from '../shared/headerFolder/UserLinks';
+import toast from 'react-hot-toast';
 
 interface HeaderProps {
   cartItemsCount: number;
@@ -35,9 +36,11 @@ export default function Header({
     try {
       await logout().unwrap();
       dispatch(logoutAction());
+      toast.success(t("auth.logout.success", { defaultValue: "Successfully logged out!" }));
       navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
+      toast.error(t("auth.logout.error", { defaultValue: "Logout failed. Please try again." }));
     }
   };
 

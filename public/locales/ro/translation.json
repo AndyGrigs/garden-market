@@ -121,6 +121,7 @@
       "submit": "Conectare",
       "loading": "Se conectează...",
       "error": "Credențiale invalide",
+      "success": "Conectat cu succes!",
       "register": "Sau creează un cont nou"
     },
     "register": {
@@ -134,6 +135,10 @@
       "loading": "Se creează contul...",
       "error": "Înregistrarea a eșuat",
       "login": "Sau conectează-te la contul tău"
+    },
+    "logout": {
+      "success": "Deconectat cu succes!",
+      "error": "Deconectarea a eșuat. Te rog să încerci din nou."
     },
     "resetPassword": {
       "languageDetected": "Limba detectată",

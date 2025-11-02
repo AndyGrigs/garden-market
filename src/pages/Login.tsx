@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import { motion, AnimatePresence } from "framer-motion";
 import { setUser } from '../store/slices/authSlice';
 import MainPageLink from '../shared/MainPageLink';
+import toast from 'react-hot-toast';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -34,13 +35,16 @@ export default function Login() {
 
   try {
     const result = await login({ email, password }).unwrap();
-   
+
     if (result.user) {
       dispatch(setUser(result.user));
+      toast.success(t("auth.login.success", { defaultValue: "Successfully logged in!" }));
       navigate(from, { replace: true });
     }
   } catch (err) {
-    setError(t("auth.login.error"));
+    const errorMessage = t("auth.login.error");
+    setError(errorMessage);
+    toast.error(errorMessage);
     console.log(err);
   }
 };
@@ -52,12 +56,11 @@ export default function Login() {
     try {
       const result = await forgotPassword({ email: forgotEmail }).unwrap();
       setForgotMessage(result.message);
+      toast.success(result.message);
     }catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError(String(err));
-      }
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      setError(errorMsg);
+      toast.error(errorMsg);
 }
   };
   return (
