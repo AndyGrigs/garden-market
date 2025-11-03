@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
@@ -10,7 +10,12 @@ import Cart from '../Features/Cart/Cart';
 export default function Layout() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(false);
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const location = useLocation();
+
+  // Only show category filter on homepage
+  const showCategoryFilter = location.pathname === '/';
 
   const updateQuantity = (id: string, quantity: number) => {
     if (quantity < 1) return;
@@ -31,10 +36,17 @@ export default function Layout() {
         cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
         onCartClick={() => setIsCartOpen(true)}
         isAuthenticated={isAuthenticated}
+        onCategoryFilterClick={() => setIsCategoryFilterOpen(true)}
+        showCategoryFilter={showCategoryFilter}
       />
-      
+
       <main>
-        <Outlet context={{ cartItems, setCartItems }} />
+        <Outlet context={{
+          cartItems,
+          setCartItems,
+          isCategoryFilterOpen,
+          setIsCategoryFilterOpen
+        }} />
       </main>
 
       <AnimatePresence>

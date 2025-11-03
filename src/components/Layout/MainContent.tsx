@@ -14,7 +14,7 @@ import i18n from "@/i18n";
 import CategorySidebar from "../ui/CategorySidebar";
 import TreeCard from "../ui/TreeCard";
 import ReviewsSection from "../Features/Reviwes/ReviewsSection";
-import { CheckCircle, Filter, MessageCircle, Star, X } from "lucide-react";
+import { CheckCircle, MessageCircle, Star, X } from "lucide-react";
 import Footer from "../Footer";
 import ContactForm from "../Features/Contact/ContactForm";
 import ReviewForm from "../Features/Reviwes/ReviewForm";
@@ -24,6 +24,8 @@ import Hero from '../Hero';
 interface OutletContext {
   cartItems: CartItem[];
   setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  isCategoryFilterOpen: boolean;
+  setIsCategoryFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function MainContent() {
@@ -32,16 +34,15 @@ export function MainContent() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
-  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [notification, setNotification] = useState<{ message: string; visible: boolean }>({
     message: '',
     visible: false
   });
   const { t } = useTranslation();
   const lang = useLanguage();
-  
-  // Get cart context from Layout
-  const { setCartItems } = useOutletContext<OutletContext>();
+
+  // Get context from Layout
+  const { setCartItems, isCategoryFilterOpen, setIsCategoryFilterOpen } = useOutletContext<OutletContext>();
 
   const showNotification = (message: string) => {
     setNotification({ message, visible: true });
@@ -123,17 +124,6 @@ const getSelectedCategoryName = () => {
 
             {/* Main Content */}
             <div className="flex-1">
-              {/* Mobile Category Filter Button */}
-              <div className="lg:hidden mb-6">
-                <button
-                  onClick={() => setIsCategoryMenuOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 rounded-lg text-white bg-emerald-600 transition-colors "
-                >
-                  <Filter className="h-5 w-5" />
-                  <span>{t('categories.all')}</span>
-                </button>
-              </div>
-
               <section id="products" className="mb-12">
                 <h2 className="text-3xl font-bold text-gray-800 mb-8">
                   {selectedCategoryId 
@@ -195,8 +185,8 @@ const getSelectedCategoryName = () => {
         selectedCategoryId={selectedCategoryId}
         onCategorySelect={setSelectedCategoryId}
         isMobile={true}
-        isOpen={isCategoryMenuOpen}
-        onClose={() => setIsCategoryMenuOpen(false)}
+        isOpen={isCategoryFilterOpen}
+        onClose={() => setIsCategoryFilterOpen(false)}
       />
 
       {/* Floating Action Buttons */}

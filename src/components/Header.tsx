@@ -11,17 +11,22 @@ import { RootState } from "../store/store";
 import AdminLink from '../shared/headerFolder/AdminLinks';
 import { UserLinks } from '../shared/headerFolder/UserLinks';
 import toast from 'react-hot-toast';
+import SubHeader from './SubHeader';
 
 interface HeaderProps {
   cartItemsCount: number;
   onCartClick: () => void;
   isAuthenticated: boolean;
+  onCategoryFilterClick?: () => void;
+  showCategoryFilter?: boolean;
 }
 
 export default function Header({
   cartItemsCount,
   onCartClick,
   isAuthenticated,
+  onCategoryFilterClick,
+  showCategoryFilter = false,
 }: HeaderProps) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -79,7 +84,7 @@ export default function Header({
             ) : (
               <Link
                 to="/login"
-                className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
+                className="flex items-center space-x-2  px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
               >
                 <User className="h-6 w-6" />
                 <span className="font-semibold">{t("header.login")}</span>
@@ -97,6 +102,12 @@ export default function Header({
           </button>
         </div>
       </div>
+
+      {/* SubHeader */}
+      <SubHeader
+        onCategoryFilterClick={onCategoryFilterClick}
+        showCategoryFilter={showCategoryFilter}
+      />
 
       {/* Mobile Menu */}
       <MobileMenu
