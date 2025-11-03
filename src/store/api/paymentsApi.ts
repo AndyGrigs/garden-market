@@ -64,11 +64,30 @@ export interface StripeIntentResponse {
   paymentId: string;
 }
 
+export interface StripeConfigResponse {
+  success: boolean;
+  publishableKey: string;
+}
+
+export interface ConfirmStripePaymentResponse {
+  success: boolean;
+  payment: {
+    id: string;
+    orderId: string;
+    status: string;
+    amount: number;
+    currency: string;
+  };
+}
+
 export const paymentApi = createApi({
   reducerPath: 'paymentApi',
   baseQuery: appBaseQuery,
   tagTypes: ['Payment'],
   endpoints: (builder) => ({
+    getStripeConfig: builder.query<StripeConfigResponse, void>({
+      query: () => '/payments/stripe/config',
+    }),
     createPayPalOrder: builder.mutation<
       PayPalOrderResponse,
       CreatePayPalOrderRequest
@@ -115,7 +134,7 @@ export const paymentApi = createApi({
     }),
 
     confirmStripePayment: builder.mutation<
-      unknown,
+      ConfirmStripePaymentResponse,
       { paymentIntentId: string }
     >({
       query: (data) => ({
@@ -129,6 +148,7 @@ export const paymentApi = createApi({
 });
 
 export const {
+  useGetStripeConfigQuery,
   useCreatePayPalOrderMutation,
   useCapturePayPalPaymentMutation,
   useCreateRunPayPaymentMutation,

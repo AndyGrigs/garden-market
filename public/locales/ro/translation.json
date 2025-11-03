@@ -357,6 +357,47 @@
     "preparingPayment": "Pregătire plată...",
     "stripeError": "Eroare Stripe"
   },
+  "payment": {
+    "checkout_title": "Finalizare comandă",
+    "checkout_description": "Finalizați achiziția platind în siguranță cu cardul",
+    "order_summary": "Rezumatul comenzii",
+    "order_id": "Număr comandă",
+    "total": "Total",
+    "back_to_cart": "Înapoi la coș",
+    "card_payment": "Plată cu cardul",
+    "cardholder_name": "Numele deținătorului cardului",
+    "name_placeholder": "ION POPESCU",
+    "email": "Email",
+    "email_placeholder": "your@email.com",
+    "card_number": "Numărul cardului",
+    "expiry_date": "Dată expirare",
+    "cvc": "CVC",
+    "amount_to_pay": "Suma de plată",
+    "pay": "Plătește",
+    "processing": "Se procesează...",
+    "secured_by_stripe": "Securizat de Stripe",
+    "errors": {
+      "name_required": "Introduceți numele deținătorului cardului",
+      "email_required": "Introduceți adresa de email",
+      "card_declined": "Cardul dvs. a fost refuzat",
+      "insufficient_funds": "Fonduri insuficiente pe card",
+      "incorrect_cvc": "Cod CVC incorect",
+      "expired_card": "Cardul a expirat",
+      "processing_error": "Eroare la procesarea plății. Încercați din nou",
+      "invalid_number": "Număr de card invalid",
+      "unknown": "Eroare necunoscută la plată"
+    },
+    "success": {
+      "title": "Plată reușită!",
+      "thank_you": "Vă mulțumim pentru comandă",
+      "order_number": "Număr comandă",
+      "confirmation_email": "Un email de confirmare a fost trimis",
+      "view_orders": "Vezi comenzile",
+      "back_to_home": "Înapoi la pagina principală",
+      "need_help": "Aveți nevoie de ajutor?",
+      "contact_us": "Contactați-ne"
+    }
+  },
   "reviews": {
     "all": "Vezi toate recenzile",
     "first": " Deveniți primul care va lăsa un comentariu!",

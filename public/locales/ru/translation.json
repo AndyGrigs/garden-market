@@ -363,6 +363,47 @@
     "stripeError": "Ошибка Stripe",
     "street": "Улица"
   },
+  "payment": {
+    "checkout_title": "Оформление заказа",
+    "checkout_description": "Завершите покупку, безопасно оплатив картой",
+    "order_summary": "Сводка заказа",
+    "order_id": "Номер заказа",
+    "total": "Итого",
+    "back_to_cart": "Вернуться в корзину",
+    "card_payment": "Оплата картой",
+    "cardholder_name": "Имя владельца карты",
+    "name_placeholder": "ИВАН ИВАНОВ",
+    "email": "Email",
+    "email_placeholder": "your@email.com",
+    "card_number": "Номер карты",
+    "expiry_date": "Срок действия",
+    "cvc": "CVC",
+    "amount_to_pay": "Сумма к оплате",
+    "pay": "Оплатить",
+    "processing": "Обработка...",
+    "secured_by_stripe": "Защищено Stripe",
+    "errors": {
+      "name_required": "Введите имя владельца карты",
+      "email_required": "Введите email адрес",
+      "card_declined": "Ваша карта была отклонена",
+      "insufficient_funds": "Недостаточно средств на карте",
+      "incorrect_cvc": "Неверный CVC код",
+      "expired_card": "Срок действия карты истек",
+      "processing_error": "Ошибка обработки платежа. Попробуйте еще раз",
+      "invalid_number": "Неверный номер карты",
+      "unknown": "Неизвестная ошибка платежа"
+    },
+    "success": {
+      "title": "Платеж успешен!",
+      "thank_you": "Спасибо за ваш заказ",
+      "order_number": "Номер заказа",
+      "confirmation_email": "На вашу email адрес отправлено подтверждение",
+      "view_orders": "Посмотреть заказы",
+      "back_to_home": "Вернуться на главную",
+      "need_help": "Нужна помощь?",
+      "contact_us": "Свяжитесь с нами"
+    }
+  },
   "reviews": {
     "all": "Просмтреть все отзывы",
     "first": "Станьте первым, кто оставит отзыв!",
