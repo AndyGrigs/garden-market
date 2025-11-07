@@ -120,7 +120,7 @@ const AdminNotifications = () => {
     <div className="bg-white rounded-lg shadow-md">
       {/* Header */}
       <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row gap-2 items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
               {t('notifications.management')}
@@ -172,40 +172,40 @@ const AdminNotifications = () => {
                     : 'bg-white border-gray-200'
                 }`}
               >
-                <div className="flex gap-4">
+                <div className="flex gap-3">
                   <div className="flex-shrink-0 mt-1">
                     {getNotificationIcon(notification.type)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
                           <h3 className="text-base font-semibold text-gray-900">
                             {notification.title}
                           </h3>
-                          <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
+                          <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded whitespace-nowrap">
                             {getNotificationTypeName(notification.type)}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">
+                        <p className="text-sm text-gray-600 mb-2 break-words">
                           {notification.message}
                         </p>
                         <span className="text-xs text-gray-500">
                           {formatDate(notification.createdAt)}
                         </span>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 flex-shrink-0">
                         {!notification.isRead && (
                           <button
                             onClick={() => handleMarkAsRead(notification._id)}
-                            className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                            className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors whitespace-nowrap"
                           >
                             {t('notifications.markAsRead')}
                           </button>
                         )}
                         <button
                           onClick={() => handleDelete(notification._id)}
-                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors flex-shrink-0"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>

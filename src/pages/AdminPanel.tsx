@@ -5,7 +5,6 @@ import AdminSellers from "../components/Admin/AdminSellers";
 import AdminNotifications from "../components/Admin/AdminNotifications";
 import NotificationBell from "../components/Admin/NotificationBell";
 import { useTranslation } from 'react-i18next';
-import MainPageLink from '../shared/MainPageLink';
 
 const AdminPanel = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
@@ -19,7 +18,7 @@ const AdminPanel = () => {
           <h1 className="text-3xl font-bold text-gray-900">{t('header.adminPanel')}</h1>
           <div className="flex items-center gap-4">
             <NotificationBell />
-            <MainPageLink/>
+            
           </div>
         </div>
 

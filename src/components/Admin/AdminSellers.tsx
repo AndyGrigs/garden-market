@@ -21,6 +21,7 @@ const AdminSellers = () => {
         toast.success(t('admin.sellers.approved'));
       } catch (err) {
         toast.error(t('admin.sellers.approvalError'));
+        console.log(err)
       }
     }
   };
@@ -45,6 +46,7 @@ const AdminSellers = () => {
       setSelectedSellerId('');
     } catch (err) {
       toast.error(t('admin.sellers.rejectionError'));
+      console.log(err)
     }
   };
 
@@ -179,10 +181,10 @@ const AdminSellers = () => {
                   )}
                 </div>
 
-                <div className="flex flex-col gap-2 ml-4">
+                <div className="flex flex-col sm:flex-row w-full gap-2 ml-4">
                   <button
                     onClick={() => handleApprove(sellerId)}
-                    className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                    className="flex items-center gap-2 px-4 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                   >
                     <CheckCircle className="w-4 h-4" />
                     <span>{t('admin.sellers.approve')}</span>
@@ -190,7 +192,7 @@ const AdminSellers = () => {
 
                   <button
                     onClick={() => openRejectModal(sellerId)}
-                    className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                    className="flex items-center gap-2 px-4 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                   >
                     <XCircle className="w-4 h-4" />
                     <span>{t('admin.sellers.reject')}</span>
@@ -198,7 +200,7 @@ const AdminSellers = () => {
 
                   <button
                     onClick={() => toggleExpand(sellerId)}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+                    className="px-4 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
                   >
                     {expandedSeller === sellerId
                       ? t('admin.sellers.showLess')

@@ -1,8 +1,12 @@
-import { ShoppingCart, LogOut, X, User } from 'lucide-react';
+import { ShoppingCart, LogOut, X, User, Package } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import AdminLink from '@/shared/headerFolder/AdminLinks';
+import { UserLinks } from '@/shared/headerFolder/UserLinks';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -22,6 +26,9 @@ export default function MobileMenu({
   isAuthenticated,
 }: MobileMenuProps) {
   const { t } = useTranslation();
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAdmin = user?.role === 'admin';
+  const isSeller = user?.role === 'seller';
 
   return (
     <AnimatePresence>
@@ -76,14 +83,37 @@ export default function MobileMenu({
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Link
+                      {isAdmin ? (
+                        <AdminLink />
+                      ) : isSeller ? (
+                        <Link
+                          to="/seller"
+                          className="flex items-center space-x-1 text-white hover:text-emerald-200"
+                        >
+                          <Package className="h-4 w-4" />
+                          <span>
+                            {t('seller.dashboard.title', {
+                              defaultValue: 'Панель продавца',
+                            })}
+                          </span>
+                        </Link>
+                      ) : (
+                        <UserLinks
+                          cartItemsCount={cartItemsCount}
+                          onCartClick={onCartClick}
+                        />
+                      )}
+
+                      {/* <Link
                         to="/dashboard"
                         className="w-full flex items-center justify-center space-x-2 bg-emerald-700 px-4 py-3 rounded-lg hover:bg-emerald-800 transition-colors"
                         onClick={onClose}
                       >
                         <User className="h-6 w-6" />
-                        <span className="font-semibold">{t('header.dashboard')}</span>
-                      </Link>
+                        <span className="font-semibold">
+                          {t('header.dashboard')}
+                        </span>
+                      </Link> */}
                     </motion.div>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -95,7 +125,9 @@ export default function MobileMenu({
                       className="w-full flex items-center justify-center space-x-2 bg-emerald-700 px-4 py-3 rounded-lg hover:bg-emerald-800 transition-colors"
                     >
                       <LogOut className="h-6 w-6" />
-                      <span className="font-semibold">{t('header.logout')}</span>
+                      <span className="font-semibold">
+                        {t('header.logout')}
+                      </span>
                     </motion.button>
                   </>
                 ) : (
