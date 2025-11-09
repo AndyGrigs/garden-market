@@ -20,24 +20,24 @@ const About = () => {
 
   const teamMembers = [
     {
-      name: "Василий Ковач",
+      name: " Андрей Ковач",
       role: "Основатель & Главный садовник",
-      experience: "25+ лет опыта",
-      image: "/api/placeholder/300/300",
+      experience: "5 лет опыта",
+      image: "",
       description: "Эксперт по выращиванию хвойных и лиственных пород деревьев"
     },
     {
-      name: "Ольга Ковач",
-      role: "Специалист по ландшафтному дизайну",
-      experience: "15+ лет опыта",
-      image: "/api/placeholder/300/300",
-      description: "Помогает клиентам создавать идеальные садовые композиции"
+      name: "",
+      role: "",
+      experience: "",
+      image: "",
+      description: ""
     },
     {
-      name: "Андрей Ковач",
+      name: "Иван Ковач",
       role: "Менеджер по продажам",
-      experience: "8+ лет опыта",
-      image: "/api/placeholder/300/300",
+      experience: "",
+      image: "",
       description: "Консультирует клиентов и обеспечивает качественное обслуживание"
     }
   ];
@@ -48,13 +48,13 @@ const About = () => {
     "Доставка по всей Молдове",
     "Посадка и уход за деревьями",
     "Подбор растений под конкретную почву",
-    "Гарантия приживания саженцев"
+    "Гарантия приживаемости саженцев"
   ];
 
   const achievements = [
-    { number: "5000+", label: "Довольных клиентов" },
+    { number: "500+", label: "Довольных клиентов" },
     { number: "15000+", label: "Посаженных деревьев" },
-    { number: "25+", label: "Лет опыта" },
+    { number: "5+", label: "Лет опыта" },
     { number: "50+", label: "Видов растений" }
   ];
 
@@ -73,7 +73,7 @@ const About = () => {
                 О нашей семье
               </h1>
               <p className="text-xl text-emerald-100 max-w-2xl">
-                Семья Коваци уже более 25 лет занимается выращиванием и продажей качественных саженцев деревьев
+                Семья Ковач уже более 5 лет занимается выращиванием и продажей качественных саженцев деревьев
               </p>
             </motion.div>
             
@@ -112,17 +112,14 @@ const About = () => {
               <div>
                 <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
                   <Heart className="h-8 w-8 text-emerald-600 mr-3" />
-                  Наша история
+                  
                 </h2>
                 <div className="space-y-4 text-gray-600 leading-relaxed">
                   <p>
-                    Все началось с небольшого садика возле нашего дома в 2020 году. 
-                    Василий всегда имел страсть к растениям и мечтал создать что-то особенное.
+                  
                   </p>
                   <p>
-                    Сегодня наш семейный бизнес вырос в известное предприятие, 
-                    которое поставляет качественные саженцы по всей Молдове. Мы сохраняем 
-                    семейные традиции и личный подход к каждому клиенту.
+                    
                   </p>
                   <p>
                     Наша миссия - помочь людям создавать красивые зеленые пространства, 
@@ -178,7 +175,7 @@ const About = () => {
         >
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 flex items-center justify-center">
             <Users className="h-8 w-8 text-emerald-600 mr-3" />
-            Наша команда
+          
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -268,7 +265,7 @@ const About = () => {
                 <h3 className="text-xl font-semibold">Телефон</h3>
                 <div className="space-y-1">
                   <p className="text-emerald-100">+373 79 748 131</p>
-                  <p className="text-emerald-100">+373 68 123 456</p>
+                  <p className="text-emerald-100"></p>
                 </div>
               </motion.div>
               
@@ -295,8 +292,8 @@ const About = () => {
                 <MapPin className="h-12 w-12 mx-auto text-emerald-200" />
                 <h3 className="text-xl font-semibold">Адрес</h3>
                 <div className="space-y-1">
-                  <p className="text-emerald-100">с. Ришканы</p>
-                  <p className="text-emerald-100">Каушанский район</p>
+                  <p className="text-emerald-100"></p>с. Чалык</p>
+                  <p className="text-emerald-100">Тараклийский р-он</p>
                   <p className="text-emerald-100">Молдова</p>
                 </div>
               </motion.div>
@@ -316,7 +313,7 @@ const About = () => {
               <div className="space-y-2 text-emerald-100">
                 <p>Понедельник - Пятница: 8:00 - 18:00</p>
                 <p>Суббота: 9:00 - 16:00</p>
-                <p>Воскресенье: 10:00 - 15:00</p>
+                <p>Воскресенье: выходной</p>
               </div>
             </motion.div>
           </div>
@@ -336,7 +333,7 @@ const About = () => {
             </h2>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
               Свяжитесь с нами сегодня для бесплатной консультации. 
-              Мы поможем подобрать идеальные деревья для вашего участка.
+              Мы поможем подобрать идеальные растения для вашего участка.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
