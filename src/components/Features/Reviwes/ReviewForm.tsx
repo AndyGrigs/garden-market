@@ -36,7 +36,7 @@ const ReviewForm = ({ onClose, productId, productName }: ReviewFormProps) => {
         >
           <div className="p-6 text-center">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">
-              Потрібна авторизація
+              
             </h2>
             <p className="text-gray-600 mb-6">
               Щоб залишити відгук, необхідно увійти в аккаунт

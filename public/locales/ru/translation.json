@@ -145,6 +145,8 @@
       "subtitle": "Введите новый пароль ниже.",
       "newPassword": "Новый пароль",
       "newPasswordPlaceholder": "Введите новый пароль",
+      "verificationCode": "Код подтверждения",
+      "verificationCodePlaceholder": "Введите 3-значный код",
       "confirmPassword": "Подтвердите пароль",
       "confirmPasswordPlaceholder": "Повторите новый пароль",
       "submit": "Сбросить пароль",
@@ -405,6 +407,8 @@
     }
   },
   "reviews": {
+    "authMessage": "Для того чтобы оставить отзыв, необходимо войти в аккаунт",
+    "auth": "Войдите в аккаунт",
     "all": "Просмтреть все отзывы",
     "first": "Станьте первым, кто оставит отзыв!",
     "customerReviews": "Отзывы клиентов",

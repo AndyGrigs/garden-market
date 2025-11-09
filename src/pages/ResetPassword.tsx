@@ -1,62 +1,66 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { useResetPasswordMutation } from "../store/api/authApi";
-import { Lock } from "lucide-react";
-import { motion } from "framer-motion";
-import { ErrorResponse } from "../types/IUser";
-import { useTranslation } from "react-i18next";
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { useResetPasswordMutation } from '../store/api/authApi';
+import { Lock } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ErrorResponse } from '../types/IUser';
+import { useTranslation } from 'react-i18next';
 import MainPageLink from '../shared/MainPageLink';
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const codeFromUrl = searchParams.get('code');
+  const [code, setCode] = useState(codeFromUrl || '');
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  
+  const email = searchParams.get('email');
   const { t } = useTranslation();
 
-  // const token = searchParams.get("token");
-  const email = searchParams.get("email")
-  const code = searchParams.get("code")
-  const [resetPassword, { isLoading }] = useResetPasswordMutation();
-
   useEffect(() => {
-    if (!email || !code) {
-      setError("Invalid or missing code or email");
+    if (!email) {
+      setError('Invalid or missing email');
     }
-  }, [code, email]);
+  }, [email]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setMessage("");
+    setError('');
+    setMessage('');
 
-    if (!email  || !code) {
-      setError("Invalid email or code");
+    if (!email || !code) {
+      setError('Invalid email or code');
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError('Passwords do not match');
       return;
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
+      setError('Password must be at least 6 characters long');
       return;
     }
 
     try {
-      const response = await resetPassword({ email, code, newPassword: password }).unwrap();
+      const response = await resetPassword({
+        email,
+        code,
+        newPassword: password,
+      }).unwrap();
       setMessage(response.message);
       setTimeout(() => {
-        navigate("/login");
+        navigate('/login');
       }, 2000);
     } catch (err: ErrorResponse | unknown) {
       setError(
         (err as ErrorResponse)?.data?.message ||
-          "Failed to reset password. Please try again."
+          'Failed to reset password. Please try again.'
       );
     }
   };
@@ -64,7 +68,7 @@ const ResetPassword = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="absolute top-4 right-4">
-        <MainPageLink/>
+        <MainPageLink />
       </div>
 
       <motion.div
@@ -76,10 +80,10 @@ const ResetPassword = () => {
         <div className="text-center">
           <Lock className="mx-auto h-12 w-12 text-emerald-600" />
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            {t("auth.resetPassword.title")}
+            {t('auth.resetPassword.title')}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            {t("auth.resetPassword.subtitle")}
+            {t('auth.resetPassword.subtitle')}
           </p>
         </div>
 
@@ -112,10 +116,33 @@ const ResetPassword = () => {
 
             <div>
               <label
+                htmlFor="verificationCode"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                {t('auth.resetPassword.verificationCode')}
+              </label>
+              <input
+                id="verificationCode"
+                name="verificationCode"
+                type="text"
+                required
+                value={code || ''}
+                onChange={(e) => setCode(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-center text-lg font-mono tracking-widest"
+                placeholder={t(
+                  'auth.resetPassword.verificationCodePlaceholder'
+                )}
+                maxLength={3}
+                pattern="[0-9]{3}"
+              />
+            </div>
+
+            <div>
+              <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                {t("auth.resetPassword.newPassword")}
+                {t('auth.resetPassword.newPassword')}
               </label>
               <input
                 id="password"
@@ -125,7 +152,7 @@ const ResetPassword = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder={t("auth.resetPassword.newPasswordPlaceholder")}
+                placeholder={t('auth.resetPassword.newPasswordPlaceholder')}
                 minLength={6}
               />
             </div>
@@ -135,7 +162,7 @@ const ResetPassword = () => {
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                {t("auth.resetPassword.confirmPassword")}
+                {t('auth.resetPassword.confirmPassword')}
               </label>
               <input
                 id="confirmPassword"
@@ -145,7 +172,7 @@ const ResetPassword = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder={t("auth.resetPassword.confirmPasswordPlaceholder")}
+                placeholder={t('auth.resetPassword.confirmPasswordPlaceholder')}
                 minLength={6}
               />
             </div>
@@ -162,12 +189,12 @@ const ResetPassword = () => {
                     transition={{
                       duration: 1,
                       repeat: Infinity,
-                      ease: "linear",
+                      ease: 'linear',
                     }}
                     className="rounded-full h-5 w-5 border-b-2 border-white"
                   />
                 ) : (
-                  t("auth.resetPassword.submit")
+                  t('auth.resetPassword.submit')
                 )}
               </button>
             </div>
@@ -175,12 +202,12 @@ const ResetPassword = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              {t("auth.resetPassword.backToLogin")}{" "}
+              {t('auth.resetPassword.backToLogin')}{' '}
               <Link
                 to="/login"
                 className="font-medium text-emerald-600 hover:text-emerald-500"
               >
-                {t("auth.login.title")}
+                {t('auth.login.title')}
               </Link>
             </p>
           </div>

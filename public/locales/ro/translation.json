@@ -145,6 +145,8 @@
       "title": "Resetează parola",
       "subtitle": "Introduceți noua parolă mai jos.",
       "newPassword": "Parolă nouă",
+      "verificationCode": "Cod de verificare",
+      "verificationCodePlaceholder": "Introduceți codul de 3 cifre",
       "newPasswordPlaceholder": "Introduceți noua parolă",
       "confirmPassword": "Confirmă parola",
       "confirmPasswordPlaceholder": "Reintroduceți noua parolă",
@@ -399,6 +401,8 @@
     }
   },
   "reviews": {
+    "auth": " Vă rugăm să vă autenticați",
+    "authMessage": "Pentru a lăsa un comentariu, este necesar să vă înregistrați în contul dvs.",
     "all": "Vezi toate recenzile",
     "first": " Deveniți primul care va lăsa un comentariu!",
     "customerReviews": "Recenzii clienți",
