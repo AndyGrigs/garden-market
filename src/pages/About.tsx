@@ -20,24 +20,17 @@ const About = () => {
 
   const teamMembers = [
     {
-      name: " Андрей Ковач",
+      name: "Андрей Ковач",
       role: "Основатель & Главный садовник",
       experience: "5 лет опыта",
-      image: "",
+      image: "/api/placeholder/300/300",
       description: "Эксперт по выращиванию хвойных и лиственных пород деревьев"
-    },
-    {
-      name: "",
-      role: "",
-      experience: "",
-      image: "",
-      description: ""
     },
     {
       name: "Иван Ковач",
       role: "Менеджер по продажам",
-      experience: "",
-      image: "",
+      experience: "3 года опыта",
+      image: "/api/placeholder/300/300",
       description: "Консультирует клиентов и обеспечивает качественное обслуживание"
     }
   ];
@@ -112,17 +105,21 @@ const About = () => {
               <div>
                 <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
                   <Heart className="h-8 w-8 text-emerald-600 mr-3" />
-                  
+                  Наша история
                 </h2>
                 <div className="space-y-4 text-gray-600 leading-relaxed">
                   <p>
-                  
+                    Семья Ковач начала заниматься выращиванием саженцев более 5 лет назад.
+                    Это началось как небольшое хобби, но постепенно переросло в семейный бизнес,
+                    которым мы гордимся.
                   </p>
                   <p>
-                    
+                    За годы работы мы накопили богатый опыт в выращивании различных видов деревьев
+                    и кустарников, адаптированных к климату Молдовы. Наши саженцы выращиваются с любовью
+                    и заботой, что гарантирует их высокое качество и приживаемость.
                   </p>
                   <p>
-                    Наша миссия - помочь людям создавать красивые зеленые пространства, 
+                    Наша миссия - помочь людям создавать красивые зеленые пространства,
                     которые будут радовать их и их семьи на протяжении многих лет.
                   </p>
                 </div>
@@ -175,7 +172,7 @@ const About = () => {
         >
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 flex items-center justify-center">
             <Users className="h-8 w-8 text-emerald-600 mr-3" />
-          
+            Наша команда
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -292,7 +289,7 @@ const About = () => {
                 <MapPin className="h-12 w-12 mx-auto text-emerald-200" />
                 <h3 className="text-xl font-semibold">Адрес</h3>
                 <div className="space-y-1">
-                  <p className="text-emerald-100"></p>с. Чалык</p>
+                  <p className="text-emerald-100">с. Чалык</p>
                   <p className="text-emerald-100">Тараклийский р-он</p>
                   <p className="text-emerald-100">Молдова</p>
                 </div>

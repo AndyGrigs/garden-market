@@ -87,7 +87,7 @@ export default function SubHeader({ onCategoryFilterClick, showCategoryFilter = 
             )}
 
             <a
-              href="tel:+37368123456"
+              href="tel:+37379748131"
               className="hidden sm:flex items-center space-x-1 hover:text-emerald-200 transition-colors"
             >
               <Phone className="h-4 w-4" />
@@ -103,7 +103,7 @@ export default function SubHeader({ onCategoryFilterClick, showCategoryFilter = 
 
             {/* Mobile - Only show phone icon */}
             <a
-              href="tel:+37368123456"
+              href="tel:37379748131"
               className="sm:hidden flex items-center hover:text-emerald-200 transition-colors"
             >
               <Phone className="h-4 w-4" />
