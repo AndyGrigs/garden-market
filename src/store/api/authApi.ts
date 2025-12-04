@@ -39,6 +39,7 @@ interface ApiResponse {
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: appBaseQuery,
+  keepUnusedDataFor: 600, // Cache for 10 minutes (auth rarely changes)
   endpoints: (builder) => ({
     login: builder.mutation<AuthResponse, LoginRequest>({
       query: (credentials) => ({

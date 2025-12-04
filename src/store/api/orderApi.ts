@@ -7,6 +7,7 @@ export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: appBaseQuery,
   tagTypes: ["Order"],
+  keepUnusedDataFor: 180, // Cache for 3 minutes (orders change frequently)
   endpoints: (builder) => ({
     getUserOrders: builder.query<Order[], string>({
       query: (userId) => `/orders/user/${userId}`,

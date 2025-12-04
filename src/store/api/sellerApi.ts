@@ -7,6 +7,7 @@ export const sellerApi = createApi({
   reducerPath: "sellerApi",
   baseQuery: appBaseQuery,
   tagTypes: ["SellerTree"],
+  keepUnusedDataFor: 240, // Cache for 4 minutes
   endpoints: (builder) => ({
     // Отримати товари продавця
     getSellerTrees: builder.query<{ trees: Tree[] }, void>({

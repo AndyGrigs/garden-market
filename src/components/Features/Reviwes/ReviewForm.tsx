@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCreateReviewMutation } from '../../../store/api/reviewApi';
 import { Star } from 'lucide-react';
@@ -12,7 +12,7 @@ interface ReviewFormProps {
   productName?: string;
 }
 
-const ReviewForm = ({ onClose, productId, productName }: ReviewFormProps) => {
+const ReviewForm = memo(function ReviewForm({ onClose, productId, productName }: ReviewFormProps) {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -176,6 +176,6 @@ const ReviewForm = ({ onClose, productId, productName }: ReviewFormProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default ReviewForm;

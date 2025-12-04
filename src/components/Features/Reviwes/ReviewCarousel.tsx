@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { motion } from '@/utils/motionComponents';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,7 @@ interface ReviewCarouselProps {
   reviews: Review[];
 }
 
-export default function ReviewCarousel({ reviews }: ReviewCarouselProps) {
+const ReviewCarousel = memo(function ReviewCarousel({ reviews }: ReviewCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const { t } = useTranslation();
@@ -173,4 +173,6 @@ export default function ReviewCarousel({ reviews }: ReviewCarouselProps) {
       )}
     </div>
   );
-}
+});
+
+export default ReviewCarousel;

@@ -25,6 +25,7 @@ export const adminApi = createApi({
   reducerPath: "adminApi",
   baseQuery: appBaseQuery,
   tagTypes: ["PendingSellers", "Notifications", "UnreadCount"],
+  keepUnusedDataFor: 120, // Cache for 2 minutes (admin data changes frequently)
   endpoints: (builder) => ({
     // Seller endpoints
     getPendingSellers: builder.query<{ sellers: PendingSeller[] }, void>({

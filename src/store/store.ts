@@ -28,8 +28,22 @@ export const store = configureStore({
     [adminApi.reducerPath]: adminApi.reducer,
     [paymentApi.reducerPath]: paymentApi.reducer,
   },
+  // Disable DevTools in production for better performance
+  devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore serializability checks for actions with file uploads
+        ignoredActions: [
+          'uploadApi/executeMutation/fulfilled',
+          'uploadApi/executeMutation/pending',
+        ],
+        // Ignore these paths in the state for performance
+        ignoredPaths: ['uploadApi.mutations'],
+      },
+      // Enable immutability check only in development
+      immutableCheck: process.env.NODE_ENV === 'development',
+    })
       .concat(authApi.middleware)
       .concat(treesApi.middleware)
       .concat(categoryApi.middleware)
