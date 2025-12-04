@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import { AlertCircle} from 'lucide-react';
 import TermsContent from '../shared/terms/TermsContent';
 import { t } from 'i18next';

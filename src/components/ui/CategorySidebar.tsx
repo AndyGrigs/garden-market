@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, Filter, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from '@/utils/motionComponents';
 import { useTranslation } from 'react-i18next';
 import { useGetCategoriesQuery } from '@/store/api/categoryApi';
 import { BASE_URL } from '@/config';

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useGetCurrentUserQuery } from '../store/api/authApi';
 import { setUser } from '../store/slices/authSlice';
 import AnimatedRoutes from './AnimatedRoutes';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 
 
 const AuthLoader = () => {

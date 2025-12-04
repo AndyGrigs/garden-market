@@ -5,7 +5,7 @@ import {
   useResendVerificationCodeMutation,
 } from "../store/api/authApi";
 import { Home, Mail, RefreshCw } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from '@/utils/motionComponents';
 import { ErrorResponse } from "../types/IUser";
 import { useTranslation } from "react-i18next";
 

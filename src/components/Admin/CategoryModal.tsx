@@ -8,7 +8,7 @@ import { Loader2, X } from 'lucide-react';
 import { BASE_URL } from '../../config';
 import { t } from 'i18next';
 import toast from 'react-hot-toast';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from '@/utils/motionComponents';
 
 interface Props {
   isOpen?: boolean;

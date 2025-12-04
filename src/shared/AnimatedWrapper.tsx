@@ -1,4 +1,4 @@
-import { Variants, motion } from 'framer-motion';
+import { Variants, motion } from '@/utils/motionComponents';
 import { ReactNode } from 'react';
 
 type AnimationType =

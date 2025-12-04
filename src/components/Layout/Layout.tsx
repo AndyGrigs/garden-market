@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useState } from 'react';
 import { CartItem } from '../../types';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from '@/utils/motionComponents';
 import Cart from '../Features/Cart/Cart';
 
 export default function Layout() {

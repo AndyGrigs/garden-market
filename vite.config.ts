@@ -17,7 +17,28 @@ export default defineConfig({
       '@/utils': path.resolve(__dirname, './src/utils'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-redux': ['@reduxjs/toolkit', 'react-redux'],
+          'vendor-animations': ['framer-motion'],
+          'vendor-stripe': ['@stripe/stripe-js', '@stripe/react-stripe-js'],
+          'vendor-i18n': ['react-i18next', 'i18next'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
   optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      '@reduxjs/toolkit',
+      'react-redux'
+    ],
     exclude: ['lucide-react'],
   },
 });

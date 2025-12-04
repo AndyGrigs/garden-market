@@ -6,7 +6,7 @@ import { useLoginMutation, useForgotPasswordMutation } from "../store/api/authAp
 import { LogIn} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from '@/utils/motionComponents';
 import { setUser } from '../store/slices/authSlice';
 import MainPageLink from '../shared/MainPageLink';
 import toast from 'react-hot-toast';

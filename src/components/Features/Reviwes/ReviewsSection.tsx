@@ -1,6 +1,6 @@
 
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import ReviewCarousel from './ReviewCarousel';
 import { useGetReviewsQuery } from '@/store/api/reviewApi';
 

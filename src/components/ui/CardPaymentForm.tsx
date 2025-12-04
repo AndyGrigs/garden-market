@@ -8,7 +8,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { Loader2, CreditCard } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import toast from 'react-hot-toast';
 
 const stripePromise = loadStripe(

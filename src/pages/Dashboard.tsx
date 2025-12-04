@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Home, Package, Star } from "lucide-react";
 import { useGetUserOrdersQuery } from "../store/api/orderApi";
 import { useGetUserReviewsQuery } from "../store/api/reviewApi";
-import { motion } from "framer-motion";
+import { motion } from "@/utils/motionComponents";
 import { getCurrency } from '../shared/helpers/getCurrency';
 
 export default function Dashboard() {

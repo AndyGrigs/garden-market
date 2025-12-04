@@ -2,7 +2,7 @@ import { ShoppingCart, LogOut, X, User, Package } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from '@/utils/motionComponents';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import AdminLink from '@/shared/headerFolder/AdminLinks';

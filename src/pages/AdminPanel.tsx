@@ -1,10 +1,11 @@
-import { useState } from "react";
-import AdminCategories from "../components/Admin/AdminCategories";
-import AdminTrees from "../components/Admin/AdminTrees";
-import AdminSellers from "../components/Admin/AdminSellers";
-import AdminNotifications from "../components/Admin/AdminNotifications";
+import { useState, lazy, Suspense } from "react";
 import NotificationBell from "../components/Admin/NotificationBell";
 import { useTranslation } from 'react-i18next';
+
+const AdminCategories = lazy(() => import("../components/Admin/AdminCategories"));
+const AdminTrees = lazy(() => import("../components/Admin/AdminTrees"));
+const AdminSellers = lazy(() => import("../components/Admin/AdminSellers"));
+const AdminNotifications = lazy(() => import("../components/Admin/AdminNotifications"));
 
 const AdminPanel = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
@@ -61,23 +62,29 @@ const AdminPanel = () => {
         {/* Tab Content */}
         {activeTab === 'sellers' && (
           <div className="mb-8">
-            <AdminSellers />
+            <Suspense fallback={<div className="text-center py-8">{t('common.loading', { defaultValue: 'Завантаження...' })}</div>}>
+              <AdminSellers />
+            </Suspense>
           </div>
         )}
 
         {activeTab === 'notifications' && (
           <div className="mb-8">
-            <AdminNotifications />
+            <Suspense fallback={<div className="text-center py-8">{t('common.loading', { defaultValue: 'Завантаження...' })}</div>}>
+              <AdminNotifications />
+            </Suspense>
           </div>
         )}
 
         {activeTab === 'products' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <AdminCategories
-              selectedCategoryId={selectedCategoryId}
-              onSelectCategory={setSelectedCategoryId}
-            />
-            <AdminTrees selectedCategoryId={selectedCategoryId} />
+            <Suspense fallback={<div className="text-center py-8">{t('common.loading', { defaultValue: 'Завантаження...' })}</div>}>
+              <AdminCategories
+                selectedCategoryId={selectedCategoryId}
+                onSelectCategory={setSelectedCategoryId}
+              />
+              <AdminTrees selectedCategoryId={selectedCategoryId} />
+            </Suspense>
           </div>
         )}
       </div>

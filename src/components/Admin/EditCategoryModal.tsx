@@ -9,7 +9,7 @@ import { Loader2, X, Upload } from 'lucide-react';
 import { BASE_URL } from '../../config';
 import toast from 'react-hot-toast';
 import { t } from 'i18next';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from '@/utils/motionComponents';
 
 interface Props {
   isOpen: boolean;

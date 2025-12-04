@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X, CreditCard, Wallet } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import { useTranslation } from 'react-i18next';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { CartItem } from '@/types';

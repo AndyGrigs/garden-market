@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Edit2, Trash2, Package, Loader2} from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from '@/utils/motionComponents';
 
 import toast from "react-hot-toast";
 import SellerTreeModal from "./SellerTreeModal";

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import { t } from 'i18next';
 import { Users, ShoppingCart } from 'lucide-react';
 

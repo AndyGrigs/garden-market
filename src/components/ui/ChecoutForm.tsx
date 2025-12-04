@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';

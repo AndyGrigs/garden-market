@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import { 
   Home, 
   Phone, 

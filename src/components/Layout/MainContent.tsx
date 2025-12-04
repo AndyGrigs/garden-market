@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOutletContext } from "react-router-dom";
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from '@/utils/motionComponents';
 
 import { useLanguage } from "@/hooks/useLanguage";
 import { useGetCategoriesQuery } from "@/store/api/categoryApi";

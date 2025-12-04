@@ -4,7 +4,7 @@ import { useRegisterMutation } from '../store/api/authApi';
 import { UserPlus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import { ErrorResponse } from '../types/IUser';
 import MainPageLink from '../shared/MainPageLink';
 import TermsModal from '../components/ui/TermsModal';

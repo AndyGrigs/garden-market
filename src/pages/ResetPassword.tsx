@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useResetPasswordMutation } from '../store/api/authApi';
 import { Lock } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import { ErrorResponse } from '../types/IUser';
 import { useTranslation } from 'react-i18next';
 import MainPageLink from '../shared/MainPageLink';

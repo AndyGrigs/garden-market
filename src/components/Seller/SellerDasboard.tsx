@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Package, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useGetSellerTreesQuery } from "@/store/api/sellerApi";
-import SellerTrees from './SellerTrees';
-import SellerStats from './SellerStats';
 import MainPageLink from '@/shared/MainPageLink';
+
+const SellerTrees = lazy(() => import('./SellerTrees'));
+const SellerStats = lazy(() => import('./SellerStats'));
 
 
 const SellerDashboard = () => {
@@ -96,13 +97,17 @@ const SellerDashboard = () => {
 
           <div className="p-6">
             {activeTab === 'products' && (
-              <SellerTrees 
-                trees={sellerData?.trees || []} 
-                isLoading={isLoading} 
-              />
+              <Suspense fallback={<div className="text-center py-8">{t('seller.loading', { defaultValue: 'Завантаження...' })}</div>}>
+                <SellerTrees
+                  trees={sellerData?.trees || []}
+                  isLoading={isLoading}
+                />
+              </Suspense>
             )}
             {activeTab === 'stats' && (
-              <SellerStats trees={sellerData?.trees || []} />
+              <Suspense fallback={<div className="text-center py-8">{t('seller.loading', { defaultValue: 'Завантаження...' })}</div>}>
+                <SellerStats trees={sellerData?.trees || []} />
+              </Suspense>
             )}
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { CreditCard, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import toast from 'react-hot-toast';
 import { useCreatePayNetPaymentMutation } from '@/store/api/paymentsApi';
 

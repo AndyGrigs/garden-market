@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion } from '@/utils/motionComponents';
 import TermsContent from '@/shared/terms/TermsContent';
 
 
