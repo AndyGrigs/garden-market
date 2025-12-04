@@ -6,6 +6,9 @@ import { useState } from 'react';
 import { CartItem } from '../../types';
 import { AnimatePresence } from '@/utils/motionComponents';
 import Cart from '../Features/Cart/Cart';
+import { useGetTreesQuery } from '../../store/api/treesApi';
+import { useGetCategoriesQuery } from '../../store/api/categoryApi';
+import { useGetReviewsQuery } from '../../store/api/reviewApi';
 
 export default function Layout() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -13,6 +16,12 @@ export default function Layout() {
   const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(false);
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const location = useLocation();
+
+  // Preload critical data - це закешує дані для швидкого доступу
+  // RTK Query автоматично дедуплікує запити та кешує результати
+  useGetTreesQuery();
+  useGetCategoriesQuery();
+  useGetReviewsQuery();
 
   // Only show category filter on homepage
   const showCategoryFilter = location.pathname === '/';

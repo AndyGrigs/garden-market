@@ -7,6 +7,7 @@ export const treesApi = createApi({
   reducerPath: "treesApi",
   baseQuery: appBaseQuery,
   tagTypes: ["Trees"],
+  keepUnusedDataFor: 300, // Cache for 5 minutes
   endpoints: (builder) => ({
     getTrees: builder.query<Tree[], void>({
       query: () => "/trees",

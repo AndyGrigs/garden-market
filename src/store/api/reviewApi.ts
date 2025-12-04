@@ -6,6 +6,7 @@ export const reviewApi = createApi({
   reducerPath: "reviewApi",
   baseQuery: appBaseQuery,
   tagTypes: ["Review"],
+  keepUnusedDataFor: 300, // Cache for 5 minutes
   endpoints: (builder) => ({
     getReviews: builder.query<Review[], void>({
       query: () => "/api/reviews",

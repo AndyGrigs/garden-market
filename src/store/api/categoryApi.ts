@@ -7,6 +7,7 @@ export const categoryApi = createApi({
   reducerPath: 'categoryApi',
   baseQuery: appBaseQuery,
   tagTypes: ['Category'],
+  keepUnusedDataFor: 300, // Cache for 5 minutes
   endpoints: (builder) => ({
     getCategories: builder.query<Category[], void>({
       query: () => '/categories',
