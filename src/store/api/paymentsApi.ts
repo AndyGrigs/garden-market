@@ -48,46 +48,15 @@ export interface PayNetResponse {
   message?: string;
 }
 
-export interface CreateStripeIntentRequest {
-  orderId: string;
-  amount: number;
-  currency?: string;
-  customerInfo: {
-    name: string;
-    email?: string;
-  };
-}
 
-export interface StripeIntentResponse {
-  success: boolean;
-  clientSecret: string;
-  paymentId: string;
-}
 
-export interface StripeConfigResponse {
-  success: boolean;
-  publishableKey: string;
-}
-
-export interface ConfirmStripePaymentResponse {
-  success: boolean;
-  payment: {
-    id: string;
-    orderId: string;
-    status: string;
-    amount: number;
-    currency: string;
-  };
-}
 
 export const paymentApi = createApi({
   reducerPath: 'paymentApi',
   baseQuery: appBaseQuery,
   tagTypes: ['Payment'],
   endpoints: (builder) => ({
-    getStripeConfig: builder.query<StripeConfigResponse, void>({
-      query: () => '/payments/stripe/config',
-    }),
+  
     createPayPalOrder: builder.mutation<
       PayPalOrderResponse,
       CreatePayPalOrderRequest
@@ -122,37 +91,14 @@ export const paymentApi = createApi({
       }),
     }),
 
-    createStripePaymentIntent: builder.mutation<
-      StripeIntentResponse,
-      CreateStripeIntentRequest
-    >({
-      query: (data) => ({
-        url: '/payments/stripe/create-intent',
-        method: 'POST',
-        body: data,
-      }),
-    }),
 
-    confirmStripePayment: builder.mutation<
-      ConfirmStripePaymentResponse,
-      { paymentIntentId: string }
-    >({
-      query: (data) => ({
-        url: '/payments/stripe/confirm',
-        method: 'POST',
-        body: data,
-      }),
-      invalidatesTags: ['Payment'],
-    }),
+
   }),
 });
 
 export const {
-  useGetStripeConfigQuery,
   useCreatePayPalOrderMutation,
   useCapturePayPalPaymentMutation,
   useCreateRunPayPaymentMutation,
   useCreatePayNetPaymentMutation,
-  useCreateStripePaymentIntentMutation,
-  useConfirmStripePaymentMutation,
 } = paymentApi;
