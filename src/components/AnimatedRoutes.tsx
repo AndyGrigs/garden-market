@@ -17,11 +17,11 @@ const Layout = lazy(() => import("./Layout/Layout"));
 const About = lazy(() => import("../pages/About"));
 const TermsAndConditions = lazy(() => import("../pages/TermsAndConditions"));
 const SellerDashboard = lazy(() => import("./Seller/SellerDasboard"));
-const MainContent = lazy(() => import("./Layout/MainContent").then(module => ({ default: module.MainContent })));
-const CheckoutPage = lazy(() => import("../pages/CheckoutPage").then(module => ({ default: module.CheckoutPage })));
+const MainContent = lazy(() => import("./Layout/MainContent"));
+// const CheckoutPage = lazy(() => import("../pages/CheckoutPage").then(module => ({ default: module.CheckoutPage })));
 const OrderSuccessPage = lazy(() => import("../pages/OrderSuccessPage").then(module => ({ default: module.OrderSuccessPage })));
 
-function AnimatedRoutes() {
+function  AnimatedRoutes() {
   const location = useLocation();
 
   return (
@@ -49,7 +49,7 @@ function AnimatedRoutes() {
             }
           />
         </Route>
-        <Route path="/checkout" element={<CheckoutPage />} />
+        {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
         <Route path="/order-success" element={<OrderSuccessPage />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/reset-password" element={<ResetPassword />} />

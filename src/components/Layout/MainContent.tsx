@@ -18,7 +18,7 @@ import { CheckCircle, MessageCircle, Star, X } from "lucide-react";
 import Footer from "../Footer";
 import ContactForm from "../Features/Contact/ContactForm";
 import ReviewForm from "../Features/Reviwes/ReviewForm";
-import Hero from '../Hero';
+import Hero from '@/components/Hero';
 
 
 interface OutletContext {
@@ -28,7 +28,7 @@ interface OutletContext {
   setIsCategoryFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function MainContent() {
+export default function MainContent() {
   const { data: trees, isLoading, error } = useGetTreesQuery();
   const {data: categories}= useGetCategoriesQuery();
   const [isContactOpen, setIsContactOpen] = useState(false);

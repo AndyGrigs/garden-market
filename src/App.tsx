@@ -17,6 +17,7 @@ function App() {
           </div>
         }>
           <AuthLoader/>
+          
           <Toaster
             position="top-right"
             toastOptions={{
