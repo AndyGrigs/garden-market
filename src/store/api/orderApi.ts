@@ -1,25 +1,61 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { appBaseQuery } from './appBaseQuery';
-import { Order } from '../../types/IOrders';
+import { CreateOrderRequest, Order } from '../../types/IOrders';
 
 export const orderApi = createApi({
-  reducerPath: "orderApi",
+  reducerPath: 'orderApi',
   baseQuery: appBaseQuery,
-  tagTypes: ["Order"],
-  keepUnusedDataFor: 180, // Cache for 3 minutes (orders change frequently)
+  tagTypes: ['Order'],
+  keepUnusedDataFor: 180,
   endpoints: (builder) => ({
     getUserOrders: builder.query<Order[], string>({
       query: (userId) => `/orders/user/${userId}`,
-      providesTags: ["Order"],
+      providesTags: ['Order'],
     }),
-    createOrder: builder.mutation<Order, Partial<Order>>({
+    createOrder: builder.mutation<
+      { success: boolean; order: Order; message: string },
+      CreateOrderRequest
+    >({
       query: (orderData) => ({
-        url: "/orders",
-        method: "POST",
+        url: '/orders',
+        method: 'POST',
         body: orderData,
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ['Order'],
+    }),
+
+    getAllOrders: builder.query<
+      {
+        orders: Order[];
+        totalPages: number;
+        currentPage: number;
+        total: number;
+      },
+      { status?: string; paymentStatus?: string; page?: number; limit?: number }
+    >({
+      query: (params) => ({
+        url: '/orders',
+        params,
+      }),
+      providesTags: ['Order'],
+    }),
+
+    updateOrderStatus: builder.mutation<
+      { success: boolean; order: Order },
+      {
+        id: string;
+        status?: string;
+        paymentsStatus?: string;
+        adminNotes?: string;
+      }
+    >({
+      query: ({ id, ...data }) => ({
+        url: `/orders/${id}/status`,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['Order'],
     }),
   }),
 });
@@ -27,4 +63,6 @@ export const orderApi = createApi({
 export const {
   useGetUserOrdersQuery,
   useCreateOrderMutation,
+  useGetAllOrdersQuery,
+  useUpdateOrderStatusMutation,
 } = orderApi;
