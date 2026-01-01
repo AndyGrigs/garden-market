@@ -70,7 +70,7 @@ const SimpleCheckoutModal = ({
         userId: user?._id,
         items: items.map((item) => ({
           treeId: item._id,
-          title: item.title,
+          title: item.title[i18n.language as keyof typeof item.title] || item.title.ru,
           quantity: item.quantity,
           price: item.price,
         })),
@@ -83,21 +83,21 @@ const SimpleCheckoutModal = ({
       const result = await createOrder(orderData).unwrap();
 
       if (result.success) {
-        toast.success(result.message || t('checkout.success', { 
-          defaultValue: 'Замовлення створено! Перевірте email.' 
+        toast.success(result.message || t('checkout.success', {
+          defaultValue: 'Заказ создан! Проверьте email.'
         }));
         onSuccess();
         onClose();
       }
     } catch (error: unknown) {
       console.error('Order creation error:', error);
-      toast.error(error?.data?.message || t('checkout.orderError', { 
-        defaultValue: 'Помилка створення замовлення' 
+      toast.error(error?.data?.message || t('checkout.orderError', {
+        defaultValue: 'Ошибка создания заказа' 
       }));
     }
   };
 
-  return <div>SimpleCheckoutModal</div>;
+  return <div className='flex justify-between'>SimpleCheckoutModal</div>;
 };
 
 export default SimpleCheckoutModal;
