@@ -4,6 +4,8 @@ import { CartItem } from '../../types';
 import { useAppSelector } from '../../store/store';
 import toast from 'react-hot-toast';
 import { useCreateOrderMutation } from '@/store/api/orderApi';
+import { X } from 'lucide-react';
+import { motion } from 'framer-motion';
 interface SimpleCheckoutModalProps {
   items: CartItem[];
   total: number;
@@ -18,7 +20,7 @@ const SimpleCheckoutModal = ({
 }: SimpleCheckoutModalProps) => {
   const { t, i18n } = useTranslation();
   const user = useAppSelector((state) => state.auth.user);
-  const [createOrder, {loading}] = useCreateOrderMutation();
+  const [createOrder, { loading }] = useCreateOrderMutation();
   const [shippingInfo, setShippingInfo] = useState({
     name: user?.fullName || '',
     email: user?.email || '',
@@ -70,7 +72,9 @@ const SimpleCheckoutModal = ({
         userId: user?._id,
         items: items.map((item) => ({
           treeId: item._id,
-          title: item.title[i18n.language as keyof typeof item.title] || item.title.ru,
+          title:
+            item.title[i18n.language as keyof typeof item.title] ||
+            item.title.ru,
           quantity: item.quantity,
           price: item.price,
         })),
@@ -83,21 +87,49 @@ const SimpleCheckoutModal = ({
       const result = await createOrder(orderData).unwrap();
 
       if (result.success) {
-        toast.success(result.message || t('checkout.success', {
-          defaultValue: 'Заказ создан! Проверьте email.'
-        }));
+        toast.success(
+          result.message ||
+            t('checkout.success', {
+              defaultValue: 'Заказ создан! Проверьте email.',
+            })
+        );
         onSuccess();
         onClose();
       }
     } catch (error: unknown) {
       console.error('Order creation error:', error);
-      toast.error(error?.data?.message || t('checkout.orderError', {
-        defaultValue: 'Ошибка создания заказа' 
-      }));
+      toast.error(
+        error?.data?.message ||
+          t('checkout.orderError', {
+            defaultValue: 'Ошибка создания заказа',
+          })
+      );
     }
   };
 
-  return <div className='flex justify-between'>SimpleCheckoutModal</div>;
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      {/*Header */}
+      <div className="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
+        <h2 className="text-2xl font-bold">
+          {t('checkout.title', { defaultValue: 'Оформление заказа' })}
+        </h2>
+        <button
+          onClick={onClose}
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          <X className="h-6 w-6" />
+        </button>
+      </div>
+      {/*Content*/}
+    </motion.div>
+  );
 };
 
 export default SimpleCheckoutModal;
