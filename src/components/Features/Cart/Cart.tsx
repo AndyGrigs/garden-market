@@ -6,7 +6,7 @@ import { CartItem } from "@/types";
 import { useLanguage } from "@/hooks/useLanguage";
 import { BASE_URL } from "@/config";
 import { getCurrency } from '@/shared/helpers/getCurrency';
-import SimpleCheckoutModal from '@/SimpleCheckoutModal';
+import SimpleCheckoutModal from '../../ui/SimpleCheckoutModal';
 
 interface CartProps {
   items: CartItem[];
@@ -31,7 +31,7 @@ export default function Cart({
   );
 
   const getTreeTitle = (title: { [key: string]: string }) => {
-    return title?.[lang] || title?.en || title?.ru || "Unknown";
+    return title?.[lang] || title?.ro  || title?.ru || "Unknown";
   };
 
   const handleCheckoutSuccess = () => {
@@ -42,11 +42,6 @@ export default function Cart({
     setTimeout(() => onClose(), 500);
   };
 
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
 
   const isEmpty = items.length === 0;
 
@@ -79,10 +74,13 @@ export default function Cart({
           </div>
 
           {isEmpty ? (
-            <div className="flex-1 flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-gray-500 text-lg">{t("cart.empty")}</p>
+            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
+              <div className="text-gray-400 mb-4">
+                <svg className="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
               </div>
+              <p className="text-gray-600 text-lg font-medium">{t("cart.empty")}</p>
             </div>
           ) : (
             <>
@@ -159,9 +157,11 @@ export default function Cart({
         </motion.div>
       </motion.div>
 
+      
+      {/* Checkout Modal */}
       <AnimatePresence>
         {isCheckoutOpen && (
-          <CheckoutModal
+          <SimpleCheckoutModal
             items={items}
             total={total}
             onClose={() => setIsCheckoutOpen(false)}
