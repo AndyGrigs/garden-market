@@ -6,7 +6,7 @@ import { CartItem } from "@/types";
 import { useLanguage } from "@/hooks/useLanguage";
 import { BASE_URL } from "@/config";
 import { getCurrency } from '@/shared/helpers/getCurrency';
-import CheckoutModal from '../../ui/CheckoutModal';
+import SimpleCheckoutModal from '@/SimpleCheckoutModal';
 
 interface CartProps {
   items: CartItem[];
