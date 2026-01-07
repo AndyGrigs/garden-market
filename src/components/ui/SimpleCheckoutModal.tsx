@@ -20,7 +20,7 @@ const SimpleCheckoutModal = ({
 }: SimpleCheckoutModalProps) => {
   const { t, i18n } = useTranslation();
   const user = useAppSelector((state) => state.auth.user);
-  const [createOrder] = useCreateOrderMutation();
+  const [createOrder, {isLoading}] = useCreateOrderMutation();
   const [shippingInfo, setShippingInfo] = useState({
     name: user?.fullName || '',
     email: user?.email || '',
@@ -47,17 +47,17 @@ const SimpleCheckoutModal = ({
     ) {
       toast.error(
         t('checkout.fillAllFields', {
-          defaultValue: 'Заполните все обязятельньіе поля',
+          defaultValue: 'Заполните все обязательные поля',
         })
       );
       return false;
     }
 
-    // Валідація email
+    // Валидация email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(shippingInfo.email)) {
       toast.error(
-        t('checkout.invalidEmail', { defaultValue: 'Невірний email' })
+        t('checkout.invalidEmail', { defaultValue: 'Неверный email' })
       );
       return false;
     }
@@ -98,12 +98,12 @@ const SimpleCheckoutModal = ({
       }
     } catch (error: unknown) {
       console.error('Order creation error:', error);
-      toast.error(
-        error?.data?.message ||
-          t('checkout.orderError', {
-            defaultValue: 'Ошибка создания заказа',
-          })
-      );
+      const errorMessage =
+        (error as { data?: { message?: string } })?.data?.message ||
+        t('checkout.orderError', {
+          defaultValue: 'Ошибка создания заказа',
+        });
+      toast.error(errorMessage);
     }
   };
 
@@ -138,7 +138,7 @@ const SimpleCheckoutModal = ({
           {/* Order Summary */}
           <div className="bg-gradient-to-br from-emerald-50 to-green-50 p-4 rounded-lg border border-emerald-200">
             <h3 className="font-semibold mb-3 text-emerald-800">
-              {t('checkout.orderSummary', { defaultValue: 'Ваше замовлення' })}
+              {t('checkout.orderSummary', { defaultValue: 'Ваш заказ' })}
             </h3>
             <div className="space-y-2 max-h-40 overflow-y-auto">
               {items.map((item) => (
@@ -165,14 +165,14 @@ const SimpleCheckoutModal = ({
           <div>
             <h3 className="text-lg font-semibold mb-4">
               {t('checkout.shippingInfo', {
-                defaultValue: 'Інформація про доставку',
+                defaultValue: 'Информация о доставке',
               })}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
                 placeholder={
-                  t('checkout.name', { defaultValue: "Ім'я" }) + ' *'
+                  t('checkout.name', { defaultValue: "Имя" }) + ' *'
                 }
                 value={shippingInfo.name}
                 onChange={(e) => handleShippingChange('name', e.target.value)}
@@ -202,7 +202,7 @@ const SimpleCheckoutModal = ({
               <input
                 type="text"
                 placeholder={
-                  t('checkout.city', { defaultValue: 'Місто' }) + ' *'
+                  t('checkout.city', { defaultValue: 'Город' }) + ' *'
                 }
                 value={shippingInfo.city}
                 onChange={(e) => handleShippingChange('city', e.target.value)}
@@ -212,7 +212,7 @@ const SimpleCheckoutModal = ({
               <input
                 type="text"
                 placeholder={
-                  t('checkout.address', { defaultValue: 'Адреса' }) + ' *'
+                  t('checkout.address', { defaultValue: 'Адрес' }) + ' *'
                 }
                 value={shippingInfo.address}
                 onChange={(e) =>
@@ -227,11 +227,11 @@ const SimpleCheckoutModal = ({
           {/* Customer Notes */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('checkout.notes', { defaultValue: 'Коментар до замовлення' })}
+              {t('checkout.notes', { defaultValue: 'Комментарий к заказу' })}
             </label>
             <textarea
               placeholder={t('checkout.notesPlaceholder', {
-                defaultValue: 'Додаткові побажання...',
+                defaultValue: 'Дополнительные пожелания...',
               })}
               value={customerNotes}
               onChange={(e) => setCustomerNotes(e.target.value)}
@@ -246,13 +246,13 @@ const SimpleCheckoutModal = ({
               <div>
                 <h4 className="font-semibold text-blue-900 mb-1">
                   {t('checkout.paymentNoticeTitle', {
-                    defaultValue: '📧 Рахунок на email',
+                    defaultValue: '📧 Счет на email',
                   })}
                 </h4>
                 <p className="text-sm text-blue-800">
                   {t('checkout.paymentNotice', {
                     defaultValue:
-                      'Після оформлення замовлення, на вашу пошту буде відправлено рахунок для оплати з усіма реквізитами.',
+                      'После оформления заказа, на вашу почту будет отправлен счет для оплаты со всеми реквизитами.',
                   })}
                 </p>
               </div>
@@ -270,7 +270,7 @@ const SimpleCheckoutModal = ({
               <>
                 <Loader2 className="h-5 w-5 animate-spin" />
                 <span>
-                  {t('checkout.processing', { defaultValue: 'Обробка...' })}
+                  {t('checkout.processing', { defaultValue: 'Обраблотка...' })}
                 </span>
               </>
             ) : (
@@ -278,7 +278,7 @@ const SimpleCheckoutModal = ({
                 <Mail className="h-5 w-5" />
                 <span>
                   {t('checkout.placeOrder', {
-                    defaultValue: 'Оформити замовлення',
+                    defaultValue: 'Оформить заказ',
                   })}
                 </span>
               </>
@@ -287,7 +287,7 @@ const SimpleCheckoutModal = ({
           <p className="text-xs text-gray-500 text-center">
             {t('checkout.agreement', {
               defaultValue:
-                'Натискаючи кнопку, ви погоджуєтесь з умовами обробки персональних даних',
+                'Нажимая кнопку, вы соглашаетесь с условиями обработки персональных данных',
             })}
           </p>
         </div>
