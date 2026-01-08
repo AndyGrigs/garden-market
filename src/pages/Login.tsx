@@ -57,6 +57,11 @@ export default function Login() {
       const result = await forgotPassword({ email: forgotEmail }).unwrap();
       setForgotMessage(result.message);
       toast.success(result.message);
+
+      // Перенаправляємо користувача на сторінку скидання пароля через 2 секунди
+      setTimeout(() => {
+        navigate(`/reset-password?email=${encodeURIComponent(forgotEmail)}`);
+      }, 2000);
     }catch (err: unknown) {
       const errorMsg = err instanceof Error ? err.message : String(err);
       setError(errorMsg);
