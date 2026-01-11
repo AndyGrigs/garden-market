@@ -22,7 +22,8 @@
     "quantity": "Cantitate",
     "locale": "ro-RO",
     "previous": "Anterior",
-    "next": "Următorul"
+    "next": "Următorul",
+    "loading": "Se încarcă..."
   },
 
    "hero": {
@@ -189,7 +190,8 @@
     "tabs": {
       "sellers": "Vânzători",
       "notifications": "Notificări",
-      "products": "Produse"
+      "products": "Produse",
+      "orders": "Comenzi"
     }
   },
   "notifications": {

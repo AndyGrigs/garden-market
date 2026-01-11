@@ -6,10 +6,11 @@ const AdminCategories = lazy(() => import("../components/Admin/AdminCategories")
 const AdminTrees = lazy(() => import("../components/Admin/AdminTrees"));
 const AdminSellers = lazy(() => import("../components/Admin/AdminSellers"));
 const AdminNotifications = lazy(() => import("../components/Admin/AdminNotifications"));
+const AdminOrders = lazy(() => import("../components/Admin/AdminOrders"));
 
 const AdminPanel = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
-  const [activeTab, setActiveTab] = useState<'sellers' | 'notifications' | 'products'>('sellers');
+  const [activeTab, setActiveTab] = useState<'sellers' | 'notifications' | 'products' | 'orders'>('sellers');
   const {t} = useTranslation();
 
   return (
@@ -19,7 +20,6 @@ const AdminPanel = () => {
           <h1 className="text-3xl font-bold text-gray-900">{t('header.adminPanel')}</h1>
           <div className="flex items-center gap-4">
             <NotificationBell />
-            
           </div>
         </div>
 
@@ -56,6 +56,16 @@ const AdminPanel = () => {
             >
               {t('admin.tabs.products')}
             </button>
+            <button
+              onClick={() => setActiveTab('orders')}
+              className={`pb-4 px-2 font-medium transition-colors ${
+                activeTab === 'orders'
+                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {t('admin.tabs.orders', { defaultValue: 'Замовлення' })}
+            </button>
           </nav>
         </div>
 
@@ -84,6 +94,14 @@ const AdminPanel = () => {
                 onSelectCategory={setSelectedCategoryId}
               />
               <AdminTrees selectedCategoryId={selectedCategoryId} />
+            </Suspense>
+          </div>
+        )}
+
+        {activeTab === 'orders' && (
+          <div className="mb-8">
+            <Suspense fallback={<div className="text-center py-8">{t('common.loading', { defaultValue: 'Завантаження...' })}</div>}>
+              <AdminOrders />
             </Suspense>
           </div>
         )}

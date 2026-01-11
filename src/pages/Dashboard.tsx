@@ -115,35 +115,51 @@ export default function Dashboard() {
                   <div key={order._id} className="border rounded-lg p-4">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <p className="font-semibold">{t("dashboard.orderNumber")}{order._id.slice(-8)}</p>
+                        <p className="font-semibold">{t("dashboard.orderNumber")}{order.orderNumber || order._id.slice(-8)}</p>
                         <p className="text-sm text-gray-600">
                           {new Date(order.createdAt).toLocaleDateString()}
                         </p>
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-emerald-600">
-                          {order.totalAmount.toFixed(2)} {getCurrency()}
+                          {order.totalAmount.toFixed(2)} {order.currency || getCurrency()}
                         </p>
                         <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                           order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
-                          order.status === 'confirmed' ? 'bg-yellow-100 text-yellow-800' :
+                          order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
+                          order.status === 'paid' ? 'bg-green-100 text-green-800' :
+                          order.status === 'awaiting_payment' ? 'bg-yellow-100 text-yellow-800' :
                           order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
                           'bg-gray-100 text-gray-800'
                         }`}>
-                          {t(`dashboard.orderStatus.${order.status}`, order.status)}
+                          {t(`dashboard.orderStatus.${order.status}`, { defaultValue: order.status })}
                         </span>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-2">
                       {order.items.map((item, index) => (
                         <div key={index} className="flex justify-between text-sm">
-                          <span>{item.productName} x{item.quantity}</span>
-                          <span>{(item.price * item.quantity).toFixed(2)} {getCurrency()}</span>
+                          <span>{item.title?.ru || item.title?.ro || 'Product'} x{item.quantity}</span>
+                          <span>{item.subtotal.toFixed(2)} {order.currency || getCurrency()}</span>
                         </div>
                       ))}
                     </div>
+
+                    {order.paymentStatus && (
+                      <div className="mt-3 pt-3 border-t">
+                        <span className="text-xs text-gray-600">{t("dashboard.paymentStatus", { defaultValue: "Статус оплати" })}: </span>
+                        <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                          order.paymentStatus === 'paid' ? 'bg-green-100 text-green-800' :
+                          order.paymentStatus === 'unpaid' ? 'bg-red-100 text-red-800' :
+                          order.paymentStatus === 'partial' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {t(`dashboard.payment.${order.paymentStatus}`, { defaultValue: order.paymentStatus })}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

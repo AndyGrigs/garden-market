@@ -22,7 +22,8 @@
     "quantity": "Количество",
     "locale": "ru-RU",
     "previous": "Предыдущая",
-    "next": "Следующая"
+    "next": "Следующая",
+    "loading": "Загрузка..."
   },
 
   "hero": {
@@ -188,7 +189,8 @@
     "tabs": {
       "sellers": "Продавцы",
       "notifications": "Уведомления",
-      "products": "Товары"
+      "products": "Товары",
+      "orders": "Заказы"
     }
   },
   "notifications": {
