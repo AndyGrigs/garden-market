@@ -69,6 +69,17 @@
       "2": "Conifer perfect în formă de con pentru spații mici"
     }
   },
+  "treeDetail": {
+    "back": "Înapoi",
+    "backToHome": "Înapoi la pagina principală",
+    "notFound": "Produsul nu a fost găsit",
+    "description": "Descriere",
+    "category": "Categorie",
+    "availability": "Disponibilitate",
+    "inStock": "În stoc",
+    "outOfStock": "Epuizat",
+    "seller": "Vânzător"
+  },
   "cart": {
     "title": "Coș de cumpărături",
     "total": "Total",

@@ -13,6 +13,10 @@ export const treesApi = createApi({
       query: () => "/trees",
       providesTags: ["Trees"],
     }),
+    getTreeById: builder.query<Tree, string>({
+      query: (id) => `/trees/${id}`,
+      providesTags: (_result, _error, id) => [{ type: "Trees", id }],
+    }),
     createTree: builder.mutation<Tree, Partial<Tree>>({
       query: (treeData) => ({
         url: "/admin/trees",
@@ -41,6 +45,7 @@ export const treesApi = createApi({
 
 export const {
   useGetTreesQuery,
+  useGetTreeByIdQuery,
   useCreateTreeMutation,
   useUpdateTreeMutation,
   useDeleteTreeMutation,

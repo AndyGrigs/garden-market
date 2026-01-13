@@ -18,6 +18,7 @@ const About = lazy(() => import("../pages/About"));
 const TermsAndConditions = lazy(() => import("../pages/TermsAndConditions"));
 const SellerDashboard = lazy(() => import("./Seller/SellerDasboard"));
 const MainContent = lazy(() => import("./Layout/MainContent"));
+const TreeDetailPage = lazy(() => import("../pages/TreeDetailPage"));
 // const CheckoutPage = lazy(() => import("../pages/CheckoutPage").then(module => ({ default: module.CheckoutPage })));
 const OrderSuccessPage = lazy(() => import("../pages/OrderSuccessPage").then(module => ({ default: module.OrderSuccessPage })));
 
@@ -29,6 +30,7 @@ function  AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainContent />} />
+          <Route path="tree/:id" element={<TreeDetailPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="reviews" element={<ReviewPage />} />
           <Route path="dashboard" element={<Dashboard />} />

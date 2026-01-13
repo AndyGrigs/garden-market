@@ -1,6 +1,7 @@
 
 // import { Ruler, Droplets } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '@/config';
 import { useTreeDescription, useTreeTitle } from '@/hooks/useTreeTranslations';
 import { Tree } from '@/types/ITree';
@@ -14,13 +15,14 @@ interface TreeCardProps {
 
 export default function TreeCard({ tree, onAddToCart }: TreeCardProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const getTreeTitle = useTreeTitle();
   const getTreeDescription = useTreeDescription();
 
 
   return (
 
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(`/tree/${tree._id}`)}>
     <img
      src={
     tree.imageUrl
@@ -43,7 +45,10 @@ export default function TreeCard({ tree, onAddToCart }: TreeCardProps) {
           {tree.price.toFixed(2)} {getCurrency()}
         </span>
         <button
-          onClick={() => onAddToCart(tree)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddToCart(tree);
+          }}
           className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-500 transition-colors"
         >
           {t('tree.addToCart')}
