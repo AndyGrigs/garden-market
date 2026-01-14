@@ -13,11 +13,11 @@ import { IContactForm } from "@/types/IContactForm";
 import i18n from "@/i18n";
 import CategorySidebar from "../ui/CategorySidebar";
 import TreeCard from "../ui/TreeCard";
-import ReviewsSection from "../Features/Reviwes/ReviewsSection";
+import ReviewsSection from "../Features/Reviews/ReviewsSection";
 import { CheckCircle, MessageCircle, Star, X } from "lucide-react";
 import Footer from "../Footer";
 import ContactForm from "../Features/Contact/ContactForm";
-import ReviewForm from "../Features/Reviwes/ReviewForm";
+import ReviewForm from "../Features/Reviews/ReviewForm";
 import Hero from '@/components/Hero';
 
 
