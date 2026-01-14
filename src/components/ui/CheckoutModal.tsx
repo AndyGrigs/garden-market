@@ -1,3 +1,10 @@
+/**
+ * ARCHIVED: This checkout modal is not currently in use.
+ * Cart.tsx uses SimpleCheckoutModal.tsx instead.
+ * Keeping for reference - contains PayPal/RunPay/PayNet/Stripe integrations.
+ * Consider removing in future cleanup if payment integrations aren't needed.
+ */
+
 import { useState } from 'react';
 import { X, CreditCard, Wallet } from 'lucide-react';
 import { motion } from '@/utils/motionComponents';
