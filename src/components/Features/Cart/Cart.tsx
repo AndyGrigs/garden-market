@@ -2,27 +2,22 @@ import { X, Minus, Plus } from "lucide-react";
 import { motion, AnimatePresence } from '@/utils/motionComponents';
 import { useTranslation } from "react-i18next";
 import { useState } from 'react';
-import { CartItem } from "@/types";
 import { useLanguage } from "@/hooks/useLanguage";
 import { BASE_URL } from "@/config";
 import { getCurrency } from '@/shared/helpers/getCurrency';
 import SimpleCheckoutModal from '../../ui/SimpleCheckoutModal';
+import { useAppSelector, useAppDispatch } from '@/store/store';
+import { updateQuantity, removeFromCart, clearCart } from '@/store/slices/cartSlice';
 
 interface CartProps {
-  items: CartItem[];
   onClose: () => void;
-  onUpdateQuantity: (id: string, quantity: number) => void;
-  onRemoveItem: (id: string) => void;
 }
 
-export default function Cart({
-  items,
-  onClose,
-  onUpdateQuantity,
-  onRemoveItem,
-}: CartProps) {
+export default function Cart({ onClose }: CartProps) {
   const { t } = useTranslation();
   const lang = useLanguage();
+  const dispatch = useAppDispatch();
+  const items = useAppSelector((state) => state.cart.items);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   const total = items.reduce(
@@ -35,10 +30,8 @@ export default function Cart({
   };
 
   const handleCheckoutSuccess = () => {
-    // Очищаємо кошик після успішного замовлення
-    items.forEach(item => onRemoveItem(item._id));
+    dispatch(clearCart());
     setIsCheckoutOpen(false);
-    // Закриваємо кошик після успішного оформлення
     setTimeout(() => onClose(), 500);
   };
 
@@ -108,7 +101,7 @@ export default function Cart({
                       <motion.button
                         whileTap={{ scale: 0.95 }}
                         onClick={() =>
-                          onUpdateQuantity(item._id, item.quantity - 1)
+                          dispatch(updateQuantity({ id: item._id, quantity: item.quantity - 1 }))
                         }
                         className="p-1 hover:bg-gray-200 rounded transition-colors"
                         disabled={item.quantity <= 1}
@@ -119,7 +112,7 @@ export default function Cart({
                       <motion.button
                         whileTap={{ scale: 0.95 }}
                         onClick={() =>
-                          onUpdateQuantity(item._id, item.quantity + 1)
+                          dispatch(updateQuantity({ id: item._id, quantity: item.quantity + 1 }))
                         }
                         className="p-1 hover:bg-gray-200 rounded transition-colors"
                       >
@@ -129,7 +122,7 @@ export default function Cart({
                   </div>
                   <motion.button
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => onRemoveItem(item._id)}
+                    onClick={() => dispatch(removeFromCart(item._id))}
                     className="p-2 hover:bg-gray-200 rounded transition-colors"
                   >
                     <X className="h-5 w-5" />
