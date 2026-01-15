@@ -5,6 +5,7 @@ import { treesApi } from './api/treesApi';
 import authReducer from './slices/authSlice';
 import categoryReducer from './slices/categorySlice';
 import treeReducer from './slices/treeSlice';
+import cartReducer from './slices/cartSlice';
 import { categoryApi } from './api/categoryApi';
 import { uploadApi } from './api/uploadApi';
 import { reviewApi } from './api/reviewApi';
@@ -18,6 +19,7 @@ export const store = configureStore({
     auth: authReducer,
     category: categoryReducer,
     tree: treeReducer,
+    cart: cartReducer,
     [authApi.reducerPath]: authApi.reducer,
     [treesApi.reducerPath]: treesApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,

@@ -6,24 +6,23 @@ import { AnimatePresence, motion } from '@/utils/motionComponents';
 import { useLanguage } from "@/hooks/useLanguage";
 import { useGetCategoriesQuery } from "@/store/api/categoryApi";
 import { useGetTreesQuery } from "@/store/api/treesApi";
-import { CartItem } from "@/types";
 import { Tree } from "@/types/ITree";
 import toast, { Toaster } from "react-hot-toast";
 import { IContactForm } from "@/types/IContactForm";
 import i18n from "@/i18n";
 import CategorySidebar from "../ui/CategorySidebar";
 import TreeCard from "../ui/TreeCard";
-import ReviewsSection from "../Features/Reviwes/ReviewsSection";
+import ReviewsSection from "../Features/Reviews/ReviewsSection";
 import { CheckCircle, MessageCircle, Star, X } from "lucide-react";
 import Footer from "../Footer";
 import ContactForm from "../Features/Contact/ContactForm";
-import ReviewForm from "../Features/Reviwes/ReviewForm";
+import ReviewForm from "../Features/Reviews/ReviewForm";
 import Hero from '@/components/Hero';
+import { useAppDispatch } from '@/store/store';
+import { addToCart as addToCartAction } from '@/store/slices/cartSlice';
 
 
 interface OutletContext {
-  cartItems: CartItem[];
-  setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
   isCategoryFilterOpen: boolean;
   setIsCategoryFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -40,9 +39,10 @@ export default function MainContent() {
   });
   const { t } = useTranslation();
   const lang = useLanguage();
+  const dispatch = useAppDispatch();
 
   // Get context from Layout
-  const { setCartItems, isCategoryFilterOpen, setIsCategoryFilterOpen } = useOutletContext<OutletContext>();
+  const { isCategoryFilterOpen, setIsCategoryFilterOpen } = useOutletContext<OutletContext>();
 
   const showNotification = (message: string) => {
     setNotification({ message, visible: true });
@@ -56,19 +56,8 @@ export default function MainContent() {
   };
 
   const addToCart = (tree: Tree) => {
-    setCartItems((prev) => {
-      const existingItem = prev.find((item) => item._id === tree._id);
-      if (existingItem) {
-        showNotification(t('cart.notifications.addedAnother', { name: getTreeTitle(tree.title) }));
-        return prev.map((item) =>
-          item._id === tree._id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      showNotification(t('cart.notifications.added', { name: getTreeTitle(tree.title) }));
-      return [...prev, { ...tree, quantity: 1 }];
-    });
+    showNotification(t('cart.notifications.added', { name: getTreeTitle(tree.title) }));
+    dispatch(addToCartAction({ ...tree, quantity: 1 }));
   };
 
   const handleContactSubmit = (form: IContactForm) => {

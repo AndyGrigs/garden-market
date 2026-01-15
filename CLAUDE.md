@@ -19,4 +19,4 @@
 - `/src/store/` - Redux store and API slices
 - `/src/types/` - TypeScript type definitions
 - `/src/hooks/` - Custom React hooks
-- `/public/locales/` - Translation files (en, ro, ru)
+- `/public/locales/` - Translation files (ro, ru)
