@@ -2,7 +2,7 @@ import { useEffect, Suspense } from 'react'
 import { useDispatch } from 'react-redux';
 import { useGetCurrentUserQuery } from '../store/api/authApi';
 import { setUser } from '../store/slices/authSlice';
-import AnimatedRoutes from './AnimatedRoutes';
+import AnimatedRoutes from '../app/routes/AnimatedRoutes';
 import { motion } from '@/utils/motionComponents';
 
 

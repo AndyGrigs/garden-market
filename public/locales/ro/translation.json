@@ -32,6 +32,39 @@
     "cta": "Cumpără acum"
   },
 
+  "home": {
+    "hero": {
+      "title": "Cultivați-vă grădina de vis",
+      "subtitle": "Copaci și plante de calitate premium pentru grădina dvs."
+    }
+  },
+
+  "filters": {
+    "title": "Filtre",
+    "categories": "Categorii",
+    "allCategories": "Toate categoriile",
+    "price": "Preț",
+    "minPrice": "Preț minim",
+    "maxPrice": "Preț maxim",
+    "availability": "Disponibilitate",
+    "inStockOnly": "Doar în stoc",
+    "reset": "Resetare filtre"
+  },
+
+  "products": {
+    "noResults": "Nu au fost găsite produse",
+    "noResultsDescription": "Încercați să modificați filtrele sau să vizualizați alte categorii",
+    "found": "Produse găsite"
+  },
+
+  "product": {
+    "inStock": "În stoc",
+    "outOfStock": "Epuizat",
+    "stock": "Stoc",
+    "unavailable": "Indisponibil",
+    "seller": "Vânzător"
+  },
+
   "photo": {
     "product": "Fotografie produsului",
     "fail": " Nu s-a putut încărca fotografia",
