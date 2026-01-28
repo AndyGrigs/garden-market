@@ -1,12 +1,12 @@
-//indeximport { useState, lazy, Suspense } from "react";
-import NotificationBell from "../components/Admin/NotificationBell";
+import { useState, lazy, Suspense } from "react";
+import NotificationBell from "../../components/Admin/NotificationBell";
 import { useTranslation } from 'react-i18next';
 
-const AdminCategories = lazy(() => import("../components/Admin/AdminCategories"));
-const AdminTrees = lazy(() => import("../components/Admin/AdminTrees"));
-const AdminSellers = lazy(() => import("../components/Admin/AdminSellers"));
-const AdminNotifications = lazy(() => import("../components/Admin/AdminNotifications"));
-const AdminOrders = lazy(() => import("../components/Admin/AdminOrders"));
+const AdminCategories = lazy(() => import("../../components/Admin/AdminCategories"));
+const AdminTrees = lazy(() => import("../../components/Admin/AdminTrees"));
+const AdminSellers = lazy(() => import("../../components/Admin/AdminSellers"));
+const AdminNotifications = lazy(() => import("../../components/Admin/AdminNotifications"));
+const AdminOrders = lazy(() => import("../../components/Admin/AdminOrders"));
 
 const AdminPanel = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
