@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Loader, XCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import  useAdminSellers from '../hooks/useAdminSellers';
-import  SellerCard  from './SellerCard';
+import useAdminSellers from '../hooks/useAdminSellers';
+import SellerCard from './SellerCard';
 import { RejectSellerModal } from './RejectSellerModal';
 
 const AdminSellers = () => {
@@ -14,7 +14,7 @@ const AdminSellers = () => {
     isApproving,
     isRejecting,
     handleApprove,
-    handleReject
+    handleReject,
   } = useAdminSellers();
 
   // ✅ Тільки UI стан для модалки

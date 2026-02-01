@@ -1,5 +1,13 @@
 import { PendingSeller } from '@/store/api/adminApi';
-import { Building2, User, Phone, MapPin, FileText, CheckCircle, XCircle } from 'lucide-react';
+import {
+  Building2,
+  User,
+  Phone,
+  MapPin,
+  FileText,
+  CheckCircle,
+  XCircle,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from './ActionButton';
