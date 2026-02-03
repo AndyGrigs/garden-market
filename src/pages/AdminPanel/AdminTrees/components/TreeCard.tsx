@@ -25,7 +25,7 @@ export const TreeCard = ({ tree, onEdit, onDelete, isProcessing }: TreeCardProps
   const getCategoryName = () => {
     if (!tree.category) return t('categories.noCategory');
     if (typeof tree.category === 'string') return tree.category;
-    return tree.category.name?.[lang] || tree.category.name?.ru || '';
+    return tree.category.name?.[lang as 'ru' | 'ro'] || tree.category.name?.ru || '';
   };
 
   return (
