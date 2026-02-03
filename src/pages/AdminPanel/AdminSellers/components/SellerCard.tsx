@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActionButton } from './ActionButton';
+import { ActionButton } from '@/shared/ui/ActionButton';
 
 interface SellerCardProps {
   seller: PendingSeller;

@@ -3,7 +3,7 @@ import NotificationBell from "../components/Admin/NotificationBell";
 import { useTranslation } from 'react-i18next';
 
 const AdminCategories = lazy(() => import("../components/Admin/AdminCategories"));
-const AdminTrees = lazy(() => import("../components/Admin/AdminTrees"));
+const AdminTrees = lazy(() => import("./AdminPanel/AdminTrees"));
 const AdminSellers = lazy(() => import("./AdminPanel/AdminSellers"));
 const AdminNotifications = lazy(() => import("../components/Admin/AdminNotifications"));
 const AdminOrders = lazy(() => import("../components/Admin/AdminOrders"));

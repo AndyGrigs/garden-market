@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { lazy } from "react";
 
 import SellerGuard from '../../components/Seller/SellerGuard';
-import AdminGuard from '../../components/Admin/AdminGuard';
+import AdminGuard from '../../pages/AdminPanel/AdminGuard';
 
 const Dashboard = lazy(() => import("../../pages/Dashboard"));
 const Login = lazy(() => import("../../pages/Login"));

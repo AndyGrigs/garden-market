@@ -1,17 +1,17 @@
 // src/components/Admin/TreeModal.tsx - Спрощена версія
 import { useEffect, useState } from 'react';
-import { useGetCategoriesQuery } from '../../store/api/categoryApi';
+import { useGetCategoriesQuery } from '@/store/api/categoryApi';
 import { Loader2, X, Upload } from 'lucide-react';
-import { Category, TranslatedString } from '../../types/ICategories';
-import { TreeFormData } from '../../types/ITree';
+import { Category, TranslatedString } from '@/types/ICategories';
+import { TreeFormData } from '@/types/ITree';
 import {
   useDeleteImageMutation,
   useUploadImageMutation,
-} from '../../store/api/uploadApi';
+} from '@/store/api/uploadApi';
 import { t } from 'i18next';
-import { BASE_URL } from '../../config';
+import { BASE_URL } from '@/config';
 import toast from 'react-hot-toast';
-import NumberInput from '../../shared/NumberInput';
+import NumberInput from '@/shared/NumberInput';
 import { AnimatePresence, motion } from '@/utils/motionComponents';
 
 interface Props {
@@ -238,16 +238,6 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
                     <label className="block text-sm font-medium mb-1">
                       {t('common.price')}
                     </label>
-                    {/* <input
-              type="number"
-              min="0"
-              step="0.01"
-              className="border border-green-600 px-3 py-2 rounded w-full"
-              placeholder="0"
-              value={form.price || ""}
-              onChange={(e) => handleChange("price", parseFloat(e.target.value) || 0)}
-              required
-            /> */}
                     <NumberInput
                       label={t('common.price')}
                       value={form.price}
@@ -261,14 +251,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
                     <label className="block text-sm font-medium mb-1">
                       {t('common.quantity')}
                     </label>
-                    {/* <input
-                            type="number"
-                            min="0"
-                            className="border border-green-600 px-3 py-2 rounded w-full"
-                            placeholder="0"
-                            value={form.stock || ""}
-                            onChange={(e) => handleChange("stock", parseInt(e.target.value) || 0)}
-                          /> */}
+                    
 
                     <NumberInput
                       label="Количество"
