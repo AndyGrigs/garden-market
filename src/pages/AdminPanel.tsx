@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 const AdminCategories = lazy(() => import("./AdminPanel/AdminCategories"));
 const AdminTrees = lazy(() => import("./AdminPanel/AdminTrees"));
 const AdminSellers = lazy(() => import("./AdminPanel/AdminSellers"));
-const AdminNotifications = lazy(() => import("../components/Admin/AdminNotifications"));
+// const AdminNotifications = lazy(() => import("../components/Admin/AdminNotifications"));
+const AdminNotifications = lazy(() => import("./AdminPanel/AdminNotifications"));
 const AdminOrders = lazy(() => import("../components/Admin/AdminOrders"));
 
 const AdminPanel = () => {
