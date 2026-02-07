@@ -1,4 +1,4 @@
-import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, ShoppingCart, AlertCircle } from 'lucide-react';
 import { useGetTreeByIdQuery } from '@/store/api/treesApi';
@@ -6,13 +6,9 @@ import { useTreeTitle, useTreeDescription } from '@/hooks/useTreeTranslations';
 import { BASE_URL } from '@/config';
 import { getCurrency } from '@/shared/helpers/getCurrency';
 import { Tree } from '@/types/ITree';
-import { CartItem } from '@/types';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { addToCart } from '@/store/slices/cartSlice';
 import toast from 'react-hot-toast';
-
-interface OutletContext {
-  cartItems: CartItem[];
-  setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
-}
 
 export default function TreeDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -20,22 +16,19 @@ export default function TreeDetailPage() {
   const { t } = useTranslation();
   const getTreeTitle = useTreeTitle();
   const getTreeDescription = useTreeDescription();
-  const { setCartItems } = useOutletContext<OutletContext>();
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.items);
 
   const { data: tree, isLoading, error } = useGetTreeByIdQuery(id || '');
 
   const handleAddToCart = (tree: Tree) => {
-    setCartItems((prev) => {
-      const existingItem = prev.find((item) => item._id === tree._id);
-      if (existingItem) {
-        toast.success(t('cart.itemUpdated'));
-        return prev.map((item) =>
-          item._id === tree._id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      }
-      toast.success(t('cart.itemAdded'));
-      return [...prev, { ...tree, quantity: 1 }];
-    });
+    const existingItem = cartItems.find((item) => item._id === tree._id);
+    dispatch(addToCart({ ...tree, quantity: 1 }));
+    if (existingItem) {
+      toast.success(t('cart.notifications.addedAnother', { name: getTreeTitle(tree.title) }));
+    } else {
+      toast.success(t('cart.notifications.added', { name: getTreeTitle(tree.title) }));
+    }
   };
 
   if (isLoading) {
