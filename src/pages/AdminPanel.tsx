@@ -7,7 +7,7 @@ const AdminTrees = lazy(() => import("./AdminPanel/AdminTrees"));
 const AdminSellers = lazy(() => import("./AdminPanel/AdminSellers"));
 // const AdminNotifications = lazy(() => import("../components/Admin/AdminNotifications"));
 const AdminNotifications = lazy(() => import("./AdminPanel/AdminNotifications"));
-const AdminOrders = lazy(() => import("../components/Admin/AdminOrders"));
+const AdminOrders = lazy(() => import("./AdminPanel/AdminOrders/components/AdminOrders"));
 
 const AdminPanel = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");

@@ -209,6 +209,7 @@
       "title": "Одобрение Продавцов",
       "noPending": "Нет продавцов, ожидающих одобрения",
       "error": "Ошибка загрузки продавцов",
+      "errorItems": "Ошибка загрузки товаров",
       "confirmApprove": "Вы уверены, что хотите одобрить этого продавца?",
       "approved": "Продавец успешно одобрен!",
       "approvalError": "Ошибка при одобрении продавца",
@@ -238,6 +239,7 @@
     },
     "orders": {
       "title": "Управление заказами",
+      "number": "Номер",
       "statusUpdated": "Статус обновлён",
       "statusUpdateError": "Ошибка обновления статуса",
       "paymentStatusUpdated": "Статус оплаты обновлён",
@@ -264,7 +266,17 @@
       "shippingAddress": "Адрес доставки:",
       "items": "Товары:",
       "total": "Итого:",
-      "customerNotes": "Комментарий клиента:"
+      "customerNotes": "Комментарий клиента:",
+      "viewDetails": "Просмотреть детали",
+      "downloadInvoice": "Скачать счет",
+      "noOrders": "Заказы отсутствуют",
+      "orderDate": "Дата заказа:"
+    },
+    "toast": {
+      "statusUpdated": "Статус обновлён",
+      "statusUpdateError": "Ошибка обновления статуса",
+      "paymentStatusUpdated": "Статус оплаты обновлён",
+      "paymentStatusUpdateError": "Ошибка обновления статуса оплаты"
     }
   },
   "notifications": {

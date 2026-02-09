@@ -1,55 +1,40 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  useGetAllOrdersQuery,
-  useUpdateOrderStatusMutation,
-} from '@/store/api/orderApi';
-import { Loader2, X, Eye, Download } from 'lucide-react';
+
+import { Loader2, X, Eye, Download, XCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { BASE_URL, CURRENCY } from '@/config';
 import type { Order } from '@/types/IOrders';
+import { OrderList } from './OrderList';
+import { OrderDetailsModal } from './OrderDetailsModal';
+import { Order } from '@/types/IOrders';
+import useAdminOrders from '../hooks/useAdminOrders';
+import { useTranslation } from 'react-i18next';
 
 const AdminOrders = () => {
-  const { t } = useTranslation();
-  const [page, setPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState('');
-  const [paymentFilter, setPaymentFilter] = useState('');
+ const {
+    orders,
+    totalPages,
+    currentPage,
+    statusFilter,
+    paymentFilter,
+    isLoading,
+    error,
+    isProcessing,
+    setPage,
+    setStatusFilter,
+    setPaymentFilter,
+    handleStatusChange,
+    handlePaymentStatusChange,
+  } = useAdminOrders();
+
+    // UI state for modal
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  const { data, isLoading, refetch } = useGetAllOrdersQuery({
-    page,
-    limit: 20,
-    status: statusFilter || undefined,
-    paymentStatus: paymentFilter || undefined,
-  });
+  // Modal handlers
+  const openDetailsModal = (order: Order) => setSelectedOrder(order);
+  const closeDetailsModal = () => setSelectedOrder(null);
 
-  const [updateStatus] = useUpdateOrderStatusMutation();
-
-  const handleStatusChange = async (orderId: string, newStatus: string) => {
-    try {
-      await updateStatus({ id: orderId, status: newStatus }).unwrap();
-      toast.success(t('admin.orders.statusUpdated'));
-      refetch();
-    } catch {
-      toast.error(t('admin.orders.statusUpdateError'));
-    }
-  };
-
-  const handlePaymentStatusChange = async (
-    orderId: string,
-    newPaymentStatus: string
-  ) => {
-    try {
-      await updateStatus({
-        id: orderId,
-        paymentsStatus: newPaymentStatus,
-      }).unwrap();
-      toast.success(t('admin.orders.paymentStatusUpdated'));
-      refetch();
-    } catch {
-      toast.error(t('admin.orders.paymentStatusUpdateError'));
-    }
-  };
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
@@ -73,10 +58,23 @@ const AdminOrders = () => {
     return colors[status] || 'bg-gray-100 text-gray-800';
   };
 
+  // Loading State
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+      <div className="flex justify-center items-center p-8">
+        <Loader className="w-8 h-8 animate-spin text-emerald-600" />
+      </div>
+    );
+  }
+
+  // Error State
+  if (error) {
+    return (
+      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div className="flex items-center gap-2 text-red-800">
+          <XCircle className="w-5 h-5" />
+          <span>Помилка завантаження замовлень</span>
+        </div>
       </div>
     );
   }

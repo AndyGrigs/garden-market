@@ -210,6 +210,7 @@
       "title": "Aprobare Vânzători",
       "noPending": "Nu există vânzători în așteptare",
       "error": "Eroare la încărcarea vânzătorilor",
+      "errorItems": "Eroare la încărcarea produselor",
       "confirmApprove": "Sunteți sigur că doriți să aprobați acest vânzător?",
       "approved": "Vânzătorul a fost aprobat cu succes!",
       "approvalError": "Eroare la aprobarea vânzătorului",
@@ -239,6 +240,7 @@
     },
     "orders": {
       "title": "Gestionarea comenzilor",
+      "number": "Număr",
       "statusUpdated": "Statusul a fost actualizat",
       "statusUpdateError": "Eroare la actualizarea statusului",
       "paymentStatusUpdated": "Statusul plății a fost actualizat",
@@ -265,7 +267,17 @@
       "shippingAddress": "Adresa de livrare:",
       "items": "Produse:",
       "total": "Total:",
-      "customerNotes": "Comentariul clientului:"
+      "customerNotes": "Comentariul clientului:",
+      "viewDetails": "Vizualizare detalii",
+      "downloadInvoice": "Descărcați factura",
+      "noOrders": "Nu există comenzi",
+      "orderDate": "Data comenzii:"
+    },
+    "toast": {
+      "statusUpdated": "Statusul a fost actualizat",
+      "statusUpdateError": "Eroare la actualizarea statusului",
+      "paymentStatusUpdated": "Statusul plății a fost actualizat",
+      "paymentStatusUpdateError": "Eroare la actualizarea statusului plății"
     }
   },
   "notifications": {
