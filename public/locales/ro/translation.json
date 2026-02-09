@@ -271,7 +271,8 @@
       "viewDetails": "Vizualizare detalii",
       "downloadInvoice": "Descărcați factura",
       "noOrders": "Nu există comenzi",
-      "orderDate": "Data comenzii:"
+      "orderDate": "Data comenzii:",
+      "errorItems": "Eroare la încărcarea comenzilor"
     },
     "toast": {
       "statusUpdated": "Statusul a fost actualizat",

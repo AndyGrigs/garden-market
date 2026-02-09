@@ -270,7 +270,8 @@
       "viewDetails": "Просмотреть детали",
       "downloadInvoice": "Скачать счет",
       "noOrders": "Заказы отсутствуют",
-      "orderDate": "Дата заказа:"
+      "orderDate": "Дата заказа:",
+      "errorItems": "Ошибка загрузки заказов"
     },
     "toast": {
       "statusUpdated": "Статус обновлён",
