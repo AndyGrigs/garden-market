@@ -1,8 +1,3 @@
-// ✅ ЩО ТУТ:
-// - Приймає products як props
-// - Рендерить список
-// - Loading/Error стани
-// - Використовує ProductCard з features/products
 
 import { useTranslation } from 'react-i18next';
 import { ProductCard } from '@/features/products/components/ProductCard';
@@ -17,8 +12,7 @@ interface ProductGridProps {
 export const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
   const { t } = useTranslation();
 
-  // ❌ НЕ робити: useState для products, API виклики
-  // ✅ Тільки приймаємо props і рендеримо
+
 
   if (isLoading) {
     return <Spinner />;

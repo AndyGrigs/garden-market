@@ -4,7 +4,7 @@ import { Tree } from '@/types/ITree';
 import { Edit, Trash2, Package, Tag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/hooks/useLanguage';
-import { BASE_URL } from '@/config';
+import { BASE_URL, CURRENCY } from '@/config';
 import { ActionButton } from '@/shared/ui/ActionButton';
 
 interface TreeCardProps {
@@ -55,7 +55,7 @@ export const TreeCard = ({ tree, onEdit, onDelete, isProcessing }: TreeCardProps
           <div className="flex items-center gap-2 text-sm">
             <Tag className="w-4 h-4 text-green-600" />
             <span className="font-medium text-green-600">
-              {tree.price} MDL
+              {tree.price} {CURRENCY}
             </span>
           </div>
 

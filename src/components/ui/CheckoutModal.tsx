@@ -20,6 +20,7 @@ import RunPayButton from './RunPayButton';
 import PayNetButton from './PayNetButton';
 import toast from 'react-hot-toast';
 import { useAppSelector } from '@/store/store';
+import { CURRENCY } from '@/config';
 
 interface CheckoutModalProps {
   items: CartItem[];
@@ -145,7 +146,7 @@ export default function CheckoutModal({
       const paypalOrder = await createPayPalOrder({
         orderId: currentOrderId,
         amount: total,
-        currency: 'MDL',
+        currency: {CURRENCY},
       }).unwrap();
 
       return paypalOrder.paypalOrderId;
@@ -309,13 +310,13 @@ export default function CheckoutModal({
                   <span>
                     {item.title.ru} x {item.quantity}
                   </span>
-                  <span>{(item.price * item.quantity).toFixed(2)} MDL</span>
+                  <span>{(item.price * item.quantity).toFixed(2)} {CURRENCY} </span>
                 </div>
               ))}
             </div>
             <div className="border-t mt-2 pt-2 flex justify-between font-bold">
               <span>{t('cart.total', { defaultValue: 'Итого' })}:</span>
-              <span>{total.toFixed(2)} MDL</span>
+              <span>{total.toFixed(2)} {CURRENCY}</span>
             </div>
           </div>
 
@@ -351,7 +352,7 @@ export default function CheckoutModal({
               >
                 <Wallet className="h-5 w-5 text-blue-600" />
                 <span className="font-semibold">RunPay</span>
-                <span className="text-xs text-gray-500">(MDL)</span>
+                <span className="text-xs text-gray-500">({CURRENCY})</span>
               </button>
 
               {/* ⬇️ PayNet кнопка */}
@@ -365,7 +366,7 @@ export default function CheckoutModal({
               >
                 <CreditCard className="h-5 w-5 text-emerald-600" />
                 <span className="font-semibold">PayNet</span>
-                <span className="text-xs text-gray-500">(MDL)</span>
+                <span className="text-xs text-gray-500">({CURRENCY})</span>
               </button>
 
               <button

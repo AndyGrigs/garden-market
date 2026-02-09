@@ -4,6 +4,7 @@ import { Wallet, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion } from '@/utils/motionComponents';
 import { useCreateRunPayPaymentMutation } from '@/store/api/paymentsApi';
+import { CURRENCY } from '@/config';
 
 interface RunPayButtonProps {
   orderId: string;
@@ -23,7 +24,7 @@ export default function RunPayButton({ orderId, amount, disabled }: RunPayButton
       const result = await createRunPayPayment({
         orderId,
         amount,
-        currency: 'MDL'
+        currency: {CURRENCY}
       }).unwrap();
 
       if (result.success && result.paymentUrl) {

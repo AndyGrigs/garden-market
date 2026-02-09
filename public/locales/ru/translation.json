@@ -91,7 +91,7 @@
   "tree": {
     "addToCart": "В корзину",
     "height": "Высота",
-    "priceLabel": "Цена: {{price}} MDL",
+    "priceLabel": "Цена: {{price}} {{currency}}",
     "maintenance": {
       "low": "Низкий",
       "medium": "Средний",
@@ -235,6 +235,36 @@
       "notifications": "Уведомления",
       "products": "Товары",
       "orders": "Заказы"
+    },
+    "orders": {
+      "title": "Управление заказами",
+      "statusUpdated": "Статус обновлён",
+      "statusUpdateError": "Ошибка обновления статуса",
+      "paymentStatusUpdated": "Статус оплаты обновлён",
+      "paymentStatusUpdateError": "Ошибка обновления статуса оплаты",
+      "allStatuses": "Все статусы",
+      "awaitingPayment": "Ожидает оплаты",
+      "paid": "Оплачено",
+      "processing": "Обрабатывается",
+      "shipped": "Отправлено",
+      "delivered": "Доставлено",
+      "cancelled": "Отменено",
+      "allPayments": "Все оплаты",
+      "unpaid": "Не оплачено",
+      "partial": "Частично",
+      "refunded": "Возвращено",
+      "order": "Заказ",
+      "client": "Клиент",
+      "amount": "Сумма",
+      "status": "Статус",
+      "payment": "Оплата",
+      "actions": "Действия",
+      "orderNumber": "Заказ {{orderNumber}}",
+      "clientLabel": "Клиент:",
+      "shippingAddress": "Адрес доставки:",
+      "items": "Товары:",
+      "total": "Итого:",
+      "customerNotes": "Комментарий клиента:"
     }
   },
   "notifications": {

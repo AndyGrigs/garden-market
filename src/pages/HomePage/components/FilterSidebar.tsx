@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGetCategoriesQuery } from '@/store/api/categoryApi';
 import type { HomePageFilters } from '../hooks/useHomePage';
+import { CURRENCY } from '@/config';
 
 interface FilterSidebarProps {
   filters: HomePageFilters;
@@ -169,7 +170,7 @@ export const FilterSidebar = ({ filters, onChange }: FilterSidebarProps) => {
               />
             </div>
             <div className="text-sm text-gray-600">
-              {filters.priceRange[0]} - {filters.priceRange[1]} MDL
+              {filters.priceRange[0]} - {filters.priceRange[1]} {CURRENCY}
             </div>
           </div>
         )}

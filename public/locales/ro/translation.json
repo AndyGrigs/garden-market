@@ -91,7 +91,7 @@
   "tree": {
     "addToCart": "Adaugă în coș",
     "height": "Înălțime",
-    "priceLabel": "Preț: {{price}} MDL",
+    "priceLabel": "Preț: {{price}} {{currency}}",
     "maintenance": {
       "low": "Scăzut",
       "medium": "Mediu",
@@ -236,6 +236,36 @@
       "notifications": "Notificări",
       "products": "Produse",
       "orders": "Comenzi"
+    },
+    "orders": {
+      "title": "Gestionarea comenzilor",
+      "statusUpdated": "Statusul a fost actualizat",
+      "statusUpdateError": "Eroare la actualizarea statusului",
+      "paymentStatusUpdated": "Statusul plății a fost actualizat",
+      "paymentStatusUpdateError": "Eroare la actualizarea statusului plății",
+      "allStatuses": "Toate statusurile",
+      "awaitingPayment": "Așteaptă plata",
+      "paid": "Plătit",
+      "processing": "În procesare",
+      "shipped": "Expediat",
+      "delivered": "Livrat",
+      "cancelled": "Anulat",
+      "allPayments": "Toate plățile",
+      "unpaid": "Neplătit",
+      "partial": "Parțial",
+      "refunded": "Rambursat",
+      "order": "Comandă",
+      "client": "Client",
+      "amount": "Sumă",
+      "status": "Status",
+      "payment": "Plată",
+      "actions": "Acțiuni",
+      "orderNumber": "Comanda {{orderNumber}}",
+      "clientLabel": "Client:",
+      "shippingAddress": "Adresa de livrare:",
+      "items": "Produse:",
+      "total": "Total:",
+      "customerNotes": "Comentariul clientului:"
     }
   },
   "notifications": {

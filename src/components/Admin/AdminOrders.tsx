@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   useGetAllOrdersQuery,
   useUpdateOrderStatusMutation,
 } from '@/store/api/orderApi';
 import { Loader2, X, Eye, Download } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { BASE_URL } from '@/config';
+import { BASE_URL, CURRENCY } from '@/config';
 import type { Order } from '@/types/IOrders';
 
 const AdminOrders = () => {
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState('');
   const [paymentFilter, setPaymentFilter] = useState('');
@@ -26,10 +28,10 @@ const AdminOrders = () => {
   const handleStatusChange = async (orderId: string, newStatus: string) => {
     try {
       await updateStatus({ id: orderId, status: newStatus }).unwrap();
-      toast.success('Статус оновлено');
+      toast.success(t('admin.orders.statusUpdated'));
       refetch();
     } catch {
-      toast.error('Помилка оновлення статусу');
+      toast.error(t('admin.orders.statusUpdateError'));
     }
   };
 
@@ -42,10 +44,10 @@ const AdminOrders = () => {
         id: orderId,
         paymentsStatus: newPaymentStatus,
       }).unwrap();
-      toast.success('Статус оплати оновлено');
+      toast.success(t('admin.orders.paymentStatusUpdated'));
       refetch();
     } catch {
-      toast.error('Помилка оновлення статусу оплати');
+      toast.error(t('admin.orders.paymentStatusUpdateError'));
     }
   };
 
@@ -82,20 +84,20 @@ const AdminOrders = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Управління замовленнями</h2>
+        <h2 className="text-2xl font-bold">{t('admin.orders.title')}</h2>
         <div className="flex space-x-2">
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="px-4 py-2 border rounded-lg"
           >
-            <option value="">Всі статуси</option>
-            <option value="awaiting_payment">Очікує оплати</option>
-            <option value="paid">Оплачено</option>
-            <option value="processing">Обробляється</option>
-            <option value="shipped">Відправлено</option>
-            <option value="delivered">Доставлено</option>
-            <option value="cancelled">Скасовано</option>
+            <option value="">{t('admin.orders.allStatuses')}</option>
+            <option value="awaiting_payment">{t('admin.orders.awaitingPayment')}</option>
+            <option value="paid">{t('admin.orders.paid')}</option>
+            <option value="processing">{t('admin.orders.processing')}</option>
+            <option value="shipped">{t('admin.orders.shipped')}</option>
+            <option value="delivered">{t('admin.orders.delivered')}</option>
+            <option value="cancelled">{t('admin.orders.cancelled')}</option>
           </select>
 
           <select
@@ -103,9 +105,9 @@ const AdminOrders = () => {
             onChange={(e) => setPaymentFilter(e.target.value)}
             className="px-4 py-2 border rounded-lg"
           >
-            <option value="">Всі оплати</option>
-            <option value="unpaid">Не оплачено</option>
-            <option value="paid">Оплачено</option>
+            <option value="">{t('admin.orders.allPayments')}</option>
+            <option value="unpaid">{t('admin.orders.unpaid')}</option>
+            <option value="paid">{t('admin.orders.paid')}</option>
           </select>
         </div>
       </div>
@@ -116,22 +118,22 @@ const AdminOrders = () => {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Замовлення
+                {t('admin.orders.order')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Клієнт
+                {t('admin.orders.client')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Сума
+                {t('admin.orders.amount')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Статус
+                {t('admin.orders.status')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Оплата
+                {t('admin.orders.payment')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Дії
+                {t('admin.orders.actions')}
               </th>
             </tr>
           </thead>
@@ -159,7 +161,7 @@ const AdminOrders = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-bold text-gray-900">
-                    {order.totalAmount.toFixed(2)} MDL
+                    {order.totalAmount.toFixed(2)} {CURRENCY}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -168,12 +170,12 @@ const AdminOrders = () => {
                     onChange={(e) => handleStatusChange(order._id, e.target.value)}
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(order.status)}`}
                   >
-                    <option value="awaiting_payment">Очікує оплати</option>
-                    <option value="paid">Оплачено</option>
-                    <option value="processing">Обробляється</option>
-                    <option value="shipped">Відправлено</option>
-                    <option value="delivered">Доставлено</option>
-                    <option value="cancelled">Скасовано</option>
+                    <option value="awaiting_payment">{t('admin.orders.awaitingPayment')}</option>
+                    <option value="paid">{t('admin.orders.paid')}</option>
+                    <option value="processing">{t('admin.orders.processing')}</option>
+                    <option value="shipped">{t('admin.orders.shipped')}</option>
+                    <option value="delivered">{t('admin.orders.delivered')}</option>
+                    <option value="cancelled">{t('admin.orders.cancelled')}</option>
                   </select>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -182,10 +184,10 @@ const AdminOrders = () => {
                     onChange={(e) => handlePaymentStatusChange(order._id, e.target.value)}
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${getPaymentStatusColor(order.paymentStatus)}`}
                   >
-                    <option value="unpaid">Не оплачено</option>
-                    <option value="paid">Оплачено</option>
-                    <option value="partial">Частково</option>
-                    <option value="refunded">Повернено</option>
+                    <option value="unpaid">{t('admin.orders.unpaid')}</option>
+                    <option value="paid">{t('admin.orders.paid')}</option>
+                    <option value="partial">{t('admin.orders.partial')}</option>
+                    <option value="refunded">{t('admin.orders.refunded')}</option>
                   </select>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
@@ -238,7 +240,7 @@ const AdminOrders = () => {
             <div className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-bold">
-                  Замовлення {selectedOrder.orderNumber}
+                  {t('admin.orders.orderNumber', { orderNumber: selectedOrder.orderNumber })}
                 </h3>
                 <button
                   onClick={() => setSelectedOrder(null)}
@@ -250,35 +252,35 @@ const AdminOrders = () => {
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2">Клієнт:</h4>
+                  <h4 className="font-semibold mb-2">{t('admin.orders.clientLabel')}</h4>
                   <p>{selectedOrder.guestName}</p>
                   <p>{selectedOrder.guestEmail}</p>
                   <p>{selectedOrder.shippingAddress.phone}</p>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2">Адреса доставки:</h4>
+                  <h4 className="font-semibold mb-2">{t('admin.orders.shippingAddress')}</h4>
                   <p>{selectedOrder.shippingAddress.address}</p>
                   <p>{selectedOrder.shippingAddress.city}, {selectedOrder.shippingAddress.country}</p>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2">Товари:</h4>
+                  <h4 className="font-semibold mb-2">{t('admin.orders.items')}</h4>
                   {selectedOrder.items.map((item, index: number) => (
                     <div key={index} className="flex justify-between py-2 border-b">
                       <span>{item.title.ru} × {item.quantity}</span>
-                      <span>{item.subtotal.toFixed(2)} MDL</span>
+                      <span>{item.subtotal.toFixed(2)} {CURRENCY}</span>
                     </div>
                   ))}
                   <div className="flex justify-between font-bold mt-2">
-                    <span>Всього:</span>
-                    <span>{selectedOrder.totalAmount.toFixed(2)} MDL</span>
+                    <span>{t('admin.orders.total')}</span>
+                    <span>{selectedOrder.totalAmount.toFixed(2)} {CURRENCY}</span>
                   </div>
                 </div>
 
                 {selectedOrder.customerNotes && (
                   <div>
-                    <h4 className="font-semibold mb-2">Коментар клієнта:</h4>
+                    <h4 className="font-semibold mb-2">{t('admin.orders.customerNotes')}</h4>
                     <p className="text-gray-600">{selectedOrder.customerNotes}</p>
                   </div>
                 )}

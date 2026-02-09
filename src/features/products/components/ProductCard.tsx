@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Tree } from '@/types/ITree';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/store/slices/cartSlice';
+import { CURRENCY } from '@/config';
 
 interface ProductCardProps {
   product: Tree;
@@ -13,7 +14,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch(addToCart(product));
+    dispatch(addToCart({ ...product, quantity: 1 }));
   };
 
   const categoryName =
@@ -84,7 +85,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <div className="flex items-center justify-between mt-4">
           <div className="flex flex-col">
             <span className="text-2xl font-bold text-green-600">
-              {product.price} MDL
+              {product.price} {CURRENCY}
             </span>
             {product.stock > 0 && (
               <span className="text-xs text-gray-500">

@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useCreateOrderMutation } from '@/store/api/orderApi';
 import { Loader2, Mail, X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { CURRENCY } from '@/config';
 interface SimpleCheckoutModalProps {
   items: CartItem[];
   total: number;
@@ -148,7 +149,7 @@ const SimpleCheckoutModal = ({
                     × {item.quantity}
                   </span>
                   <span className="font-medium text-emerald-700">
-                    {(item.price * item.quantity).toFixed(2)} MDL
+                    {(item.price * item.quantity).toFixed(2)} {CURRENCY}
                   </span>
                 </div>
               ))}
@@ -158,7 +159,7 @@ const SimpleCheckoutModal = ({
                 {t('cart.total')}:
               </span>
               <span className="font-bold text-xl text-emerald-700">
-                {total.toFixed(2)} MDL
+                {total.toFixed(2)} {CURRENCY}
               </span>
             </div>
           </div>
