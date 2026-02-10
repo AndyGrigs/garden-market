@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {Leaf, LogOut, Menu, Package, User } from "lucide-react";
+import {Leaf, LogOut, Menu, Package, User, ShoppingCart } from "lucide-react";
 import { logout as logoutAction } from "../store/slices/authSlice";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./ui/LanguageSwitcher";
@@ -59,20 +59,37 @@ export default function Header({
           </Link>
 
           <div className="hidden md:flex items-center space-x-4">
+            {/* Cart button is always visible, regardless of authentication status */}
+            <button
+              onClick={onCartClick}
+              className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
+            >
+              <ShoppingCart className="h-6 w-6" />
+              <span className="font-semibold">{cartItemsCount}</span>
+            </button>
+            
             {isAuthenticated ? (
               <>
                 {isAdmin ? (
                   <AdminLink />
-                ) : isSeller ? ( 
-                  <Link 
-                    to="/seller" 
+                ) : isSeller ? (
+                  <Link
+                    to="/seller"
                     className="flex items-center space-x-1 text-white hover:text-emerald-200"
                   >
                     <Package className="h-4 w-4" />
                     <span>{t('seller.dashboard.title', { defaultValue: 'Панель продавца' })}</span>
                   </Link>
-                ) : <UserLinks cartItemsCount={cartItemsCount} onCartClick={onCartClick} />}
-                
+                ) : (
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
+                  >
+                    <User className="h-6 w-6" />
+                    <span className="font-semibold">{t("header.dashboard")}</span>
+                  </Link>
+                )}
+
                 <button
                   onClick={handleLogout}
                   className="flex items-center space-x-2 bg-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-800 transition-colors"
