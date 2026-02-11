@@ -66,17 +66,16 @@ export const TreeCard = ({ tree, onEdit, onDelete, isProcessing }: TreeCardProps
           </div>
 
           {/* Category */}
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-600">
             {t('categories.category')}: {getCategoryName()}
           </div>
         </div>
 
         {/* Actions */}
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 pt-2">
           <ActionButton
             onClick={() => onEdit(tree)}
             disabled={isProcessing}
-            className="flex-1 bg-yellow-500 text-white hover:bg-yellow-600"
           >
             <Edit className="w-4 h-4" />
             <span>{t('dashboard.edit')}</span>
@@ -85,7 +84,7 @@ export const TreeCard = ({ tree, onEdit, onDelete, isProcessing }: TreeCardProps
           <ActionButton
             onClick={() => onDelete(tree._id, tree.imageUrl)}
             disabled={isProcessing}
-            className="flex-1 bg-red-500 text-white hover:bg-red-600"
+            className="flex-1 bg-red-500 text-white hover:bg-red-600 flex items-center justify-center gap-1 py-2"
           >
             <Trash2 className="w-4 h-4" />
             <span>{t('dashboard.delete')}</span>

@@ -357,7 +357,8 @@
     "selectedCategoryProducts": "Товары в избранной категории",
     "addProduct": "Добавить товар",
     "edit": "Редактировать",
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "stock": "Остаток"
   },
   "seller": {
     "sellerTitle": "Продавец",

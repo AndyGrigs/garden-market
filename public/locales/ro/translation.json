@@ -358,7 +358,8 @@
     "selectedCategoryProducts": "Produse în categoria selectată",
     "addProduct": "Adaugă produs",
     "edit": "Editează",
-    "delete": "Șterge"
+    "delete": "Șterge",
+    "stock": "Stoc"
   },
   "seller": {
     "stock": "Stoc",
