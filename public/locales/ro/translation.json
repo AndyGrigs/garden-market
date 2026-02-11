@@ -23,7 +23,8 @@
     "locale": "ro-RO",
     "previous": "Anterior",
     "next": "Următorul",
-    "loading": "Se încarcă..."
+    "loading": "Se încarcă...",
+    "close": "Închide"
   },
 
    "hero": {
@@ -182,6 +183,7 @@
       "error": "Înregistrarea a eșuat",
       "login": "Sau conectează-te la contul tău"
     },
+    "signIn": "Autentificare în cont",
     "logout": {
       "success": "Deconectat cu succes!",
       "error": "Deconectarea a eșuat. Te rog să încerci din nou."
@@ -511,7 +513,10 @@
     "success": "Recenzia a fost trimisă cu succes!",
     "error": "Nu s-a putut trimite recenzia",
     "reviewFor": "Recenzie pentru",
-    "customerSays": "Ce spun clienții noștri despre noi"
+    "customerSays": "Ce spun clienții noștri despre noi",
+    "loginRequiredTitle": "Autentificare în cont",
+    "loginRequiredMessage": "Pentru a lăsa un comentariu, este necesar să vă autentificați în cont",
+    "signIn": "Autentificare în cont"
   },
   "footer": {
     "description": "Sursa dumneavoastră de încredere pentru copaci frumoși de grădină și sfaturi de specialitate.",

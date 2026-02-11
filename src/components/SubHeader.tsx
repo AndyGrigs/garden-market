@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Home, Info, Mail, MessageCircle, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -7,7 +8,10 @@ interface SubHeaderProps {
   showCategoryFilter?: boolean;
 }
 
-export default function SubHeader({ onCategoryFilterClick, showCategoryFilter = false }: SubHeaderProps) {
+export default function SubHeader({
+  onCategoryFilterClick,
+  showCategoryFilter = false,
+}: SubHeaderProps) {
   const { t } = useTranslation();
 
   // Scroll to products section on desktop
@@ -18,10 +22,15 @@ export default function SubHeader({ onCategoryFilterClick, showCategoryFilter = 
     }
   };
 
-  // Open mobile sidebar
+  // Open mobile sidebar and scroll to products
   const handleMobileFilterClick = () => {
     if (onCategoryFilterClick) {
       onCategoryFilterClick();
+    }
+    // Also scroll to products section
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -77,13 +86,19 @@ export default function SubHeader({ onCategoryFilterClick, showCategoryFilter = 
           <div className="flex items-center space-x-4 text-sm ml-auto">
             {/* Desktop Category Filter (Scrolls to Products) */}
             {showCategoryFilter && (
-              <button
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={handleDesktopFilterClick}
                 className="hidden lg:flex items-center space-x-2 px-3 py-1.5  hover:bg-emerald-800 rounded-md transition-colors"
+
               >
-                {/* <Filter className="h-4 w-4" /> */}
                 <span>{t('categories.all')}</span>
-              </button>
+                
+              </motion.button>
             )}
 
             <a

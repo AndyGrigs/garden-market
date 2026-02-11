@@ -36,17 +36,17 @@ const ReviewForm = memo(function ReviewForm({ onClose, productId, productName }:
         >
           <div className="p-6 text-center">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">
-              
+              {t('reviews.loginRequiredTitle')}
             </h2>
             <p className="text-gray-600 mb-6">
-              Щоб залишити відгук, необхідно увійти в аккаунт
+              {t('reviews.loginRequiredMessage')}
             </p>
             <div className="flex justify-center space-x-3">
               <button
                 onClick={onClose}
                 className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
               >
-                Закрити
+                {t('common.close')}
               </button>
               <button
                 onClick={() => {
@@ -55,7 +55,7 @@ const ReviewForm = memo(function ReviewForm({ onClose, productId, productName }:
                 }}
                 className="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
               >
-                Увійти в аккаунт
+                {t('auth.signIn')}
               </button>
             </div>
           </div>
