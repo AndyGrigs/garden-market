@@ -1,7 +1,7 @@
 import { useState, lazy, Suspense } from "react";
 import { Package, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useGetSellerTreesQuery } from "@/store/api/sellerApi";
+import { useGetSellerTreesQuery } from "@/features/seller/api/sellerApi";
 import MainPageLink from '@/shared/MainPageLink';
 
 const SellerTrees = lazy(() => import('./SellerTrees'));

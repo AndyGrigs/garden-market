@@ -48,7 +48,8 @@
     "maxPrice": "Preț maxim",
     "availability": "Disponibilitate",
     "inStockOnly": "Doar în stoc",
-    "reset": "Resetare filtre"
+    "reset": "Resetare filtre",
+    "showFilters": "Arată filtrele"
   },
 
   "products": {

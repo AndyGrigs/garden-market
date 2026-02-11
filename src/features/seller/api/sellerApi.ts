@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { appBaseQuery } from './appBaseQuery';
-import { Tree, TreeApiData } from '../../types/ITree';
+import { appBaseQuery } from '@/store/api/appBaseQuery';
+import { Tree, TreeApiData } from '@/types/ITree';
 
 export const sellerApi = createApi({
   reducerPath: "sellerApi",

@@ -12,14 +12,14 @@ import { IContactForm } from "@/types/IContactForm";
 import i18n from "@/i18n";
 import CategorySidebar from "../ui/CategorySidebar";
 import TreeCard from "../ui/TreeCard";
-import ReviewsSection from "../Features/Reviews/ReviewsSection";
+import ReviewsSection from "@/features/buyer/components/ReviewsSection";
 import { CheckCircle, MessageCircle, Star, X } from "lucide-react";
 import Footer from "../Footer";
 import ContactForm from "../Features/Contact/ContactForm";
-import ReviewForm from "../Features/Reviews/ReviewForm";
+import ReviewForm from "@/features/buyer/components/ReviewForm";
 import Hero from '@/components/Hero';
 import { useAppDispatch } from '@/store/store';
-import { addToCart as addToCartAction } from '@/store/slices/cartSlice';
+import { addToCart as addToCartAction } from '@/features/buyer/api/cartSlice';
 
 
 interface OutletContext {

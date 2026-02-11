@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import ReviewForm from '../components/Features/Reviews/ReviewForm';
-import ReviewsSection from '@/components/Features/Reviews/ReviewsSection';
+import ReviewForm from '@/features/buyer/components/ReviewForm';
+import ReviewsSection from '@/features/buyer/components/ReviewsSection';
 import MainPageLink from '../shared/MainPageLink';
 
 export default function ReviewsPage() {

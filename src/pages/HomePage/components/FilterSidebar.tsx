@@ -53,7 +53,7 @@ export const FilterSidebar = ({ filters, onChange }: FilterSidebarProps) => {
   };
 
   return (
-    <aside className="w-64 bg-white rounded-lg shadow-md p-6 h-fit sticky top-4">
+    <aside className="w-full md:w-64 bg-white rounded-lg shadow-md p-6 h-fit sticky top-4">
       <h2 className="text-xl font-bold mb-6 text-gray-800">
         {t('filters.title')}
       </h2>

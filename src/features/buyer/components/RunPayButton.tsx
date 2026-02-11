@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { Wallet, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion } from '@/utils/motionComponents';
-import { useCreateRunPayPaymentMutation } from '@/store/api/paymentsApi';
+import { useCreateRunPayPaymentMutation } from '@/features/buyer/api/paymentsApi';
 import { CURRENCY } from '@/config';
 
 interface RunPayButtonProps {

@@ -48,7 +48,8 @@
     "maxPrice": "Макс. цена",
     "availability": "Наличие",
     "inStockOnly": "Только в наличии",
-    "reset": "Сбросить фильтры"
+    "reset": "Сбросить фильтры",
+    "showFilters": "Показать фильтры"
   },
 
   "products": {

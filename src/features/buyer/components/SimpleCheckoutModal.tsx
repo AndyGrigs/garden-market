@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CartItem } from '../../types';
-import { useAppSelector } from '../../store/store';
+import { CartItem } from '@/types';
+import { useAppSelector } from '@/store/store';
 import toast from 'react-hot-toast';
-import { useCreateOrderMutation } from '@/store/api/orderApi';
+import { useCreateOrderMutation } from '@/features/buyer/api/orderApi';
 import { Loader2, Mail, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { CURRENCY } from '@/config';

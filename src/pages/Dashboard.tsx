@@ -3,8 +3,8 @@ import { Navigate, Link } from "react-router-dom";
 import { RootState } from "../store/store";
 import { useTranslation } from "react-i18next";
 import { Home, Package, Star } from "lucide-react";
-import { useGetUserOrdersQuery } from "../store/api/orderApi";
-import { useGetUserReviewsQuery } from "../store/api/reviewApi";
+import { useGetUserOrdersQuery } from "@/features/buyer/api/orderApi";
+import { useGetUserReviewsQuery } from "@/features/buyer/api/reviewApi";
 import { motion } from "@/utils/motionComponents";
 import { getCurrency } from '../shared/helpers/getCurrency';
 

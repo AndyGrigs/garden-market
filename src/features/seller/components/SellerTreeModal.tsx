@@ -11,9 +11,9 @@ import { useUploadImageMutation } from '@/store/api/uploadApi';
 import {
   useCreateSellerTreeMutation,
   useUpdateSellerTreeMutation,
-} from '@/store/api/sellerApi';
-import { getCategoryName } from '../../shared/helpers/getCategoryName';
-import { getCurrency } from '../../shared/helpers/getCurrency';
+} from '@/features/seller/api/sellerApi';
+import { getCategoryName } from '@/shared/helpers/getCategoryName';
+import { getCurrency } from '@/shared/helpers/getCurrency';
 
 interface SellerTreeModalProps {
   isOpen: boolean;

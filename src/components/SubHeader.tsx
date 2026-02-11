@@ -60,12 +60,12 @@ export default function SubHeader({ onCategoryFilterClick, showCategoryFilter = 
             </Link>
           </div>
 
-          {/* Mobile - Category Filter Button (Opens Sidebar) */}
+          {/* Mobile/Tablet - Category Filter Button (Opens Sidebar) */}
           {showCategoryFilter && (
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <button
                 onClick={handleMobileFilterClick}
-                className="flex items-center space-x-2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-800 rounded-md transition-colors text-sm"
+                className="flex items-center space-x-2 px-3 py-1.5 ml-3 hover:bg-emerald-800 rounded-md transition-colors text-sm"
               >
                 {/* <Filter className="h-4 w-4" /> */}
                 <span>{t('categories.all')}</span>
@@ -79,7 +79,7 @@ export default function SubHeader({ onCategoryFilterClick, showCategoryFilter = 
             {showCategoryFilter && (
               <button
                 onClick={handleDesktopFilterClick}
-                className="hidden md:flex items-center space-x-2 px-3 py-1.5  hover:bg-emerald-800 rounded-md transition-colors"
+                className="hidden lg:flex items-center space-x-2 px-3 py-1.5  hover:bg-emerald-800 rounded-md transition-colors"
               >
                 {/* <Filter className="h-4 w-4" /> */}
                 <span>{t('categories.all')}</span>

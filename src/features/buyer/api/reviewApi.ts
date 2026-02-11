@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Review, ReviewFormData } from '../../types/IReviews';
-import { appBaseQuery } from './appBaseQuery';
+import { Review, ReviewFormData } from '@/types/IReviews';
+import { appBaseQuery } from '@/store/api/appBaseQuery';
 
 export const reviewApi = createApi({
   reducerPath: "reviewApi",

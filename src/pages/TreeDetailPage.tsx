@@ -7,7 +7,7 @@ import { BASE_URL } from '@/config';
 import { getCurrency } from '@/shared/helpers/getCurrency';
 import { Tree } from '@/types/ITree';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { addToCart } from '@/store/slices/cartSlice';
+import { addToCart } from '@/features/buyer/api/cartSlice';
 import toast from 'react-hot-toast';
 
 export default function TreeDetailPage() {

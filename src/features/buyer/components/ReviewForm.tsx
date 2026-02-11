@@ -1,9 +1,9 @@
 import React, { useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCreateReviewMutation } from '../../../store/api/reviewApi';
+import { useCreateReviewMutation } from '@/features/buyer/api/reviewApi';
 import { Star } from 'lucide-react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
+import { RootState } from '@/store/store';
 import toast from 'react-hot-toast';
 
 interface ReviewFormProps {

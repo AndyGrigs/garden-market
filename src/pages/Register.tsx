@@ -6,13 +6,13 @@ import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import { motion } from '@/utils/motionComponents';
 import { ErrorResponse } from '../types/IUser';
-import MainPageLink from '../shared/MainPageLink';
 import TermsModal from '../components/ui/TermsModal';
 import RoleSelector from '../shared/register/RoleSelector';
 import BasicInfoFields from '../shared/register/BasicInfoFields';
 import SellerInfoFields from '../shared/register/SellerInfoFields';
 import TermsCheckbox from '../shared/register/TermsCheckbox';
 import toast from 'react-hot-toast';
+import Footer from '@/components/Footer';
 
 export default function Register() {
   const [fullName, setFullName] = useState('');
@@ -97,9 +97,9 @@ export default function Register() {
       />
 
       <div className="relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="absolute top-4 right-4">
+        {/* <div className="absolute top-4 right-4">
           <MainPageLink />
-        </div>
+        </div> */}
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -210,6 +210,7 @@ export default function Register() {
           setShowTermsModal(false);
         }}
       />
+      <Footer/>
     </div>
   );
 }

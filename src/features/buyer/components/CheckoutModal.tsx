@@ -11,11 +11,11 @@ import { motion } from '@/utils/motionComponents';
 import { useTranslation } from 'react-i18next';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { CartItem } from '@/types';
-import { useCreateOrderMutation } from '@/store/api/orderApi';
+import { useCreateOrderMutation } from '@/features/buyer/api/orderApi';
 import {
   useCapturePayPalPaymentMutation,
   useCreatePayPalOrderMutation,
-} from '@/store/api/paymentsApi';
+} from '@/features/buyer/api/paymentsApi';
 import RunPayButton from './RunPayButton';
 import PayNetButton from './PayNetButton';
 import toast from 'react-hot-toast';

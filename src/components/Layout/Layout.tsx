@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppSelector } from '../../store/store';
 import { useState } from 'react';
 import { AnimatePresence } from '@/utils/motionComponents';
-import Cart from '../Features/Cart/Cart';
+import Cart from '@/features/buyer/components/Cart';
 import { useGetTreesQuery } from '../../store/api/treesApi';
 import { useGetCategoriesQuery } from '../../store/api/categoryApi';
-import { useGetReviewsQuery } from '../../store/api/reviewApi';
+import { useGetReviewsQuery } from '@/features/buyer/api/reviewApi';
 
 export default function Layout() {
   const [isCartOpen, setIsCartOpen] = useState(false);

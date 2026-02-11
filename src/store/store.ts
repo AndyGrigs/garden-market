@@ -5,14 +5,14 @@ import { treesApi } from './api/treesApi';
 import authReducer from './slices/authSlice';
 import categoryReducer from './slices/categorySlice';
 import treeReducer from './slices/treeSlice';
-import cartReducer from './slices/cartSlice';
+import cartReducer from '@/features/buyer/api/cartSlice';
 import { categoryApi } from './api/categoryApi';
 import { uploadApi } from './api/uploadApi';
-import { reviewApi } from './api/reviewApi';
-import { orderApi } from './api/orderApi';
-import { sellerApi } from './api/sellerApi';
+import { reviewApi } from '@/features/buyer/api/reviewApi';
+import { orderApi } from '@/features/buyer/api/orderApi';
+import { sellerApi } from '@/features/seller/api/sellerApi';
 import { adminApi } from './api/adminApi';
-import { paymentApi } from './api/paymentsApi';
+import { paymentApi } from '@/features/buyer/api/paymentsApi';
 
 export const store = configureStore({
   reducer: {

@@ -4,36 +4,40 @@
 // - Об'єднання всіх частин
 // - Передача props між компонентами
 
+import { useOutletContext } from 'react-router-dom';
 import { HeroSection } from './components/HeroSection';
-import { ProductGrid } from './components/ProductGrid';
-import { FilterSidebar } from './components/FilterSidebar';
+import { ResponsiveFilterLayout } from './components/ResponsiveFilterLayout';
 import { useHomePage } from './hooks/useHomePage';
+
+interface HomePageContext {
+  isCategoryFilterOpen: boolean;
+  setIsCategoryFilterOpen: (open: boolean) => void;
+}
 
 export const HomePage = () => {
   // ❌ НЕ ТУТ: бізнес-логіка, API виклики, складні useState
   // ✅ ТУТ: тільки виклик custom hook
-  const { 
-    products, 
-    filters, 
+  const {
+    products,
+    filters,
     handleFilterChange,
-    isLoading 
+    isLoading
   } = useHomePage();
+
+  const { isCategoryFilterOpen, setIsCategoryFilterOpen } = useOutletContext<HomePageContext>();
 
   return (
     <div className="home-page">
       <HeroSection />
-      
-      <div className="flex gap-8">
-        <FilterSidebar 
-          filters={filters}
-          onChange={handleFilterChange}
-        />
-        
-        <ProductGrid 
-          products={products}
-          isLoading={isLoading}
-        />
-      </div>
+
+      <ResponsiveFilterLayout
+        filters={filters}
+        onChange={handleFilterChange}
+        products={products}
+        isLoading={isLoading}
+        isCategoryFilterOpen={isCategoryFilterOpen}
+        onCategoryFilterClose={() => setIsCategoryFilterOpen(false)}
+      />
     </div>
   );
 };

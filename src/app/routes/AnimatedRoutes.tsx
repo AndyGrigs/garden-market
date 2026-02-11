@@ -2,7 +2,7 @@ import { AnimatePresence } from "@/utils/motionComponents";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { lazy } from "react";
 
-import SellerGuard from '../../components/Seller/SellerGuard';
+import SellerGuard from '@/features/seller/components/SellerGuard';
 import AdminGuard from '../../pages/AdminPanel/AdminGuard';
 
 const Dashboard = lazy(() => import("../../pages/Dashboard"));
@@ -16,7 +16,7 @@ const ResetPassword = lazy(() => import("../../pages/ResetPassword"));
 const Layout = lazy(() => import("../../components/Layout/Layout"));
 const About = lazy(() => import("../../pages/About"));
 const TermsAndConditions = lazy(() => import("../../pages/TermsAndConditions"));
-const SellerDashboard = lazy(() => import("../../components/Seller/SellerDasboard"));
+const SellerDashboard = lazy(() => import("@/features/seller/components/SellerDashboard"));
 const MainContent = lazy(() => import("../../components/Layout/MainContent"));
 const TreeDetailPage = lazy(() => import("../../pages/TreeDetailPage"));
 // const CheckoutPage = lazy(() => import("../../pages/CheckoutPage").then(module => ({ default: module.CheckoutPage })));

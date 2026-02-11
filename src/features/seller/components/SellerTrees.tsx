@@ -5,10 +5,10 @@ import { AnimatePresence } from '@/utils/motionComponents';
 
 import toast from "react-hot-toast";
 import SellerTreeModal from "./SellerTreeModal";
-import { Tree } from '../../types/ITree';
-import { useLanguage } from '../../hooks/useLanguage';
-import { useDeleteSellerTreeMutation } from '../../store/api/sellerApi';
-import AnimatedWrapper from '../../shared/AnimatedWrapper';
+import { Tree } from '@/types/ITree';
+import { useLanguage } from '@/hooks/useLanguage';
+import { useDeleteSellerTreeMutation } from '@/features/seller/api/sellerApi';
+import AnimatedWrapper from '@/shared/AnimatedWrapper';
 
 interface SellerTreesProps {
   trees: Tree[];

@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { appBaseQuery } from './appBaseQuery';
+import { appBaseQuery } from '@/store/api/appBaseQuery';
 
 export interface CreatePayPalOrderRequest {
   orderId: string;

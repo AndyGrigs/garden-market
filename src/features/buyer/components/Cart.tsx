@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { useLanguage } from "@/hooks/useLanguage";
 import { BASE_URL } from "@/config";
 import { getCurrency } from '@/shared/helpers/getCurrency';
-import SimpleCheckoutModal from '../../ui/SimpleCheckoutModal';
+import SimpleCheckoutModal from './SimpleCheckoutModal';
 import { useAppSelector, useAppDispatch } from '@/store/store';
-import { updateQuantity, removeFromCart, clearCart } from '@/store/slices/cartSlice';
+import { updateQuantity, removeFromCart, clearCart } from '@/features/buyer/api/cartSlice';
 
 interface CartProps {
   onClose: () => void;

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {
   useGetAllOrdersQuery,
   useUpdateOrderStatusMutation,
-} from '@/store/api/orderApi';
+} from '@/features/buyer/api/orderApi';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 

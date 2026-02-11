@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import { appBaseQuery } from './appBaseQuery';
-import { CreateOrderRequest, Order } from '../../types/IOrders';
+import { appBaseQuery } from '@/store/api/appBaseQuery';
+import { CreateOrderRequest, Order } from '@/types/IOrders';
 
 export const orderApi = createApi({
   reducerPath: 'orderApi',

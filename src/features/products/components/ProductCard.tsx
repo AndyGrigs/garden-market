@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Tree } from '@/types/ITree';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '@/store/slices/cartSlice';
+import { addToCart } from '@/features/buyer/api/cartSlice';
 import { CURRENCY } from '@/config';
 
 interface ProductCardProps {
