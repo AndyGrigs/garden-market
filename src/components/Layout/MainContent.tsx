@@ -7,7 +7,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { useGetCategoriesQuery } from "@/store/api/categoryApi";
 import { useGetTreesQuery } from "@/store/api/treesApi";
 import { Tree } from "@/types/ITree";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { IContactForm } from "@/types/IContactForm";
 import i18n from "@/i18n";
 import CategorySidebar from "../ui/CategorySidebar";
@@ -249,34 +249,6 @@ const getSelectedCategoryName = () => {
           <ReviewForm onClose={() => setIsReviewFormOpen(false)} />
         )}
       </AnimatePresence>
-        <Toaster
-          position="bottom-right"
-          reverseOrder={false}
-          gutter={8}
-          containerClassName=""
-          containerStyle={{}}
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: '#363636',
-              color: '#fff',
-            },
-            success: {
-              duration: 3000,
-              iconTheme: {
-                primary: '#10B981',
-                secondary: 'black',
-              },
-            },
-            error: {
-              duration: 5000,
-              iconTheme: {
-                primary: '#EF4444',
-                secondary: 'black',
-              },
-            },
-          }}
-        />
 
     </div>
   );
