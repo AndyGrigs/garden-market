@@ -13,6 +13,7 @@ import { orderApi } from '@/features/buyer/api/orderApi';
 import { sellerApi } from '@/features/seller/api/sellerApi';
 import { adminApi } from './api/adminApi';
 import { paymentApi } from '@/features/buyer/api/paymentsApi';
+import { contactApi } from './api/contactApi';
 
 export const store = configureStore({
   reducer: {
@@ -29,6 +30,7 @@ export const store = configureStore({
     [sellerApi.reducerPath]: sellerApi.reducer,
     [adminApi.reducerPath]: adminApi.reducer,
     [paymentApi.reducerPath]: paymentApi.reducer,
+    [contactApi.reducerPath]: contactApi.reducer,
   },
   // Disable DevTools in production for better performance
   devTools: process.env.NODE_ENV !== 'production',
@@ -55,6 +57,7 @@ export const store = configureStore({
       .concat(sellerApi.middleware)
       .concat(adminApi.middleware)
       .concat(paymentApi.middleware)
+      .concat(contactApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

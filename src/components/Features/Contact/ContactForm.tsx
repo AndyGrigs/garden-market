@@ -1,30 +1,50 @@
+import { IContactForm } from '@/types/IContactForm';
 import React, { useState } from 'react';
-import { ContactForm as IContactForm } from '../types';
+import { useTranslation } from 'react-i18next';
+import { useSendContactMessageMutation } from '@/store/api/contactApi';
+import toast from 'react-hot-toast';
 
 interface ContactFormProps {
-  onSubmit: (form: IContactForm) => void;
+  onSubmit?: (form: IContactForm) => void;
 }
 
 export default function ContactForm({ onSubmit }: ContactFormProps) {
+  const { t } = useTranslation();
   const [form, setForm] = useState<IContactForm>({
     name: '',
     email: '',
     message: '',
   });
+  
+  const [sendContactMessage, { isLoading }] = useSendContactMessageMutation();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(form);
-    setForm({ name: '', email: '', message: '' });
+    
+    try {
+      await sendContactMessage(form).unwrap();
+      toast.success(t('contact.success'));
+      
+      // Reset form after successful submission
+      setForm({ name: '', email: '', message: '' });
+      
+      // Call parent onSubmit if provided
+      if (onSubmit) {
+        onSubmit(form);
+      }
+    } catch (error) {
+      console.error('Failed to send contact message:', error);
+      toast.error(t('common.error'));
+    }
   };
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Contact Us</h2>
+      <h2 className="text-2xl font-bold mb-6">{t('contact.title')}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="name" className="block text-gray-700 mb-2">
-            Name
+            {t('contact.name')}
           </label>
           <input
             type="text"
@@ -37,7 +57,7 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
         </div>
         <div>
           <label htmlFor="email" className="block text-gray-700 mb-2">
-            Email
+            {t('contact.email')}
           </label>
           <input
             type="email"
@@ -50,7 +70,7 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
         </div>
         <div>
           <label htmlFor="message" className="block text-gray-700 mb-2">
-            Message
+            {t('contact.message')}
           </label>
           <textarea
             id="message"
@@ -63,9 +83,10 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
         </div>
         <button
           type="submit"
-          className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-500 transition-colors"
+          disabled={isLoading}
+          className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-500 transition-colors disabled:opacity-50"
         >
-          Send Message
+          {isLoading ? t('common.submitting') : t('contact.send')}
         </button>
       </form>
     </div>
