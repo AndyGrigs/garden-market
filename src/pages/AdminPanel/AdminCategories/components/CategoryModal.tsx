@@ -168,7 +168,7 @@ const CategoryModal = ({
                     <div className="mb-4">
                       <img
                         src={
-                          imageUrl.startsWith('blob:')
+                          imageUrl.startsWith('blob:') || imageUrl.startsWith('http')
                             ? imageUrl
                             : `${BASE_URL}${imageUrl}`
                         }

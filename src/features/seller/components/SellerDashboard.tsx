@@ -10,7 +10,7 @@ const SellerStats = lazy(() => import('./SellerStats'));
 
 const SellerDashboard = () => {
   const { t } = useTranslation();
-  // const { data: sellerData, isLoading } = useGetSellerTreesQuery();
+  const { data: sellerData, isLoading } = useGetSellerTreesQuery();
   const [activeTab, setActiveTab] = useState<'products' | 'stats'>('products');
   
   return (

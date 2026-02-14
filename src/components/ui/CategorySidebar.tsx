@@ -115,7 +115,7 @@ export default function CategorySidebar({
                 >
                   {category.imageUrl && (
                     <img
-                      src={`${BASE_URL}${category.imageUrl}`}
+                      src={category.imageUrl.startsWith('http') ? category.imageUrl : `${BASE_URL}${category.imageUrl}`}
                       alt={getCategoryName(category, i18n.language)}
                       className="w-8 h-8 object-cover rounded-md"
                     />

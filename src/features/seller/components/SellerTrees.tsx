@@ -119,7 +119,7 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
             >
               <div className="relative">
                 <img
-                  src={tree.imageUrl ? `${import.meta.env.VITE_API_URL}${tree.imageUrl}` : "/placeholder.jpg"}
+                  src={tree.imageUrl ? (tree.imageUrl.startsWith('http') ? tree.imageUrl : `${import.meta.env.VITE_API_URL}${tree.imageUrl}`) : "/placeholder.jpg"}
                   alt={getTreeTitle(tree.title)}
                   className="w-full h-48 object-cover"
                 />

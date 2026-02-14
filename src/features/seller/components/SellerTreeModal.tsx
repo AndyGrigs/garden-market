@@ -65,7 +65,9 @@ const SellerTreeModal = ({
       });
       setImagePreview(
         editingTree.imageUrl
-          ? `${import.meta.env.VITE_API_URL}${editingTree.imageUrl}`
+          ? editingTree.imageUrl.startsWith('http')
+            ? editingTree.imageUrl
+            : `${import.meta.env.VITE_API_URL}${editingTree.imageUrl}`
           : ''
       );
     } else {

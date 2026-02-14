@@ -205,7 +205,8 @@
       "invalidToken": "Token de resetare invalid",
       "passwordsDoNotMatch": "Parolele nu coincid",
       "passwordTooShort": "Parola trebuie să aibă cel puțin 6 caractere",
-      "resetFailed": "Resetarea parolei a eșuat. Vă rugăm să încercați din nou."
+      "resetFailed": "Resetarea parolei a eșuat. Vă rugăm să încercați din nou.",
+      "error": "Trimiterea codului de resetare a eșuat. Vă rugăm să încercați din nou."
     }
   },
   "admin": {

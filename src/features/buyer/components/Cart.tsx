@@ -88,7 +88,7 @@ export default function Cart({ onClose }: CartProps) {
                   className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg"
                 >
                   <img
-                    src={item.imageUrl ? `${BASE_URL}${item.imageUrl}` : "/placeholder.jpg"}
+                    src={item.imageUrl ? (item.imageUrl.startsWith('http') ? item.imageUrl : `${BASE_URL}${item.imageUrl}`) : "/placeholder.jpg"}
                     alt={getTreeTitle(item.title)}
                     className="w-20 h-20 object-cover rounded-md"
                   />

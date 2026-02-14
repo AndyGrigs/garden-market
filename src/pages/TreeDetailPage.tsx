@@ -70,7 +70,7 @@ export default function TreeDetailPage() {
         {/* Image Section */}
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <img
-            src={tree.imageUrl ? `${BASE_URL}${tree.imageUrl}` : '/placeholder.png'}
+            src={tree.imageUrl ? (tree.imageUrl.startsWith('http') ? tree.imageUrl : `${BASE_URL}${tree.imageUrl}`) : '/placeholder.png'}
             alt={getTreeTitle(tree.title)}
             className="w-full h-full object-cover"
           />

@@ -26,7 +26,7 @@ export default function TreeCard({ tree, onAddToCart }: TreeCardProps) {
     <img
      src={
     tree.imageUrl
-      ? `${BASE_URL}${tree.imageUrl}`
+      ? tree.imageUrl.startsWith('http') ? tree.imageUrl : `${BASE_URL}${tree.imageUrl}`
       : '/placeholder.png'
   }
       

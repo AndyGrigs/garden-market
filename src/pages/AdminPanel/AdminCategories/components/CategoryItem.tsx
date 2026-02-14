@@ -31,7 +31,7 @@ export const CategoryItem = ({
       <div className="flex items-center gap-3">
         {category.imageUrl && (
           <img
-            src={`${BASE_URL}${category.imageUrl}`}
+            src={category.imageUrl.startsWith('http') ? category.imageUrl : `${BASE_URL}${category.imageUrl}`}
             alt={getCategoryName(category, lang)}
             className="w-12 h-12 object-cover rounded-md"
           />

@@ -63,11 +63,13 @@ export default function Login() {
       setTimeout(() => {
         navigate(`/reset-password?email=${encodeURIComponent(forgotEmail)}`);
       }, 2000);
-    }catch (err: unknown) {
-      const errorMsg = err instanceof Error ? err.message : String(err);
+    } catch (err: unknown) {
+      const errorMsg =
+        (err as { data?: { message?: string } })?.data?.message ||
+        (err instanceof Error ? err.message : t('auth.resetPassword.error', { defaultValue: 'Failed to send reset code. Please try again.' }));
       setError(errorMsg);
       toast.error(errorMsg);
-}
+    }
   };
   return (
     <div className="min-h-screen bg-gray-50">

@@ -33,7 +33,7 @@ export const TreeCard = ({ tree, onEdit, onDelete, isProcessing }: TreeCardProps
       {/* Image */}
       <div className="relative h-40 bg-gray-100">
         <img
-          src={tree.imageUrl ? `${BASE_URL}${tree.imageUrl}` : '/placeholder.jpg'}
+          src={tree.imageUrl ? (tree.imageUrl.startsWith('http') ? tree.imageUrl : `${BASE_URL}${tree.imageUrl}`) : '/placeholder.jpg'}
           alt={getTitle(tree.title)}
           className="w-full h-full object-cover"
         />

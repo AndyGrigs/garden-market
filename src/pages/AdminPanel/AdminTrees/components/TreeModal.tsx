@@ -293,7 +293,7 @@ const TreeModal = ({ isOpen, onClose, onSubmit, initialData }: Props) => {
                     <div className="mb-4">
                       <img
                         src={
-                          form.imageUrl.startsWith('blob:')
+                          form.imageUrl.startsWith('blob:') || form.imageUrl.startsWith('http')
                             ? form.imageUrl
                             : `${BASE_URL}${form.imageUrl}`
                         }
