@@ -240,7 +240,36 @@
       "sellers": "Vânzători",
       "notifications": "Notificări",
       "products": "Produse",
+      "pendingTrees": "Copaci în așteptare",
       "orders": "Comenzi"
+    },
+    "trees": {
+      "pendingTitle": "Copaci în așteptare de aprobare",
+      "noPending": "Nu există copaci în așteptare",
+      "error": "Eroare la încărcarea copacilor în așteptare",
+      "confirmApprove": "Sunteți sigur că doriți să aprobați acest copac?",
+      "approved": "Copacul a fost aprobat cu succes!",
+      "approvalError": "Eroare la aprobarea copacului",
+      "approve": "Aprobă",
+      "created": "Creat"
+    },
+    "translate": {
+      "title": "Traducerea produsului",
+      "backToAdmin": "Înapoi la panoul admin",
+      "originalRu": "Original (rusă)",
+      "translationRo": "Traducere (română)",
+      "titleLabel": "Titlu",
+      "descriptionLabel": "Descriere",
+      "titlePlaceholder": "Introduceți titlul în română",
+      "descriptionPlaceholder": "Introduceți descrierea în română",
+      "save": "Salvează traducerea",
+      "saveAndApprove": "Salvează și aprobă",
+      "saved": "Traducerea a fost salvată!",
+      "saveError": "Eroare la salvarea traducerii",
+      "approvedSuccess": "Produsul a fost tradus și aprobat!",
+      "approveError": "Eroare la aprobarea produsului",
+      "loadError": "Nu s-a putut încărca produsul",
+      "fillAllFields": "Completați toate câmpurile de traducere"
     },
     "orders": {
       "title": "Gestionarea comenzilor",

@@ -19,6 +19,7 @@ const TermsAndConditions = lazy(() => import("../../pages/TermsAndConditions"));
 const SellerDashboard = lazy(() => import("@/features/seller/components/SellerDashboard"));
 const MainContent = lazy(() => import("../../components/Layout/MainContent"));
 const TreeDetailPage = lazy(() => import("../../pages/TreeDetailPage"));
+const AdminTreeTranslate = lazy(() => import("../../pages/AdminPanel/AdminTreeTranslate"));
 // const CheckoutPage = lazy(() => import("../../pages/CheckoutPage").then(module => ({ default: module.CheckoutPage })));
 const OrderSuccessPage = lazy(() => import("../../pages/OrderSuccessPage").then(module => ({ default: module.OrderSuccessPage })));
 
@@ -39,6 +40,14 @@ function  AnimatedRoutes() {
             element={
               <AdminGuard>
                 <AdminPanel />
+              </AdminGuard>
+            }
+          />
+          <Route
+            path="admin/trees/:id/translate"
+            element={
+              <AdminGuard>
+                <AdminTreeTranslate />
               </AdminGuard>
             }
           />

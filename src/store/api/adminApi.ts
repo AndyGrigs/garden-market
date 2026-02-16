@@ -1,4 +1,4 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { appBaseQuery } from './appBaseQuery';
 import { User } from '../../types/IUser';
 import {
@@ -7,6 +7,7 @@ import {
   UnreadCountResponse,
   CreateNotificationRequest,
 } from '../../types/INotification';
+import { PendingTree } from '@/types/IPendingTree';
 
 export interface PendingSeller extends User {
   role: 'seller';
@@ -22,32 +23,63 @@ export interface PendingSeller extends User {
 }
 
 export const adminApi = createApi({
-  reducerPath: "adminApi",
+  reducerPath: 'adminApi',
   baseQuery: appBaseQuery,
-  tagTypes: ["PendingSellers", "Notifications", "UnreadCount"],
+  tagTypes: ['PendingSellers', 'Notifications', 'UnreadCount', 'PendingTrees'],
   keepUnusedDataFor: 120, // Cache for 2 minutes (admin data changes frequently)
   endpoints: (builder) => ({
     // Seller endpoints
     getPendingSellers: builder.query<{ sellers: PendingSeller[] }, void>({
-      query: () => "/admin/sellers/pending",
-      providesTags: ["PendingSellers"],
+      query: () => '/admin/sellers/pending',
+      providesTags: ['PendingSellers'],
     }),
 
     approveSeller: builder.mutation<{ message: string }, string>({
       query: (userId) => ({
         url: `/admin/sellers/${userId}/approve`,
-        method: "PATCH",
+        method: 'PATCH',
       }),
-      invalidatesTags: ["PendingSellers"],
+      invalidatesTags: ['PendingSellers'],
     }),
 
-    rejectSeller: builder.mutation<{ message: string }, { userId: string; reason?: string }>({
+    rejectSeller: builder.mutation<
+      { message: string },
+      { userId: string; reason?: string }
+    >({
       query: ({ userId, reason }) => ({
         url: `/admin/sellers/${userId}/reject`,
-        method: "DELETE",
+        method: 'DELETE',
         body: reason ? { reason } : undefined,
       }),
-      invalidatesTags: ["PendingSellers"],
+      invalidatesTags: ['PendingSellers'],
+    }),
+
+    getPendingTrees: builder.query<{ trees: PendingTree[] }, void>({
+      query: () => '/admin/trees/pending',
+      providesTags: ['PendingTrees',],
+    }),
+
+    approveTree: builder.mutation<
+      { message: string; tree: PendingTree },
+      string
+    >({
+      query: (treeId) => ({
+        url: `/admin/trees/${treeId}/approve`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['PendingTrees'],
+    }),
+
+    updateTreeTranslations: builder.mutation<
+      PendingTree,
+      { id: string; body: { title: { ro: string }; description: { ro: string } } }
+    >({
+      query: ({ id, body }) => ({
+        url: `/admin/trees/${id}/translations`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['PendingTrees'],
     }),
 
     // Notification endpoints
@@ -58,16 +90,17 @@ export const adminApi = createApi({
       query: (params) => {
         const searchParams = new URLSearchParams();
         if (params?.page) searchParams.append('page', params.page.toString());
-        if (params?.limit) searchParams.append('limit', params.limit.toString());
+        if (params?.limit)
+          searchParams.append('limit', params.limit.toString());
         const queryString = searchParams.toString();
         return `/admin/notifications${queryString ? `?${queryString}` : ''}`;
       },
-      providesTags: ["Notifications"],
+      providesTags: ['Notifications'],
     }),
 
     getUnreadCount: builder.query<UnreadCountResponse, void>({
-      query: () => "/admin/notifications/unread-count",
-      providesTags: ["UnreadCount"],
+      query: () => '/admin/notifications/unread-count',
+      providesTags: ['UnreadCount'],
     }),
 
     createNotification: builder.mutation<
@@ -75,35 +108,35 @@ export const adminApi = createApi({
       CreateNotificationRequest
     >({
       query: (body) => ({
-        url: "/admin/notifications",
-        method: "POST",
+        url: '/admin/notifications',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Notifications", "UnreadCount"],
+      invalidatesTags: ['Notifications', 'UnreadCount'],
     }),
 
     markAsRead: builder.mutation<{ message: string }, string>({
       query: (id) => ({
         url: `/admin/notifications/${id}/read`,
-        method: "PATCH",
+        method: 'PATCH',
       }),
-      invalidatesTags: ["Notifications", "UnreadCount"],
+      invalidatesTags: ['Notifications', 'UnreadCount'],
     }),
 
     markAllAsRead: builder.mutation<{ message: string }, void>({
       query: () => ({
-        url: "/admin/notifications/mark-all-read",
-        method: "PATCH",
+        url: '/admin/notifications/mark-all-read',
+        method: 'PATCH',
       }),
-      invalidatesTags: ["Notifications", "UnreadCount"],
+      invalidatesTags: ['Notifications', 'UnreadCount'],
     }),
 
     deleteNotification: builder.mutation<{ message: string }, string>({
       query: (id) => ({
         url: `/admin/notifications/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Notifications", "UnreadCount"],
+      invalidatesTags: ['Notifications', 'UnreadCount'],
     }),
   }),
 });
@@ -118,4 +151,7 @@ export const {
   useMarkAsReadMutation,
   useMarkAllAsReadMutation,
   useDeleteNotificationMutation,
+  useApproveTreeMutation,
+  useGetPendingTreesQuery,
+  useUpdateTreeTranslationsMutation,
 } = adminApi;
