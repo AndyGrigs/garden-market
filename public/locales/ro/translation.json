@@ -81,8 +81,16 @@
     "cart": "Coș",
     "logout": "Deconectare",
     "login": "Conectare",
+    "register": "Înregistrare",
     "dashboard": "Panou de Control",
-    "adminPanel": "Admin Panel"
+    "adminPanel": "Admin Panel",
+    "home": "Acasă",
+    "homeDescription": "Copaci și plante de calitate premium pentru grădina dvs.",
+    "about": "Despre noi",
+    "aboutDescription": "Aflați mai multe despre compania și misiunea noastră",
+    "contact": "Contact",
+    "contactDescription": "Contactați-ne pentru orice întrebare",
+    "reviewsDescription": "Recenziile clienților noștri"
   },
   "collection": {
     "categoryTitle": "{{categoryName}}",
@@ -159,7 +167,17 @@
     "sat": "Sâmbăta: 9:00 - 16:00",
     "sun": "Duminică: Închis"
   },
+  "order": {
+    "success": "Comandă plasată cu succes",
+    "successDescription": "Vă mulțumim pentru comanda dvs.!",
+    "number": "Număr comandă"
+  },
+
   "auth": {
+    "verifyEmail": "Verificare Email",
+    "verifyEmailDescription": "Confirmați adresa dvs. de email",
+    "resetPassword": "Resetează parola",
+    "resetPasswordDescription": "Recuperarea accesului la cont",
     "forgotPassword": "Ai uitat parola?",
     "login": {
       "title": "Conectează-te la cont",
@@ -210,6 +228,8 @@
     }
   },
   "admin": {
+    "title": "Panoul de administrare",
+    "description": "Gestionarea platformei",
     "sellers": {
       "title": "Aprobare Vânzători",
       "noPending": "Nu există vânzători în așteptare",
@@ -561,7 +581,9 @@
     "rights": "Toate drepturile rezervate."
   },
   "terms": {
-      "pageTitle": "Condiții de prestare a serviciilor",
+    "title": "Termeni și condiții",
+    "description": "Reguli de utilizare a platformei",
+    "pageTitle": "Condiții de prestare a serviciilor",
   "pageSubtitle": "Familiarizați-vă cu condițiile de achiziție a puieților și serviciilor întreprinderii de familie „Covaci Copaci\"",
   "lastUpdated": "Ultima actualizare",
   "importantInfo": "Informații importante",

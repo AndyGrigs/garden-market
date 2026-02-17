@@ -98,10 +98,7 @@ export default function MobileMenu({
                           </span>
                         </Link>
                       ) : (
-                        <UserLinks
-                          cartItemsCount={cartItemsCount}
-                          onCartClick={onCartClick}
-                        />
+                        <UserLinks />
                       )}
 
                       {/* <Link

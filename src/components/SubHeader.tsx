@@ -117,12 +117,12 @@ export default function SubHeader({
             </a>
 
             {/* Mobile - Only show phone icon */}
-            <a
+            {/* <a
               href="tel:37379748131"
               className="sm:hidden flex items-center hover:text-emerald-200 transition-colors"
             >
               <Phone className="h-4 w-4" />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

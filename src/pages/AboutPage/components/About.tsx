@@ -1,3 +1,5 @@
+import PageHeader from '@/components/Layout/PageHeader';
+import SubHeader from '@/components/SubHeader';
 import { AchievementsSection } from './AchievementsSection';
 import { ContactSection } from './ContactSection';
 import { CtaSection } from './CtaSection';
@@ -9,6 +11,9 @@ import { TeamSection } from './TeamSection';
 export const About = () => {
   return (
     <div className="min-h-screen bg-gray-50">
+      <PageHeader />
+      <SubHeader />
+
       {/* Header */}
       <HeroSection />
 
