@@ -1,6 +1,6 @@
 
 import { useTranslation } from 'react-i18next';
-import { ProductCard } from '@/features/products/components/ProductCard';
+import { ProductCard } from '@/shared/ui/ProductCard';
 import { Spinner } from '@/shared/ui/Spinner';
 import { Tree } from '@/types/ITree';
 

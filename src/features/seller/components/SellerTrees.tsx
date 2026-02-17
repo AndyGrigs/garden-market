@@ -8,7 +8,7 @@ import SellerTreeModal from "./SellerTreeModal";
 import { Tree } from '@/types/ITree';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useDeleteSellerTreeMutation } from '@/features/seller/api/sellerApi';
-import AnimatedWrapper from '@/shared/AnimatedWrapper';
+import AnimatedWrapper from '@/shared/ui/AnimatedWrapper';
 
 interface SellerTreesProps {
   trees: Tree[];

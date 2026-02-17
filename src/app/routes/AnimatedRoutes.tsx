@@ -14,7 +14,7 @@ const ContactPage = lazy(() => import("../../pages/ContactPage"));
 const ReviewPage = lazy(() => import("../../pages/ReviewPage"));
 const ResetPassword = lazy(() => import("../../pages/ResetPassword"));
 const Layout = lazy(() => import("../../components/Layout/Layout"));
-const About = lazy(() => import("../../pages/About"));
+const About = lazy(() => import("../../pages/AboutPage/").then(module => ({ default: module.About })));
 const TermsAndConditions = lazy(() => import("../../pages/TermsAndConditions"));
 const SellerDashboard = lazy(() => import("@/features/seller/components/SellerDashboard"));
 const MainContent = lazy(() => import("../../components/Layout/MainContent"));
