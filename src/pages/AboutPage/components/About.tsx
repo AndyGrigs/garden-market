@@ -1,33 +1,31 @@
-
-
+import { AchievementsSection } from './AchievementsSection';
+import { ContactSection } from './ContactSection';
+import { CtaSection } from './CtaSection';
+import { HeroSection } from './HeroSection';
+import { ServiceSection } from './ServiceSection';
+import { StorySection } from './StorySection';
+import { TeamSection } from './TeamSection';
 
 export const About = () => {
-
- 
-
   return (
     <div className="min-h-screen bg-gray-50">
-     
-      
-        {/* Header */}
+      {/* Header */}
+      <HeroSection />
 
-        {/* Story Section */}
-       
+      {/* Story Section */}
+      <StorySection />
 
-        {/* Achievements */}
-       
+      {/* Achievements */}
+      <AchievementsSection />
 
-        {/* Team Section */}
-        
-        {/* Services Section */}
-        
-        {/* Contact Section */}
-        
-
-        {/* Call to Action */}
-        
-      
+      {/* Team Section */}
+      <TeamSection />
+      {/* Services Section */}
+      <ServiceSection />
+      {/* Contact Section */}
+      <ContactSection />
+      {/* Call to Action */}
+      <CtaSection/>
     </div>
   );
 };
-

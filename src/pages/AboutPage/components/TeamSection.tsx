@@ -24,11 +24,11 @@ export const TeamSection = () => {
             transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
             className="bg-white rounded-lg shadow-md overflow-hidden"
           >
-            <img
+            {/* <img
               src={member.image}
               alt={member.name}
               className="w-full h-48 object-cover"
-            />
+            /> */}
             <div className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-2">
                 {member.name}
