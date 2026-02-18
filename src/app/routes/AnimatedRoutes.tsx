@@ -59,15 +59,14 @@ function  AnimatedRoutes() {
               </SellerGuard>
             }
           />
+          <Route path="order-success" element={<OrderSuccessPage />} />
+          <Route path="verify-email" element={<VerifyEmail />} />
+          <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="about" element={<About />} />
+          <Route path="terms" element={<TermsAndConditions />} />
         </Route>
-        {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
-        <Route path="/order-success" element={<OrderSuccessPage />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/terms" element={<TermsAndConditions />} />
       </Routes>
     </AnimatePresence>
   );

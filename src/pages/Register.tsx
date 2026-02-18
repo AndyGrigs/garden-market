@@ -3,7 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useRegisterMutation } from '../store/api/authApi';
 import { UserPlus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import Header from '../components/Header';
 import { motion } from '@/utils/motionComponents';
 import { ErrorResponse } from '../types/IUser';
 import TermsModal from '../shared/ui/TermsModal';
@@ -89,11 +88,6 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header
-        cartItemsCount={0}
-        onCartClick={() => {}}
-        isAuthenticated={false}
-      />
 
       <div className="relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         {/* <div className="absolute top-4 right-4">

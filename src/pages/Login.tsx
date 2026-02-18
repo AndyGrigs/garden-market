@@ -5,7 +5,6 @@ import { useLoginMutation, useForgotPasswordMutation } from "../store/api/authAp
 
 import { LogIn} from "lucide-react";
 import { useTranslation } from "react-i18next";
-import Header from "../components/Header";
 import { motion, AnimatePresence } from '@/utils/motionComponents';
 import { setUser } from '../store/slices/authSlice';
 // import MainPageLink from '../shared/MainPageLink';
@@ -72,11 +71,6 @@ export default function Login() {
   };
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header
-        cartItemsCount={0}
-        onCartClick={() => {}}
-        isAuthenticated={false}
-      />
 
       <div className="relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="absolute top-4 right-4">
