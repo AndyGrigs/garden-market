@@ -3,7 +3,7 @@ import { X, Upload, Loader2, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
-import NumberInput from '@/shared/NumberInput';
+import NumberInput from '@/shared/ui/NumberInput';
 import { Category } from '@/types/ICategories';
 import { Tree, TreeApiData, TreeFormData } from '@/types/ITree';
 import { useGetCategoriesQuery } from '@/store/api/categoryApi';

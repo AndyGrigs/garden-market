@@ -1,5 +1,5 @@
-import PageHeader from '@/components/Layout/PageHeader';
-import SubHeader from '@/components/SubHeader';
+import PageHeader from '@/app/Layout/PageHeader';
+import SubHeader from '@/shared/headerFolder/SubHeader';
 import { AchievementsSection } from './AchievementsSection';
 import { ContactSection } from './ContactSection';
 import { CtaSection } from './CtaSection';

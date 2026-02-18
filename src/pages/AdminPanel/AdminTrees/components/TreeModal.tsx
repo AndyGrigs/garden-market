@@ -11,7 +11,7 @@ import {
 import { t } from 'i18next';
 import { BASE_URL } from '@/config';
 import toast from 'react-hot-toast';
-import NumberInput from '@/shared/NumberInput';
+import NumberInput from '@/shared/ui/NumberInput';
 import { AnimatePresence, motion } from '@/utils/motionComponents';
 
 interface Props {

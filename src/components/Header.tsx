@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {Leaf, LogOut, Menu, Package, User, ShoppingCart } from "lucide-react";
 import { logout as logoutAction } from "../store/slices/authSlice";
 import { useTranslation } from "react-i18next";
-import LanguageSwitcher from "./ui/LanguageSwitcher";
-import MobileMenu from "./ui/MobileMenu";
+import LanguageSwitcher from "../shared/ui/LanguageSwitcher";
+import MobileMenu from "../shared/ui/MobileMenu";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../store/api/authApi";
 import { RootState } from "../store/store";
 import AdminLink from '../shared/headerFolder/AdminLinks';
 // import { UserLinks } from '../shared/headerFolder/UserLinks';
 import toast from 'react-hot-toast';
-import SubHeader from './SubHeader';
+import SubHeader from '../shared/headerFolder/SubHeader';
 
 interface HeaderProps {
   cartItemsCount: number;

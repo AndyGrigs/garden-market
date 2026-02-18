@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ReviewForm from '@/features/buyer/components/ReviewForm';
 import ReviewsSection from '@/features/buyer/components/ReviewsSection';
-import MainPageLink from '../shared/MainPageLink';
+import MainPageLink from '../shared/ui/MainPageLink';
 
 export default function ReviewsPage() {
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);

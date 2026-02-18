@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import { motion } from '@/utils/motionComponents';
 import { ErrorResponse } from '../types/IUser';
-import TermsModal from '../components/ui/TermsModal';
+import TermsModal from '../shared/ui/TermsModal';
 import RoleSelector from '../shared/register/RoleSelector';
 import BasicInfoFields from '../shared/register/BasicInfoFields';
 import SellerInfoFields from '../shared/register/SellerInfoFields';
