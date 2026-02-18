@@ -1,6 +1,6 @@
 
 import { t } from 'i18next'
-import MainPageLink from '../shared/MainPageLink'
+// import MainPageLink from '../shared/MainPageLink'
 
 const ContactPage = () => {
   return (
@@ -9,7 +9,7 @@ const ContactPage = () => {
         <div className="max-w-3xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900">{t('contact.title')}</h1>
-            <MainPageLink/>
+            {/* <MainPageLink/> */}
           </div>
           
           <div className="bg-white rounded-lg shadow-md p-8">

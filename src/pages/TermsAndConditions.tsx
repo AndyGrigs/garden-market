@@ -2,7 +2,7 @@ import { motion } from '@/utils/motionComponents';
 import { AlertCircle} from 'lucide-react';
 import TermsContent from '../shared/terms/TermsContent';
 import { t } from 'i18next';
-import MainPageLink from '../shared/MainPageLink';
+// import MainPageLink from '../shared/MainPageLink';
 
 const TermsAndConditions = () => {
 
@@ -26,7 +26,7 @@ const TermsAndConditions = () => {
               </p>
             </motion.div>
 
-            <MainPageLink/>
+            {/* <MainPageLink/> */}
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@ const TermsAndConditions = () => {
       <div className="container mx-auto px-4 py-12">
         {/* Mobile Home Button */}
         <div className="md:hidden mb-8">
-          <MainPageLink/>
+          {/* <MainPageLink/> */}
         </div>
 
         {/* Last Updated */}

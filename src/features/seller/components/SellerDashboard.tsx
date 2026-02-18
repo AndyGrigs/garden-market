@@ -2,7 +2,7 @@ import { useState, lazy, Suspense } from "react";
 import { Package, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useGetSellerTreesQuery } from "@/features/seller/api/sellerApi";
-import MainPageLink from '@/shared/MainPageLink';
+// import MainPageLink from '@/shared/MainPageLink';
 
 const SellerTrees = lazy(() => import('./SellerTrees'));
 const SellerStats = lazy(() => import('./SellerStats'));
@@ -20,7 +20,7 @@ const SellerDashboard = () => {
           <h1 className="text-3xl font-bold text-gray-900">
             {t('seller.dashboard.title', { defaultValue: 'Панель продавца' })}
           </h1>
-         <MainPageLink/>
+         {/* <MainPageLink/> */}
         </div>
 
         {/* Статистика */}

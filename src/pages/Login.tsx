@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { motion, AnimatePresence } from '@/utils/motionComponents';
 import { setUser } from '../store/slices/authSlice';
-import MainPageLink from '../shared/MainPageLink';
+// import MainPageLink from '../shared/MainPageLink';
 import toast from 'react-hot-toast';
 import Footer from "@/components/Footer";
 
@@ -81,7 +81,7 @@ export default function Login() {
 
       <div className="relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="absolute top-4 right-4">
-          <MainPageLink />
+          {/* <MainPageLink /> */}
         </div>
 
         <div className="max-w-md w-full space-y-8">
