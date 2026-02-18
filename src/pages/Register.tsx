@@ -12,7 +12,6 @@ import BasicInfoFields from '../shared/register/BasicInfoFields';
 import SellerInfoFields from '../shared/register/SellerInfoFields';
 import TermsCheckbox from '../shared/register/TermsCheckbox';
 import toast from 'react-hot-toast';
-import Footer from '@/components/Footer';
 
 export default function Register() {
   const [fullName, setFullName] = useState('');
@@ -210,7 +209,6 @@ export default function Register() {
           setShowTermsModal(false);
         }}
       />
-      <Footer/>
     </div>
   );
 }

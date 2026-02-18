@@ -10,7 +10,6 @@ import { motion, AnimatePresence } from '@/utils/motionComponents';
 import { setUser } from '../store/slices/authSlice';
 // import MainPageLink from '../shared/MainPageLink';
 import toast from 'react-hot-toast';
-import Footer from "@/components/Footer";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -240,7 +239,6 @@ export default function Login() {
           </AnimatePresence>
         </div>
       </div>
-      <Footer/>
     </div>
   );
 }

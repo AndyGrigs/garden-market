@@ -14,7 +14,6 @@ import CategorySidebar from "../../shared/ui/CategorySidebar";
 import TreeCard from "../../shared/ui/TreeCard";
 import ReviewsSection from "@/features/buyer/components/ReviewsSection";
 import { CheckCircle, MessageCircle, Star, X } from "lucide-react";
-import Footer from "../../components/Footer";
 import ContactForm from "../../shared/ui/ContactForm";
 import ReviewForm from "@/features/buyer/components/ReviewForm";
 import Hero from '@/components/Hero';
@@ -179,7 +178,7 @@ const getSelectedCategoryName = () => {
       />
 
       {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 right-6 flex flex-col space-y-3">
+      <div className="hidden lg:flex fixed bottom-6 right-6 flex-col space-y-3">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -200,8 +199,6 @@ const getSelectedCategoryName = () => {
           <MessageCircle className="h-6 w-6" />
         </motion.button>
       </div>
-
-      <Footer />
 
       <AnimatePresence>
         {notification.visible && (
