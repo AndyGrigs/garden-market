@@ -5,7 +5,7 @@ import { lazy } from "react";
 import SellerGuard from '@/features/seller/components/SellerGuard';
 import AdminGuard from '../../pages/AdminPanel/AdminGuard';
 
-const Dashboard = lazy(() => import("../../pages/BuyerDashboard/components/Dashboard"));
+const Dashboard = lazy(() => import("../../pages/BuyerDashboard").then(module => ({ default: module.Dashboard })));
 const Login = lazy(() => import("../../pages/Login"));
 const Register = lazy(() => import("../../pages/Register"));
 const AdminPanel = lazy(() => import("../../pages/AdminPanel"));
