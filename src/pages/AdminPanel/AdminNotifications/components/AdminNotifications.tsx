@@ -60,8 +60,8 @@ const AdminNotifications = () => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">
+      <div className="flex flex-wrap items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold mb-3 text-gray-900">
           {t('notifications.title')}
         </h2>
 

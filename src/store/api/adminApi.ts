@@ -22,10 +22,23 @@ export interface PendingSeller extends User {
   };
 }
 
+export interface AllSeller extends User {
+  role: 'seller';
+  sellerInfo: {
+    nurseryName?: string;
+    address?: string;
+    phoneNumber?: string;
+    businessLicense?: string;
+    description?: string;
+    registrationDate?: string;
+    isApproved?: boolean;
+  };
+}
+
 export const adminApi = createApi({
   reducerPath: 'adminApi',
   baseQuery: appBaseQuery,
-  tagTypes: ['PendingSellers', 'Notifications', 'UnreadCount', 'PendingTrees'],
+  tagTypes: ['PendingSellers', 'AllSellers', 'Notifications', 'UnreadCount', 'PendingTrees'],
   keepUnusedDataFor: 120, // Cache for 2 minutes (admin data changes frequently)
   endpoints: (builder) => ({
     // Seller endpoints
@@ -52,6 +65,23 @@ export const adminApi = createApi({
         body: reason ? { reason } : undefined,
       }),
       invalidatesTags: ['PendingSellers'],
+    }),
+
+    getAllSellers: builder.query<{ sellers: AllSeller[] }, void>({
+      query: () => '/admin/sellers',
+      providesTags: ['AllSellers'],
+    }),
+
+    getSellerById: builder.query<{ seller: AllSeller }, string>({
+      query: (userId) => `/admin/sellers/${userId}`,
+    }),
+
+    deleteSeller: builder.mutation<{ message: string; id: string }, string>({
+      query: (userId) => ({
+        url: `/admin/sellers/${userId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['AllSellers', 'PendingSellers'],
     }),
 
     getPendingTrees: builder.query<{ trees: PendingTree[] }, void>({
@@ -142,6 +172,9 @@ export const adminApi = createApi({
 });
 
 export const {
+  useGetAllSellersQuery,
+  useGetSellerByIdQuery,
+  useDeleteSellerMutation,
   useGetPendingSellersQuery,
   useApproveSellerMutation,
   useRejectSellerMutation,

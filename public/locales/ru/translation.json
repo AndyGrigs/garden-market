@@ -253,14 +253,33 @@
       "address": "Адрес",
       "license": "Бизнес лицензия",
       "description": "Описание",
-      "registered": "Зарегистрирован"
+      "registered": "Зарегистрирован",
+      "nursery": "Питомник"
     },
     "tabs": {
       "sellers": "Продавцы",
+      "allSellers": "Все продавцы",
       "notifications": "Уведомления",
       "products": "Товары",
       "pendingTrees": "Деревья на проверке",
       "orders": "Заказы"
+    },
+    "allSellers": {
+      "title": "Все продавцы",
+      "noSellers": "Продавцы не найдены",
+      "name": "Имя",
+      "email": "Email",
+      "nursery": "Питомник",
+      "status": "Статус",
+      "approved": "Одобрен",
+      "pending": "На рассмотрении",
+      "rejected": "Отклонён",
+      "viewDetails": "Подробнее",
+      "details": "Детали продавца",
+      "delete": "Удалить продавца",
+      "confirmDelete": "Вы уверены, что хотите удалить этого продавца? Это действие нельзя отменить.",
+      "deleted": "Продавец удалён",
+      "deleteError": "Ошибка при удалении продавца"
     },
     "trees": {
       "pendingTitle": "Деревья, ожидающие одобрения",

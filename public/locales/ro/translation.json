@@ -254,14 +254,33 @@
       "address": "Adresă",
       "license": "Licență comercială",
       "description": "Descriere",
-      "registered": "Înregistrat"
+      "registered": "Înregistrat",
+      "nursery": "Pepinieră"
     },
     "tabs": {
       "sellers": "Vânzători",
+      "allSellers": "Toți vânzătorii",
       "notifications": "Notificări",
       "products": "Produse",
       "pendingTrees": "Copaci în așteptare",
       "orders": "Comenzi"
+    },
+    "allSellers": {
+      "title": "Toți vânzătorii",
+      "noSellers": "Nu s-au găsit vânzători",
+      "name": "Nume",
+      "email": "Email",
+      "nursery": "Pepinieră",
+      "status": "Status",
+      "approved": "Aprobat",
+      "pending": "În așteptare",
+      "rejected": "Respins",
+      "viewDetails": "Detalii",
+      "details": "Detalii vânzător",
+      "delete": "Șterge vânzătorul",
+      "confirmDelete": "Sigur doriți să ștergeți acest vânzător? Această acțiune nu poate fi anulată.",
+      "deleted": "Vânzătorul a fost șters",
+      "deleteError": "Eroare la ștergerea vânzătorului"
     },
     "trees": {
       "pendingTitle": "Copaci în așteptare de aprobare",

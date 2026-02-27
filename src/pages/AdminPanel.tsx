@@ -2,6 +2,7 @@ import { useState, lazy, Suspense } from "react";
 import { useTranslation } from 'react-i18next';
 import NotificationBell from "./AdminPanel/NotificationBell";
 import AdminPendingTrees from "./AdminPanel/AdminNotifications/components/AdminPendingTrees";
+import AdminAllSellers from "./AdminPanel/AdminSellers/components/AdminAllSellers";
 
 const AdminCategories = lazy(() => import("./AdminPanel/AdminCategories"));
 const AdminTrees = lazy(() => import("./AdminPanel/AdminTrees"));
@@ -12,7 +13,7 @@ const AdminOrders = lazy(() => import("./AdminPanel/AdminOrders"));
 
 const AdminPanel = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
-  const [activeTab, setActiveTab] = useState<'sellers' | 'notifications' | 'products' | 'pendingTrees' | 'orders'>('sellers');
+  const [activeTab, setActiveTab] = useState<'sellers' | 'allSellers' | 'notifications' | 'products' | 'pendingTrees' | 'orders'>('sellers');
   const {t} = useTranslation();
 
   return (
@@ -26,8 +27,8 @@ const AdminPanel = () => {
         </div>
 
         {/* Tabs */}
-        <div className="mb-6 border-b border-gray-200 overflow-x-auto">
-          <nav className="flex gap-4 sm:gap-8 min-w-max">
+        <div className="mb-6 border-b border-gray-200">
+          <nav className="flex flex-wrap gap-x-4 sm:gap-x-8">
             <button
               onClick={() => setActiveTab('sellers')}
               className={`pb-4 px-2 font-medium transition-colors whitespace-nowrap text-sm sm:text-base ${
@@ -37,6 +38,16 @@ const AdminPanel = () => {
               }`}
             >
               {t('admin.tabs.sellers')}
+            </button>
+            <button
+              onClick={() => setActiveTab('allSellers')}
+              className={`pb-4 px-2 font-medium transition-colors whitespace-nowrap text-sm sm:text-base ${
+                activeTab === 'allSellers'
+                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {t('admin.tabs.allSellers')}
             </button>
             <button
               onClick={() => setActiveTab('notifications')}
@@ -87,6 +98,12 @@ const AdminPanel = () => {
             <Suspense fallback={<div className="text-center py-8">{t('common.loading', { defaultValue: 'Завантаження...' })}</div>}>
               <AdminSellers />
             </Suspense>
+          </div>
+        )}
+
+        {activeTab === 'allSellers' && (
+          <div className="mb-8">
+            <AdminAllSellers />
           </div>
         )}
 
