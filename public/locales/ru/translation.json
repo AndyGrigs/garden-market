@@ -366,10 +366,13 @@
     "types": {
       "new_seller_registration": "Регистрация нового продавца",
       "new_product_created": "Создан новый товар",
+      "tree_approved": "Товар одобрен",
       "order_placed": "Размещен заказ",
       "order_cancelled": "Заказ отменен",
       "other": "Другое"
-    }
+    },
+    "treeApprovedTitle": "Товар одобрен",
+    "treeApprovedMessage": "Товар \"{{treeName}}\" от продавца {{sellerName}} был одобрен"
   },
   "dashboard": {
     "admin": "Админ панель",

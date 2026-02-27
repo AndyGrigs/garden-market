@@ -17,12 +17,9 @@ const dynamicBaseQuery: BaseQueryFn<
   const baseQuery = fetchBaseQuery({
     baseUrl,
     credentials: 'include',
-    prepareHeaders: (headers, { type }) => {
+    prepareHeaders: (headers) => {
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
-      }
-      if (type === 'mutation') {
-        headers.set('Content-Type', 'application/json');
       }
       return headers;
     },

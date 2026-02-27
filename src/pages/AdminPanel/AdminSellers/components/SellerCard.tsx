@@ -115,38 +115,38 @@ const SellerCard = ({
                   ).toLocaleDateString()}
                 </div>
               )}
-
-              {/* Actions */}
-              <div className="flex flex-col sm:flex-row gap-2 mt-4">
-                <ActionButton
-                  onClick={() => onApprove(seller.id)}
-                  disabled={isProcessing}
-                  className="bg-green-600 text-white hover:bg-green-700"
-                >
-                  <CheckCircle className="w-4 h-4" />
-                  <span>{t('admin.sellers.approve')}</span>
-                </ActionButton>
-
-                <ActionButton
-                  onClick={() => onReject(seller.id)}
-                  disabled={isProcessing}
-                  className="bg-red-600 text-white hover:bg-red-700"
-                >
-                  <XCircle className="w-4 h-4" />
-                  <span>{t('admin.sellers.reject')}</span>
-                </ActionButton>
-
-                <ActionButton
-                  onClick={() => setIsExpanded(!isExpanded)}
-                  className="bg-gray-100 text-gray-700 hover:bg-gray-200 text-sm"
-                >
-                  {isExpanded
-                    ? t('admin.sellers.showLess')
-                    : t('admin.sellers.showMore')}
-                </ActionButton>
-              </div>
             </div>
           )}
+
+          {/* Actions - always visible */}
+          <div className="flex flex-col sm:flex-row gap-2 mt-4">
+            <ActionButton
+              onClick={() => onApprove(seller._id)}
+              disabled={isProcessing}
+              className="bg-green-600 text-white hover:bg-green-700"
+            >
+              <CheckCircle className="w-4 h-4" />
+              <span>{t('admin.sellers.approve')}</span>
+            </ActionButton>
+
+            <ActionButton
+              onClick={() => onReject(seller._id)}
+              disabled={isProcessing}
+              className="bg-red-600 text-white hover:bg-red-700"
+            >
+              <XCircle className="w-4 h-4" />
+              <span>{t('admin.sellers.reject')}</span>
+            </ActionButton>
+
+            <ActionButton
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="bg-gray-100 text-gray-700 hover:bg-gray-200 text-sm"
+            >
+              {isExpanded
+                ? t('admin.sellers.showLess')
+                : t('admin.sellers.showMore')}
+            </ActionButton>
+          </div>
         </div>
       </div>
     </div>

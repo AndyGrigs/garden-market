@@ -367,10 +367,13 @@
     "types": {
       "new_seller_registration": "Înregistrare vânzător nou",
       "new_product_created": "Produs nou creat",
+      "tree_approved": "Produs aprobat",
       "order_placed": "Comandă plasată",
       "order_cancelled": "Comandă anulată",
       "other": "Altele"
-    }
+    },
+    "treeApprovedTitle": "Produs aprobat",
+    "treeApprovedMessage": "Produsul \"{{treeName}}\" de la vânzătorul {{sellerName}} a fost aprobat"
   },
   "dashboard": {
     "admin": "Admin panel",

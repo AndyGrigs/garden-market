@@ -30,6 +30,19 @@ const NotificationDropdown = ({ onClose }: NotificationDropdownProps) => {
   const [markAllAsRead] = useMarkAllAsReadMutation();
   const [deleteNotification] = useDeleteNotificationMutation();
 
+  const getNotificationContent = (notification: Notification) => {
+    if (notification.type === 'tree_approved') {
+      return {
+        title: t('notifications.treeApprovedTitle'),
+        message: t('notifications.treeApprovedMessage', {
+          treeName: notification.data?.treeName ?? notification.title,
+          sellerName: notification.data?.sellerName ?? '',
+        }),
+      };
+    }
+    return { title: notification.title, message: notification.message };
+  };
+
   const getNotificationIcon = (type: NotificationType) => {
     switch (type) {
       case 'new_seller_registration':
@@ -135,7 +148,7 @@ const NotificationDropdown = ({ onClose }: NotificationDropdownProps) => {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <p className="text-sm font-medium text-gray-900 line-clamp-1">
-                        {notification.title}
+                        {getNotificationContent(notification).title}
                       </p>
                       {!notification.isRead && (
                         <button
@@ -146,7 +159,7 @@ const NotificationDropdown = ({ onClose }: NotificationDropdownProps) => {
                       )}
                     </div>
                     <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                      {notification.message}
+                      {getNotificationContent(notification).message}
                     </p>
                     <div className="flex items-center justify-between mt-2">
                       <span className="text-xs text-gray-500">

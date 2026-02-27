@@ -113,7 +113,7 @@ const AdminPendingTrees = () => {
                     <div className="space-y-2 mt-3 pt-3 border-t border-orange-200">
                       <p className="text-sm text-gray-700">
                         <strong>{t('common.describing')}:</strong>{' '}
-                        {tree.description[lang] || tree.description.ru}
+                        {tree.description?.[lang] || tree.description?.ru}
                       </p>
 
                       <div className="flex items-center gap-2 text-sm">

@@ -1,6 +1,7 @@
 export type NotificationType =
   | 'new_seller_registration'
   | 'new_product_created'
+  | 'tree_approved'
   | 'order_placed'
   | 'order_cancelled'
   | 'other';
@@ -15,6 +16,8 @@ export interface Notification {
     userId?: string;
     productId?: string;
     orderId?: string;
+    treeName?: string;
+    sellerName?: string;
     sellerInfo?: {
       nurseryName?: string;
       email?: string;

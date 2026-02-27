@@ -44,6 +44,19 @@ export const NotificationItem = ({
     return t(`notifications.types.${type}`);
   };
 
+  const getNotificationContent = (notification: Notification) => {
+    if (notification.type === 'tree_approved') {
+      return {
+        title: t('notifications.treeApprovedTitle'),
+        message: t('notifications.treeApprovedMessage', {
+          treeName: notification.data?.treeName ?? notification.title,
+          sellerName: notification.data?.sellerName ?? '',
+        }),
+      };
+    }
+    return { title: notification.title, message: notification.message };
+  };
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat(t('common.locale'), {
@@ -78,11 +91,11 @@ export const NotificationItem = ({
 
             {/* Title */}
             <h3 className="font-semibold text-gray-900 mb-1">
-              {notification.title}
+              {getNotificationContent(notification).title}
             </h3>
 
             {/* Message */}
-            <p className="text-sm text-gray-600 mb-2">{notification.message}</p>
+            <p className="text-sm text-gray-600 mb-2">{getNotificationContent(notification).message}</p>
 
             {/* Date */}
             <p className="text-xs text-gray-500">
