@@ -5,7 +5,11 @@ import './index.css';
 import './i18n/index';
 import { checkBackendHealth } from './utils/apiHealthCheck.ts';
 
-checkBackendHealth().catch(() => {}).then(() => {
+const init = import.meta.env.DEV
+  ? checkBackendHealth().catch(() => {})
+  : Promise.resolve();
+
+init.then(() => {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <App />
