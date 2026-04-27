@@ -56,6 +56,13 @@ const AdminCategories = ({
     closeModal();
   };
 
+  const handleDeleteWithReset = async (id: string, imageUrl?: string) => {
+    const deleted = await handleDelete(id, imageUrl);
+    if (deleted && selectedCategoryId === id) {
+      onSelectCategory('all');
+    }
+  };
+
   // Loading State
   if (isLoading) {
     return (
@@ -114,7 +121,7 @@ const AdminCategories = ({
         selectedCategoryId={selectedCategoryId}
         onSelectCategory={onSelectCategory}
         onEdit={openEditModal}
-        onDelete={handleDelete}
+        onDelete={handleDeleteWithReset}
         isProcessing={isProcessing}
       />
 
