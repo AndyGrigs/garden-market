@@ -101,10 +101,8 @@ const useAdminTrees = (selectedCategoryId: string = 'all') => {
     try {
       // Delete image first if exists
       if (imageUrl) {
-        const normalizedUrl = imageUrl.startsWith('/uploads/') 
-          ? imageUrl.replace('/uploads/', '') 
-          : imageUrl;
-        await deleteImage(normalizedUrl).unwrap();
+        const filename = imageUrl.split('/').pop();
+        if (filename) await deleteImage(filename).unwrap();
       }
       
       await deleteTree(id).unwrap();

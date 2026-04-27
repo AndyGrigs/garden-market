@@ -87,11 +87,9 @@ const useAdminCategories = () => {
     try {
       // Delete image first if exists
       if (imageUrl) {
-        const normalizedUrl = imageUrl.startsWith('/uploads/')
-          ? imageUrl.replace('/uploads/', '')
-          : imageUrl;
+        const filename = imageUrl.split('/').pop();
         try {
-          await deleteImage(normalizedUrl).unwrap();
+          if (filename) await deleteImage(filename).unwrap();
         } catch {
           // Image deletion failure shouldn't block category deletion
         }
