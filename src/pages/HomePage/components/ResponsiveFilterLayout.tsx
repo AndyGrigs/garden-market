@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FilterSidebar } from './FilterSidebar';
 import { ProductGrid } from './ProductGrid';
 import type { HomePageFilters } from '../hooks/useHomePage';
 import { Tree } from '@/types/ITree';
+import CategoryCards from './CategoryCards';
 
 interface ResponsiveFilterLayoutProps {
   filters: HomePageFilters;
@@ -58,12 +58,12 @@ export const ResponsiveFilterLayout = ({
         </button>
       </div>
 
-      <div className="flex gap-8">
-        {/* Sidebar - hidden on mobile unless open */}
-        <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block lg:w-64 flex-shrink-0`}>
-          <FilterSidebar filters={filters} onChange={onChange} />
-        </div>
+      <CategoryCards
+        selectedCategoryId={filters.categoryId}
+        onCategorySelect={(id) => onChange({ categoryId: id })}
+      />
 
+      <div className="flex gap-8">
         {/* Overlay for mobile when sidebar is open */}
         {sidebarOpen && (
           <div 
