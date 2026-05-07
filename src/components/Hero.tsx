@@ -8,9 +8,9 @@ const Hero = () => {
       {/* Background Image with Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/magicstudio-art.jpg)' }}
+        style={{ backgroundImage: 'url(/garden.jpg)' }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/30 via-emerald-500/50 to-emerald-300/60"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-emerald-500/50 to-emerald-300/60"></div>
       </div>
 
       <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
