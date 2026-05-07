@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOutletContext } from "react-router-dom";
 import { AnimatePresence, motion } from '@/utils/motionComponents';
-
-import { useLanguage } from "@/hooks/useLanguage";
 import { useGetCategoriesQuery } from "@/store/api/categoryApi";
 import { useGetTreesQuery } from "@/store/api/treesApi";
 import { Tree } from "@/types/ITree";
@@ -19,6 +17,9 @@ import ReviewForm from "@/features/buyer/components/ReviewForm";
 import Hero from '@/components/Hero';
 import { useAppDispatch } from '@/store/store';
 import { addToCart as addToCartAction } from '@/features/buyer/api/cartSlice';
+import { useTreeTitle } from "@/hooks/useTreeTitle";
+
+
 
 
 interface OutletContext {
@@ -36,8 +37,9 @@ export default function MainContent() {
     message: '',
     visible: false
   });
+const getTitle = useTreeTitle();
+
   const { t } = useTranslation();
-  const lang = useLanguage();
   const dispatch = useAppDispatch();
 
   // Get context from Layout
@@ -50,12 +52,9 @@ export default function MainContent() {
     }, 3000);
   };
 
-  const getTreeTitle = (title: { [key: string]: string }) => {
-    return title?.[lang] || title?.en || title?.ru || "Unknown";
-  };
-
+  
   const addToCart = (tree: Tree) => {
-    showNotification(t('cart.notifications.added', { name: getTreeTitle(tree.title) }));
+    showNotification(t('cart.notifications.added', { name: getTitle( tree.title) }));
     dispatch(addToCartAction({ ...tree, quantity: 1 }));
   };
 
