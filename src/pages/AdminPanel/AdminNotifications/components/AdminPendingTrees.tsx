@@ -14,6 +14,7 @@ import {
   Languages,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useTreeTitle } from '@/hooks/useTreeTitle';
 
 const AdminPendingTrees = () => {
   const navigate = useNavigate();
@@ -39,10 +40,7 @@ const AdminPendingTrees = () => {
     setExpandedTree(expandedTree === treeId ? null : treeId);
   };
 
-  const getTreeTitle = (title: { ru: string; ro?: string }) => {
-    return title[lang] || title.ru;
-  };
-
+  const getTitle = useTreeTitle()
   if (isLoading) {
     return (
       <div className="flex justify-center items-center p-8">
@@ -89,13 +87,13 @@ const AdminPendingTrees = () => {
                     {tree.imageUrl && (
                       <img
                         src={tree.imageUrl}
-                        alt={getTreeTitle(tree.title)}
+                        alt={getTitle(tree.title)}
                         className="w-20 h-20 object-cover rounded-lg"
                       />
                     )}
                     <div>
                       <h3 className="font-bold text-lg text-gray-900">
-                        {getTreeTitle(tree.title)}
+                        {getTitle(tree.title)}
                       </h3>
                       <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
                         <User className="w-4 h-4" />
@@ -129,7 +127,7 @@ const AdminPendingTrees = () => {
                       {tree.category && (
                         <p className="text-sm text-gray-600">
                           <strong>{t('categories.category')}:</strong>{' '}
-                          {getTreeTitle(tree.category.title)}
+                          {getTitle(tree.category.title)}
                         </p>
                       )}
 

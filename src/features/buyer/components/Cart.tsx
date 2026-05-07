@@ -2,12 +2,12 @@ import { X, Minus, Plus } from "lucide-react";
 import { motion, AnimatePresence } from '@/utils/motionComponents';
 import { useTranslation } from "react-i18next";
 import { useState } from 'react';
-import { useLanguage } from "@/hooks/useLanguage";
 import { BASE_URL } from "@/config";
 import { getCurrency } from '@/shared/helpers/getCurrency';
 import SimpleCheckoutModal from './SimpleCheckoutModal';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { updateQuantity, removeFromCart, clearCart } from '@/features/buyer/api/cartSlice';
+import { useTreeTitle } from "@/hooks/useTreeTitle";
 
 interface CartProps {
   onClose: () => void;
@@ -15,7 +15,7 @@ interface CartProps {
 
 export default function Cart({ onClose }: CartProps) {
   const { t } = useTranslation();
-  const lang = useLanguage();
+  const getTitle = useTreeTitle()
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.cart.items);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -25,9 +25,7 @@ export default function Cart({ onClose }: CartProps) {
     0
   );
 
-  const getTreeTitle = (title: { [key: string]: string }) => {
-    return title?.[lang] || title?.ro  || title?.ru || "Unknown";
-  };
+
 
   const handleCheckoutSuccess = () => {
     dispatch(clearCart());
@@ -89,11 +87,11 @@ export default function Cart({ onClose }: CartProps) {
                 >
                   <img
                     src={item.imageUrl ? (item.imageUrl.startsWith('http') ? item.imageUrl : `${BASE_URL}${item.imageUrl}`) : "/placeholder.jpg"}
-                    alt={getTreeTitle(item.title)}
+                    alt={getTitle(item.title)}
                     className="w-20 h-20 object-cover rounded-md"
                   />
                   <div className="flex-1">
-                    <h3 className="font-semibold">{getTreeTitle(item.title)}</h3>
+                    <h3 className="font-semibold">{getTitle(item.title)}</h3>
                     <p className="text-emerald-600 font-bold">
                       {item.price.toFixed(2)} {getCurrency()}
                     </p>

@@ -9,6 +9,7 @@ import { Tree } from '@/types/ITree';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useDeleteSellerTreeMutation } from '@/features/seller/api/sellerApi';
 import AnimatedWrapper from '@/shared/ui/AnimatedWrapper';
+import { useTreeTitle } from "@/hooks/useTreeTitle";
 
 interface SellerTreesProps {
   trees: Tree[];
@@ -22,9 +23,7 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTree, setEditingTree] = useState<Tree | null>(null);
 
-  const getTreeTitle = (title: { [key: string]: string }) => {
-    return title?.[lang] || title?.en || title?.ru || "Unknown";
-  };
+  const getTitle = useTreeTitle();
 
   const getTreeDescription = (description: { [key: string]: string }) => {
     return description?.[lang] || description?.en || description?.ru || "";
@@ -120,7 +119,7 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
               <div className="relative">
                 <img
                   src={tree.imageUrl ? (tree.imageUrl.startsWith('http') ? tree.imageUrl : `${import.meta.env.VITE_API_URL}${tree.imageUrl}`) : "/placeholder.jpg"}
-                  alt={getTreeTitle(tree.title)}
+                  alt={getTitle(tree.title)}
                   className="w-full h-48 object-cover"
                 />
                 <div className="absolute top-2 right-2">
@@ -139,7 +138,7 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
 
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {getTreeTitle(tree.title)}
+                  {getTitle(tree.title)}
                 </h3>
                 <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                   {getTreeDescription(tree.description)}
@@ -163,7 +162,7 @@ const SellerTrees = ({ trees, isLoading }: SellerTreesProps) => {
                     <span>{t('dashboard.edit', { defaultValue: 'Редактировать' })}</span>
                   </button>
                   <button
-                    onClick={() => handleDeleteTree(tree._id, getTreeTitle(tree.title))}
+                    onClick={() => handleDeleteTree(tree._id, getTitle(tree.title))}
                     className="flex-1 flex items-center justify-center space-x-2 bg-red-600 text-white px-3 py-2 rounded text-sm hover:bg-red-700 transition-colors"
                   >
                     <Trash2 className="h-4 w-4" />

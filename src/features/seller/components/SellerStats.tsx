@@ -4,14 +4,8 @@ import { TrendingUp, Package, DollarSign, AlertCircle } from "lucide-react";
 import { useLanguage } from '@/hooks/useLanguage';
 import { Tree } from '@/types/ITree';
 import { getCurrency } from '@/shared/helpers/getCurrency';
+import { useTreeTitle } from "@/hooks/useTreeTitle";
 
-
-// Define TranslatedString type for category names and titles
-type TranslatedString = {
-  ru?: string;
-  en?: string;
-  ro?: string;
-};
 
 
 interface SellerStatsProps {
@@ -21,10 +15,8 @@ interface SellerStatsProps {
 const SellerStats = ({ trees }: SellerStatsProps) => {
   const { t } = useTranslation();
   const lang = useLanguage();
+  const getTitle = useTreeTitle()
 
-  const getTreeTitle = (title: { [key: string]: string }) => {
-    return title?.[lang] || title?.en || title?.ru || "Unknown";
-  };
 
   // Розрахунок статистики
   const totalProducts = trees.length;
@@ -38,10 +30,10 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
   const lowStockProducts = trees.filter(tree => tree.stock < 5);
   
   const categoryStats = trees.reduce((acc, tree) => {
-    // Use type assertion to safely access the translation
-    const nameObj = tree.category?.name as TranslatedString | undefined;
+    const cat = tree.category;
+    const nameObj = (cat && typeof cat === 'object') ? cat.name as Record<string, string> : undefined;
     const categoryName =
-      (nameObj && nameObj[lang as keyof TranslatedString]) ||
+      nameObj?.[lang] || nameObj?.ru || nameObj?.ro ||
       t('common.noCategory', { defaultValue: 'Без категории' });
     acc[categoryName] = (acc[categoryName] || 0) + 1;
     return acc;
@@ -119,7 +111,7 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
               {lowStockProducts.map((tree) => (
                 <div key={tree._id} className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
                   <div>
-                    <p className="font-medium text-gray-900">{getTreeTitle(tree.title)}</p>
+                    <p className="font-medium text-gray-900">{getTitle(tree.title)}</p>
                     <p className="text-sm text-gray-600">{tree.price} {getCurrency()}</p>
                   </div>
                   <span className="px-2 py-1 bg-orange-200 text-orange-800 text-sm rounded-full">
@@ -193,7 +185,7 @@ const SellerStats = ({ trees }: SellerStatsProps) => {
               {t('seller.stats.mostExpensiveProduct', { defaultValue: 'Найдорожчий товар' })}:
             </p>
             <p className="font-medium text-emerald-800">
-              {getTreeTitle(mostExpensiveProduct.title)}
+              {getTitle(mostExpensiveProduct.title)}
             </p>
           </div>
         )} */}

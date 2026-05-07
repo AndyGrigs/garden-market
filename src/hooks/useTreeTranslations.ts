@@ -4,7 +4,7 @@ export const useTreeTitle = () => {
   const lang = useLanguage();
   
   return (title: { [key: string]: string }) => {
-    return title?.[lang] || title?.en || title?.ru || title?.ro || "";
+    return title?.[lang] || title?.ru || title?.ro || "";
   };
 };
 
